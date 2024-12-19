@@ -30,6 +30,7 @@ var spectate_mode := false
 
 # P3 Ultimate Relativity
 var p3_selected_debuff := 0  # [random, short, med, long]
+var p3_selected_strat := 0  # [naur, lpdu]
 var p4_selected_debuff := 0  # [random, red/aero, red/ice, blue/eruption, blue/ice, blue,unholy, blue/water]
 
 # Waymarks

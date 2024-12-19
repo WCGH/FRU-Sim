@@ -50,6 +50,10 @@ const SLIDE_TIME := 0.4
 var party: Dictionary
 var na_dps_prio := ["r2", "r1", "m1", "m2"]
 var na_sup_prio := ["h2", "h1", "t1", "t2"]
+
+var eu_dps_prio := ["r1", "m1", "m2", "r2"]
+var eu_sup_prio := ["h1", "t1", "t2", "h2"]
+
 var party_keys_ur := {
 	"f1_dps_sw": "", "f1_dps_se": "", "f1_sup": "",
 	"f2_dps": "", "f2_sup": "",
@@ -460,8 +464,8 @@ func instantiate_party(new_party: Dictionary) -> void:
 	# Standard role keys
 	party = new_party
 	valid_targets = party.values()
-	# NA Party setup
-	na_party_setup()
+	# Party setup (strat based on selected option)
+	party_setup()
 	# Rotate arena
 	arena_rotation_deg = 45 * randi_range(0, 7)
 	# Need to invert this because .rotated is CW and .rotate_y is CCW :D
@@ -480,9 +484,20 @@ func instantiate_party(new_party: Dictionary) -> void:
 		hourglass_rotations[key] = randi_range(0, 1)
 
 
-func na_party_setup() -> void:
+func party_setup() -> void:
+	var dps_prio: Array
+	var sup_prio: Array
+	
+	assert(Global.p3_selected_strat >= 0 && Global.p3_selected_strat <= 1, "Invalid strat")
+	if Global.p3_selected_strat == 0:
+		dps_prio = na_dps_prio.duplicate()
+		sup_prio = na_sup_prio.duplicate()
+	elif Global.p3_selected_strat == 1:
+		dps_prio = eu_dps_prio.duplicate()
+		sup_prio = eu_sup_prio.duplicate()
+	
 	# Shuffle dps/sup roles
-	var shuffle_list := na_dps_prio.duplicate()
+	var shuffle_list := dps_prio.duplicate()
 	shuffle_list.shuffle()
 	
 	# Handle manual debuff selection for player
@@ -499,7 +514,7 @@ func na_party_setup() -> void:
 	
 	# DPS assignments: 0=f3, 1= f2, 2=f1sw, 3=f1se
 	# Check if 2/3 are in prio order, otherwise swap them.
-	if na_dps_prio.find(shuffle_list[2]) > na_dps_prio.find(shuffle_list[3]):
+	if dps_prio.find(shuffle_list[2]) > dps_prio.find(shuffle_list[3]):
 		shuffle_list.append(shuffle_list.pop_at(2))
 	# Add dps roles to dictionary
 	party_keys_ur["f3_dps"] = shuffle_list[0]
@@ -508,7 +523,7 @@ func na_party_setup() -> void:
 	party_keys_ur["f1_dps_se"] = shuffle_list[3]
 	
 	# Repeat for supports. Supp assignments: 0=f1, 1=f2, 2=f3nw, 3=f3ne
-	shuffle_list = na_sup_prio.duplicate()
+	shuffle_list = sup_prio.duplicate()
 	shuffle_list.shuffle()
 	
 	# Handle manual debuff selection for player
@@ -517,7 +532,7 @@ func na_party_setup() -> void:
 		shuffle_list.erase(supp_key)
 		shuffle_list.insert(Global.p3_selected_debuff - 1, supp_key)
 	
-	if na_sup_prio.find(shuffle_list[2]) > na_sup_prio.find(shuffle_list[3]):
+	if sup_prio.find(shuffle_list[2]) > sup_prio.find(shuffle_list[3]):
 		shuffle_list.append(shuffle_list.pop_at(2))
 	party_keys_ur["f1_sup"] = shuffle_list[0]
 	party_keys_ur["f2_sup"] = shuffle_list[1]
