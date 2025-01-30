@@ -59,6 +59,10 @@ var waymarks := {
 		"wm_a": Vector2(40, 0), "wm_b": Vector2(0, 40), "wm_c": Vector2(-40, 0), "wm_d": Vector2(0, -40),
 		"wm_1": Vector2(28.28, -28.28), "wm_2": Vector2(28.28, 28.28), "wm_3": Vector2(-28.28, 28.28), "wm_4": Vector2(-28.28, -28.28),
 	},
+	"mana_preset": {
+		"wm_a": Vector2(19, 0), "wm_b": Vector2(0, 19), "wm_c": Vector2(-19, 0), "wm_d": Vector2(0, -19),
+		"wm_1": Vector2(13.25, 13.25), "wm_2": Vector2(-13.25, 13.25), "wm_3": Vector2(-13.25, -13.25), "wm_4": Vector2(13.25, -13.25),
+	},
 	"current": {}
 }
 

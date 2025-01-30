@@ -119,9 +119,13 @@ func _on_button_slot_5_pressed() -> void:
 	waymark_controller.set_preset_markers(4)
 
 
-func _on_save_button_4_pressed() -> void:
-	waymark_controller.save_custom_preset(3)
-
-
 func _on_save_button_5_pressed() -> void:
 	waymark_controller.save_custom_preset(4)
+
+
+func _on_button_slot_6_pressed():
+	waymark_controller.set_preset_markers(5)
+
+
+func _on_save_button_6_pressed():
+	waymark_controller.save_custom_preset(5)

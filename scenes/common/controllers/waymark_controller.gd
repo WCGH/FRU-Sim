@@ -13,7 +13,7 @@ class_name WaymarkController
 @export var arena_waymark_node: Node3D
 
 var wm_scene: Waymarks
-var menu_slot_keys := ["preset_1", "preset_2", "preset_3", "custom_1", "custom_2"]
+var menu_slot_keys := ["preset_1", "preset_2", "preset_3", "mana_preset", "custom_1", "custom_2"]
 
 
 func _ready() -> void:
@@ -48,7 +48,7 @@ func clear_all_wm():
 
 func set_preset_markers(preset_slot: int):
 	# Preset markers from Global
-	if preset_slot < 3:
+	if preset_slot < 4:
 		wm_scene.set_waymarks(Global.waymarks[menu_slot_keys[preset_slot]])
 	# Custom markers from SavedVariables
 	else:

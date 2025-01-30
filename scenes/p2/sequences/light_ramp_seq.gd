@@ -5,7 +5,8 @@
 
 extends Node
 
-enum Strat {NA, EU, ELE}
+enum Strat{NA, EU, ELE, MANA}
+
 
 # Debuff Icon Scenes
 const CHAINS_LOCKED = preload("res://scenes/ui/auras/debuff_icons/p2/chains_locked.tscn")
@@ -13,50 +14,50 @@ const CHAINS = preload("res://scenes/ui/auras/debuff_icons/p2/chains.tscn")
 const LIGHTSTEEPED = preload("res://scenes/ui/auras/debuff_icons/p2/lightsteeped.tscn")
 const WEIGHT_OF_LIGHT = preload("res://scenes/ui/auras/debuff_icons/p2/weight_of_light.tscn")
 
-const CHAINS_MAX_DIST := 9999
-const CHAINS_MIN_DIST := 200
-const CHAINS_WIDTH := 0.15
-const LR_SOLO_TOWER_DURATION := 8.0
-const LIGHTSTEEPED_DURATION := 36.0
+const CHAINS_MAX_DIST: = 9999
+const CHAINS_MIN_DIST: = 200
+const CHAINS_WIDTH: = 0.15
+const LR_SOLO_TOWER_DURATION: = 8.0
+const LIGHTSTEEPED_DURATION: = 36.0
 
-const PUDDLE_COUNT := 6
-const PUDDLE_DROP_DELAY := 1.6
-const PUDDLE_DURATION := 10.0
-const PUDDLE_RADIUS := 14.5
-const PUDDLE_COLOR := Color(1, 1, 0, 0.125)
-const PUDDLE_TARGET_FAIL_COUNT := 2
+const PUDDLE_COUNT: = 6
+const PUDDLE_DROP_DELAY: = 1.6
+const PUDDLE_DURATION: = 10.0
+const PUDDLE_RADIUS: = 14.5
+const PUDDLE_COLOR: = Color(1, 1, 0, 0.125)
+const PUDDLE_TARGET_FAIL_COUNT: = 2
 
-const ORB_AOE_RADIUS := 10
-const ORB_AOE_LIFETIME := 0.5
-const ORB_AOE_COLOR := Color.ORANGE_RED
+const ORB_AOE_RADIUS: = 10
+const ORB_AOE_LIFETIME: = 0.5
+const ORB_AOE_COLOR: = Color.ORANGE_RED
 
-const LARGE_ORB_RADIUS := 25.5
-const LARGE_ORB_DURATION := 0.1
-const LARGE_ORB_COLOR := Color(1, 0.643, 0.227, 0.13)
+const LARGE_ORB_RADIUS: = 25.5
+const LARGE_ORB_DURATION: = 0.1
+const LARGE_ORB_COLOR: = Color(1, 0.643, 0.227, 0.13)
 
-const SPREAD_AOE_RADIUS := 11
-const SPREAD_AOE_LIFETIME := 0.3
-const SPREAD_AOE_COLOR := Color.ALICE_BLUE
+const SPREAD_AOE_RADIUS: = 11
+const SPREAD_AOE_LIFETIME: = 0.3
+const SPREAD_AOE_COLOR: = Color.ALICE_BLUE
 
-const PAIRS_AOE_RADIUS := 13
-const PAIRS_AOE_LIFETIME := 0.3
-const PAIRS_AOE_COLOR := Color.ALICE_BLUE
+const PAIRS_AOE_RADIUS: = 13
+const PAIRS_AOE_LIFETIME: = 0.3
+const PAIRS_AOE_COLOR: = Color.ALICE_BLUE
 
-const PROTEAN_ANGLE := 90
-const PROTEAN_LENGTH := 150
-const PROTEAN_LIFETIME := 0.3
-const PROTEAN_COLOR := Color(0.8, 0.647059, 0, 0.06)
+const PROTEAN_ANGLE: = 90
+const PROTEAN_LENGTH: = 150
+const PROTEAN_LIFETIME: = 0.3
+const PROTEAN_COLOR: = Color(0.8, 0.647059, 0, 0.06)
 
-@onready var light_ramp_anim: AnimationPlayer = %LightRampAnim
-@onready var cast_bar: CastBar = %CastBar
-@onready var ground_aoe_controller: GroundAoeController = %GroundAoEController
-@onready var lockon_controller: LockonController = %LockonController
-@onready var lr_chains_controller: LRChainsController = %LRChainsController
-@onready var puddle_controller: PuddleController = %PuddleController
-@onready var fail_list: FailList = %FailList
-@onready var n_orb_list := [%LargeOrb1, %LargeOrb3, %LargeOrb5]
-@onready var s_orb_list := [%LargeOrb2, %LargeOrb4, %LargeOrb6]
-@onready var shiva: Node3D = %Shiva
+@onready var light_ramp_anim: AnimationPlayer = % LightRampAnim
+@onready var cast_bar: CastBar = % CastBar
+@onready var ground_aoe_controller: GroundAoeController = % GroundAoEController
+@onready var lockon_controller: LockonController = % LockonController
+@onready var lr_chains_controller: LRChainsController = % LRChainsController
+@onready var puddle_controller: PuddleController = % PuddleController
+@onready var fail_list: FailList = % FailList
+@onready var n_orb_list: = [ % LargeOrb1, % LargeOrb3, % LargeOrb5]
+@onready var s_orb_list: = [ % LargeOrb2, % LargeOrb4, % LargeOrb6]
+@onready var shiva: Node3D = % Shiva
 
 
 var party: Dictionary
@@ -75,16 +76,16 @@ var eu_ns_spread_prio := [3, 2, 1, 0, 4, 5, 6, 7] # N > S Prio [h1, h2, t1, t2, 
 var lightsteeped_keys := ["t2", "t1", "h2", "h1", "r1", "r2", "m1", "m2"]
 var solo_tower_positions := [Vector2(19, -32.8), Vector2(37.7, 0), Vector2(19, 32.8),
 	Vector2(-19, -32.8), Vector2(-37.7, 0), Vector2(-19, 32.8)]
-var puddles := []
-var solo_towers := []
+var puddles: = []
+var solo_towers: = []
 var middle_tower: LRTower
 var n_orb_pattern: bool
 var halo_spread_pattern: bool
 var strat: Strat
 
 
-func start_sequence(new_party: Dictionary) -> void:
-	assert(new_party != null, "Error. Where the party at?")
+func start_sequence(new_party: Dictionary) -> void :
+	assert (new_party != null, "Error. Where the party at?")
 	ground_aoe_controller.preload_aoe(["lr_tower", "circle", "cone"])
 	lockon_controller.pre_load([10, 11])
 	lr_chains_controller.preload_resources()
@@ -108,8 +109,8 @@ func cast_lr() -> void:
 	shiva.play_hand_down_cast()
 
 
-func move_pre_pos() -> void:
-	if strat == Strat.ELE:
+func move_pre_pos() -> void :
+	if strat in [Strat.ELE, Strat.MANA]:
 		move_party(party, LRPosNA.pre_pos_44_ele)
 	else:
 		move_party(party, LRPosNA.pre_pos_44)
@@ -151,7 +152,10 @@ func move_puddles_tower_lineup() -> void:
 	if strat == Strat.NA or strat == Strat.ELE:
 		party[lr_party["n_puddle"]].move_to(LRPosNA.tower_lineup["n_puddle"])
 		party[lr_party["s_puddle"]].move_to(LRPosNA.tower_lineup["s_puddle"])
-	else: 
+	elif strat == Strat.MANA:
+		party[lr_party["n_puddle"]].move_to(LRPosJP.tower_lineup["n_puddle"])
+		party[lr_party["s_puddle"]].move_to(LRPosJP.tower_lineup["s_puddle"])
+	else:
 		party[lr_party["n_puddle"]].move_to(LRPosEU.tower_lineup["n_puddle"])
 		party[lr_party["s_puddle"]].move_to(LRPosEU.tower_lineup["s_puddle"])
 
@@ -160,6 +164,8 @@ func move_puddles_tower_lineup() -> void:
 func move_tower_lineup() -> void:
 	if strat == Strat.NA or strat == Strat.ELE:
 		move_lr_party(LRPosNA.tower_lineup)
+	elif strat == Strat.MANA:
+		move_lr_party(LRPosJP.tower_lineup)
 	else:
 		move_lr_party(LRPosEU.tower_lineup)
 
@@ -176,8 +182,10 @@ func spawn_solo_towers() -> void:
 ## 12.75
 # Chains move to towers.
 func move_tower_soak():
-	if strat == Strat.NA  or strat == Strat.ELE:
+	if strat == Strat.NA or strat == Strat.ELE:
 		move_lr_party(LRPosNA.tower_soak)
+	elif strat == Strat.MANA:
+		move_lr_party(LRPosJP.tower_soak)
 	else:
 		move_lr_party(LRPosEU.tower_soak)
 
@@ -188,15 +196,17 @@ func first_puddle_snapshot() -> void:
 	lockon_controller.remove_marker(11, party[spread_keys[0]])
 	lockon_controller.remove_marker(11, party[spread_keys[1]])
 	# Instantiate puddles
-	puddles.append(puddle_controller.spawn_puddle(party[spread_keys[0]], PUDDLE_COUNT,
+	puddles.append(puddle_controller.spawn_puddle(party[spread_keys[0]], PUDDLE_COUNT, 
 		PUDDLE_DROP_DELAY, PUDDLE_DURATION, PUDDLE_RADIUS, PUDDLE_COLOR, PUDDLE_TARGET_FAIL_COUNT))
-	puddles.append(puddle_controller.spawn_puddle(party[spread_keys[1]], PUDDLE_COUNT,
+	puddles.append(puddle_controller.spawn_puddle(party[spread_keys[1]], PUDDLE_COUNT, 
 		PUDDLE_DROP_DELAY, PUDDLE_DURATION, PUDDLE_RADIUS, PUDDLE_COLOR, PUDDLE_TARGET_FAIL_COUNT))
 	# Spawn first AoE
 	drop_puddles()
 	# Move spread players
 	if strat == Strat.NA  or strat == Strat.ELE:
 		move_lr_party(LRPosNA.puddle_dodge_1)
+	elif strat == Strat.MANA:
+		move_lr_party(LRPosJP.puddle_dodge_1)
 	else:
 		move_lr_party(LRPosEU.puddle_dodge_1)
 
@@ -205,8 +215,10 @@ func first_puddle_snapshot() -> void:
 # Second puddle snapshot
 func second_puddle_snapshot() -> void:
 	drop_puddles()
-	if strat == Strat.NA  or strat == Strat.ELE:
+	if strat == Strat.NA or strat == Strat.ELE:
 		move_lr_party(LRPosNA.puddle_dodge_2)
+	elif strat == Strat.MANA:
+		move_lr_party(LRPosJP.puddle_dodge_2)
 	else:
 		move_lr_party(LRPosEU.puddle_dodge_2)
 
@@ -215,8 +227,10 @@ func second_puddle_snapshot() -> void:
 # Third puddle snapshot
 func third_puddle_snapshot() -> void:
 	drop_puddles()
-	if strat == Strat.NA  or strat == Strat.ELE:
+	if strat == Strat.NA or strat == Strat.ELE:
 		move_lr_party(LRPosNA.puddle_dodge_3)
+	elif strat == Strat.MANA:
+		move_lr_party(LRPosJP.puddle_dodge_3)
 	else:
 		move_lr_party(LRPosEU.puddle_dodge_3)
 
@@ -265,6 +279,8 @@ func forth_puddle_snapshot() -> void:
 	drop_puddles()
 	if strat == Strat.NA or strat == Strat.ELE:
 		move_lr_party(LRPosNA.puddle_dodge_4)
+	elif strat == Strat.MANA:
+		move_lr_party(LRPosJP.puddle_dodge_4)
 	else:
 		move_lr_party(LRPosEU.puddle_dodge_4)
 
@@ -276,12 +292,14 @@ func fifth_puddle_snapshot() -> void:
 	drop_puddles()
 	if strat == Strat.NA or strat == Strat.ELE:
 		move_lr_party(LRPosNA.puddle_dodge_5)
+	elif strat == Strat.MANA:
+		move_lr_party(LRPosJP.puddle_dodge_5)
 	else:
 		move_lr_party(LRPosEU.puddle_dodge_5)
 	first_orbs_telegraph()
 
 
-func first_orbs_telegraph () -> void:
+func first_orbs_telegraph() -> void :
 	if n_orb_pattern:
 		for orb: P2LargeOrb in n_orb_list:
 			orb.play_tele_spawn()
@@ -302,18 +320,18 @@ func second_orbs_spawn () -> void:
 
 
 # Intermediate dodge to simulate slower movement leading up to shared hit
-func move_to_intermediate_spot() -> void:
-	if strat == Strat.NA or strat == Strat.ELE:
+func move_to_intermediate_spot() -> void :
+	if strat in [Strat.NA, Strat.ELE ,Strat.MANA]:
 		move_lr_party(LRPosNA.inter_dodge)
 	else:
 		move_lr_party(LRPosEU.inter_dodge)
-	
+
 
 
 ## 24.50
 # Move groups to first safe spot
-func move_safe_spot_1() -> void:
-	if strat == Strat.NA  or strat == Strat.ELE:
+func move_safe_spot_1() -> void :
+	if strat in [Strat.NA, Strat.ELE, Strat.MANA]:
 		if n_orb_pattern:
 			move_lr_party(LRPosNA.north_orb_first_dodge)
 		else:
@@ -323,7 +341,7 @@ func move_safe_spot_1() -> void:
 			move_lr_party(LRPosEU.north_orb_first_dodge)
 		else:
 			move_lr_party(LRPosEU.south_orb_first_dodge)
-	
+
 
 
 ## 25.00
@@ -333,7 +351,7 @@ func move_safe_spot_1() -> void:
 func group_soak_hit() -> void:
 	# Group soak hit
 	for key in orb_keys:
-		ground_aoe_controller.spawn_circle(v2(party[lr_party[key]].global_position),
+		ground_aoe_controller.spawn_circle(v2(party[lr_party[key]].global_position), 
 			ORB_AOE_RADIUS, ORB_AOE_LIFETIME, ORB_AOE_COLOR, [4, 4, "Powerful Light (LP Soaks)"])
 		#for pc: PlayableCharacter in circle_aoe.get_bodies():
 			#pc.add_debuff(LIGHTSTEEPED, 35.0, true, "lightsteeped")
@@ -345,17 +363,17 @@ func group_soak_hit() -> void:
 	spawn_middle_tower()
 
 
-func second_orbs_telegraph() -> void:
+func second_orbs_telegraph() -> void :
 	if n_orb_pattern:
 		for orb: P2LargeOrb in s_orb_list:
 			orb.play_tele_spawn()
 	else:
 		for orb: P2LargeOrb in n_orb_list:
 			orb.play_tele_spawn()
-			
 
 
-func spawn_middle_tower() -> void:
+
+func spawn_middle_tower() -> void :
 	middle_tower = ground_aoe_controller.spawn_lr_tower(Vector2(0, 0), 8)
 	middle_tower.set_bodies_required(4)
 
@@ -365,15 +383,15 @@ func spawn_middle_tower() -> void:
 func first_orbs_hit() -> void:
 	var this_orb_list = n_orb_list if n_orb_pattern else s_orb_list
 	for orb: P2LargeOrb in this_orb_list:
-		ground_aoe_controller.spawn_circle(v2(orb.global_position),
+		ground_aoe_controller.spawn_circle(v2(orb.global_position), 
 			LARGE_ORB_RADIUS, LARGE_ORB_DURATION, LARGE_ORB_COLOR, [0, 0, "Light Orb AoE"])
 		orb.visible = false
 
 ## 27.00
 # Move group to second safe spot
 # Remove chains
-func move_safe_spot_2() -> void:
-	if strat == Strat.NA or strat == Strat.ELE:
+func move_safe_spot_2() -> void :
+	if strat in [Strat.NA, Strat.ELE, Strat.MANA]:
 		if n_orb_pattern:
 			move_lr_party(LRPosNA.north_orb_second_dodge)
 		else:
@@ -393,7 +411,7 @@ func move_safe_spot_2() -> void:
 func second_orbs_hit() -> void:
 	var this_orb_list = s_orb_list if n_orb_pattern else n_orb_list
 	for orb: P2LargeOrb in this_orb_list:
-		ground_aoe_controller.spawn_circle(v2(orb.global_position),
+		ground_aoe_controller.spawn_circle(v2(orb.global_position), 
 			LARGE_ORB_RADIUS, LARGE_ORB_DURATION, LARGE_ORB_COLOR, [0, 0, "Light Orb AoE"])
 		orb.visible = false
 	move_middle_safe_spot()
@@ -401,8 +419,8 @@ func second_orbs_hit() -> void:
 	shiva.visible = true
 
 
-func move_middle_safe_spot() -> void:
-	if strat == Strat.NA or strat == Strat.ELE:
+func move_middle_safe_spot() -> void :
+	if strat in [Strat.NA, Strat.ELE ,Strat.MANA]:
 		if n_orb_pattern:
 			move_lr_party(LRPosNA.n_pattern_middle_dodge)
 		else:
@@ -445,33 +463,42 @@ func middle_tower_snapshot() -> void:
 
 ## 34.4
 # Move to spread/pair spots
-func move_spread_pairs() -> void:
+func move_spread_pairs() -> void :
 	if halo_spread_pattern:
-		move_party(party, LRPosNA.spread_clocks)
+		if strat == Strat.MANA:
+			move_party(party, LRPosJP.spread_clocks)
+		else:
+			move_party(party, LRPosNA.spread_clocks)
 	else:
-		move_party(party, LRPosNA.pairs)
+		if strat == Strat.MANA:
+			move_party(party, LRPosJP.pairs)
+		else:
+			move_party(party, LRPosNA.pairs)
 
 
-## 37.1
-# Spread/pair hits
-func spread_pairs_hit() -> void:
+
+
+func spread_pairs_hit() -> void :
 	if halo_spread_pattern:
 		for pc_key in party:
-			ground_aoe_controller.spawn_circle(v2(party[pc_key].global_position), SPREAD_AOE_RADIUS,
+			ground_aoe_controller.spawn_circle(v2(party[pc_key].global_position), SPREAD_AOE_RADIUS, 
 				SPREAD_AOE_LIFETIME, SPREAD_AOE_COLOR, [1, 1, "Banish III Divided (Spread AoE)"])
 	else:
-		# Coin flip for supports or dps being pair targets
+
 		var keys = support_keys if randi() % 2 == 0 else dps_keys
 		for key in keys:
-			ground_aoe_controller.spawn_circle(v2(party[key].global_position), PAIRS_AOE_RADIUS,
+			ground_aoe_controller.spawn_circle(v2(party[key].global_position), PAIRS_AOE_RADIUS, 
 				PAIRS_AOE_LIFETIME, PAIRS_AOE_COLOR, [2, 2, "Banish III Shared (Pairs AoE)"])
 	shiva.hide_halo()
 
 
 ## 38.0
 # Move to clock pos
-func move_to_clock_pos() -> void:
-	move_party(party, LRPosNA.spread_clocks)
+func move_to_clock_pos() -> void :
+	if strat == Strat.MANA:
+		move_party(party, LRPosJP.spread_clocks)
+	else:
+		move_party(party, LRPosNA.spread_clocks)
 
 
 ## 40.0
@@ -484,7 +511,7 @@ func start_house_cast() -> void:
 # Check stacks
 func protean_wave_hits() -> void:
 	for pc_key in party:
-		ground_aoe_controller.spawn_cone(Vector2(0, 0), PROTEAN_ANGLE, PROTEAN_LENGTH,
+		ground_aoe_controller.spawn_cone(Vector2(0, 0), PROTEAN_ANGLE, PROTEAN_LENGTH, 
 			v2(party[pc_key].global_position), PROTEAN_LIFETIME, PROTEAN_COLOR, [1, 1, "House of Light (Protean)"])
 		party[pc_key].add_debuff(LIGHTSTEEPED, 0.0, true, "lightsteeped")
 		if party[pc_key].get_debuff_stacks("lightsteeped") > 4:
@@ -504,13 +531,13 @@ func instantiate_party(new_party: Dictionary) -> void:
 	lightsteeped_keys.shuffle()
 
 
-func four_four_party_setup() -> void:
+func four_four_party_setup() -> void :
 	var spread_prio
 	if strat == Strat.NA:
 		spread_prio = na_we_spread_prio
 	elif strat == Strat.EU:
 		spread_prio = eu_ns_spread_prio
-	elif strat == Strat.ELE:
+	elif strat in [Strat.ELE, Strat.MANA]:
 		spread_prio = na_we_spread_prio
 		lr_south_lineup = lr_south_lineup_ele
 	# LR assigments: 2 puddles, 6 chains, 2 chained orbs
@@ -525,11 +552,11 @@ func four_four_party_setup() -> void:
 		if spread_keys_index.has(rand):
 			continue
 		spread_keys_index.append(rand)
-	
+
 	# Order spread (puddle) based on north/south prio
 	if spread_prio.find(spread_keys_index[0]) > spread_prio.find(spread_keys_index[1]):
 		spread_keys_index.append(spread_keys_index.pop_at(0))
-	
+
 	# Remove spread from lineups (0-3 is north, 4-7 is south)
 	for index in spread_keys_index:
 		if index < 4:
@@ -548,10 +575,10 @@ func four_four_party_setup() -> void:
 	elif lr_south_lineup.size() > 3:
 		lr_north_lineup.append(lr_south_lineup.pop_front())
 	# Populate Dictionary
-	lr_party = { 
-		"n0" : lr_north_lineup[0], "n1" : lr_north_lineup[1], "n2" : lr_north_lineup[2],
-		"s0" : lr_south_lineup[0], "s1" : lr_south_lineup[1], "s2" : lr_south_lineup[2],
-		"n_puddle" : spread_keys[0], "s_puddle" : spread_keys[1],
+	lr_party = {
+		"n0": lr_north_lineup[0], "n1": lr_north_lineup[1], "n2": lr_north_lineup[2], 
+		"s0": lr_south_lineup[0], "s1": lr_south_lineup[1], "s2": lr_south_lineup[2], 
+		"n_puddle": spread_keys[0], "s_puddle": spread_keys[1], 
 	}
 	# Pick orb targets (adjacent chain targets)
 	var valid_orb_keys = ["n0", "n1", "n2", "s0", "s1", "s2"]
@@ -565,7 +592,7 @@ func four_four_party_setup() -> void:
 	orb_keys = [valid_orb_keys[orb_index_1], valid_orb_keys[orb_index_2]]
 
 
-func spawn_chains() -> void:
+func spawn_chains() -> void :
 	spawn_chain_from_index("n0", "n1")
 	spawn_chain_from_index("n1", "n2")
 	spawn_chain_from_index("n2", "s0")
@@ -574,12 +601,12 @@ func spawn_chains() -> void:
 	spawn_chain_from_index("s2", "n0")
 
 
-func spawn_chain_from_index(source_index: String, target_index: String) -> void:
-	lr_chains_controller.spawn_chain(party[lr_party[source_index]],
-		party[lr_party[target_index]],CHAINS_MAX_DIST, CHAINS_MIN_DIST, CHAINS_WIDTH)
+func spawn_chain_from_index(source_index: String, target_index: String) -> void :
+	lr_chains_controller.spawn_chain(party[lr_party[source_index]], 
+		party[lr_party[target_index]], CHAINS_MAX_DIST, CHAINS_MIN_DIST, CHAINS_WIDTH)
 
 
-func drop_puddles() -> void:
+func drop_puddles() -> void :
 	for puddle: Puddle in puddles:
 		puddle.drop()
 
@@ -590,7 +617,7 @@ func move_party(party_dict: Dictionary, pos: Dictionary) -> void:
 		var pc: PlayableCharacter = party_dict[key]
 		pc.move_to(pos[key])
 
-func move_lr_party(pos: Dictionary) -> void:
+func move_lr_party(pos: Dictionary) -> void :
 	for key: String in pos:
 		var pc: PlayableCharacter = party[lr_party[key]]
 		pc.move_to(pos[key])
