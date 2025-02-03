@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://chasoddjwqblg"]
+[gd_scene load_steps=9 format=3 uid="uid://chasoddjwqblg"]
 
 [ext_resource type="Script" path="res://scenes/ui/cast_bars/cast_bar.gd" id="1_nkki0"]
 [ext_resource type="FontFile" uid="uid://dflgosesmjvf" path="res://assets/common/fonts/MYRIADPRO-BOLD.OTF" id="1_uiasi"]
+[ext_resource type="Script" path="res://scenes/ui/move_ui_button.gd" id="3_nefkv"]
 
 [sub_resource type="Theme" id="Theme_vadjc"]
 default_font = ExtResource("1_uiasi")
@@ -21,6 +22,8 @@ border_color = Color(0.968627, 0.6, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eit2t"]
 bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5ibvd"]
 
 [node name="CastBar" type="CanvasLayer" groups=["cast_bar"]]
 script = ExtResource("1_nkki0")
@@ -67,5 +70,23 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_eit2t")
 max_value = 1.0
 value = 0.5
 show_percentage = false
+
+[node name="MoveButton" type="Button" parent="MarginContainer"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+focus_mode = 1
+theme_override_constants/h_separation = 0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_5ibvd")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_5ibvd")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_5ibvd")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_5ibvd")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_5ibvd")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_5ibvd")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_5ibvd")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_5ibvd")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_5ibvd")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_5ibvd")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_5ibvd")
+script = ExtResource("3_nefkv")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://02ckwb1trdp4"]
+[gd_scene load_steps=14 format=3 uid="uid://02ckwb1trdp4"]
 
 [ext_resource type="Script" path="res://scenes/ui/party_list/party_list.gd" id="1_nit7q"]
 [ext_resource type="PackedScene" uid="uid://b2w6j0ped8mgg" path="res://scenes/ui/auras/aura_container.tscn" id="2_cyddy"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://bupwk74kk36gt" path="res://scenes/ui/party_list/role_icons/sam_icon.tscn" id="9_728ig"]
 [ext_resource type="PackedScene" uid="uid://b3umk4oihslqw" path="res://scenes/ui/party_list/role_icons/dnc_icon.tscn" id="10_06nwm"]
 [ext_resource type="PackedScene" uid="uid://bo67lk3uwl485" path="res://scenes/ui/party_list/role_icons/smn_icon.tscn" id="11_6j0nu"]
+[ext_resource type="Script" path="res://scenes/ui/move_ui_button.gd" id="12_uy0mg"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_j1ng4"]
 font_size = 10
@@ -65,3 +66,11 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/separation = 1
 alignment = 1
+
+[node name="MoveButton" type="Button" parent="MarginContainer"]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+size_flags_vertical = 0
+focus_mode = 1
+script = ExtResource("12_uy0mg")

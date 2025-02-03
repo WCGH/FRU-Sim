@@ -1,13 +1,24 @@
-[gd_scene load_steps=3 format=3 uid="uid://jcbpndkhehjl"]
+[gd_scene load_steps=4 format=3 uid="uid://jcbpndkhehjl"]
 
 [ext_resource type="Script" path="res://scenes/ui/coords.gd" id="1_0hb85"]
+[ext_resource type="Script" path="res://scenes/ui/move_ui_button.gd" id="2_mh6vw"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_n540m"]
 outline_size = 4
 outline_color = Color(0, 0, 0, 1)
 
-[node name="Coords" type="Label"]
-visible = false
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="Coords" type="Label" parent="."]
+layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
@@ -24,4 +35,16 @@ text = "0,12"
 label_settings = SubResource("LabelSettings_n540m")
 script = ExtResource("1_0hb85")
 
-[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
+[node name="Button" type="Button" parent="."]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(24, 42)
+offset_left = -243.0
+offset_top = -96.0
+offset_right = -99.0
+offset_bottom = -51.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+focus_mode = 1
+script = ExtResource("2_mh6vw")
+
+[connection signal="visibility_changed" from="Coords" to="Coords" method="_on_visibility_changed"]

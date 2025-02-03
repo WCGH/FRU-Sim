@@ -1,6 +1,7 @@
-[gd_scene load_steps=26 format=3 uid="uid://cbimodxf0fbhu"]
+[gd_scene load_steps=27 format=3 uid="uid://cbimodxf0fbhu"]
 
 [ext_resource type="Script" path="res://scenes/ui/waymark_menu.gd" id="1_sqrhw"]
+[ext_resource type="Script" path="res://scenes/ui/move_ui_button.gd" id="2_cbmco"]
 [ext_resource type="Texture2D" uid="uid://glmlxtvb0wx7" path="res://assets/common/world_markers/wm_menu_trans.png" id="2_qx7ww"]
 [ext_resource type="Texture2D" uid="uid://bdlrvfp5ys0c4" path="res://assets/common/world_markers/wm_menu_collapsed.png" id="3_ri3rt"]
 [ext_resource type="Texture2D" uid="uid://d0lmgkhpr4k37" path="res://assets/common/world_markers/wm_a_button.png" id="4_bfals"]
@@ -29,40 +30,51 @@
 [node name="WaymarkMenu" type="CanvasLayer"]
 script = ExtResource("1_sqrhw")
 
-[node name="MenuContainer" type="MarginContainer" parent="."]
-unique_name_in_owner = true
-visible = false
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_top = -364.0
-offset_right = 225.0
+offset_top = -648.0
+offset_bottom = -648.0
 grow_vertical = 0
 
-[node name="TextureRect" type="TextureRect" parent="MenuContainer"]
+[node name="MenuContainer" type="MarginContainer" parent="Control"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = 284.0
+offset_right = 225.0
+offset_bottom = 648.0
+grow_vertical = 0
+
+[node name="TextureRect" type="TextureRect" parent="Control/MenuContainer"]
 layout_mode = 2
 texture = ExtResource("2_qx7ww")
 expand_mode = 4
 stretch_mode = 4
 
-[node name="MarginContainer" type="MarginContainer" parent="MenuContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="Control/MenuContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 9
 theme_override_constants/margin_top = 30
 theme_override_constants/margin_right = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MenuContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/MenuContainer/MarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = 27
 
-[node name="GridContainer" type="GridContainer" parent="MenuContainer/MarginContainer/VBoxContainer"]
+[node name="GridContainer" type="GridContainer" parent="Control/MenuContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 13.215)
 layout_mode = 2
 theme_override_constants/h_separation = 1
 theme_override_constants/v_separation = 2
 columns = 5
 
-[node name="ButtonA" type="TextureButton" parent="MenuContainer/MarginContainer/VBoxContainer/GridContainer"]
+[node name="ButtonA" type="TextureButton" parent="Control/MenuContainer/MarginContainer/VBoxContainer/GridContainer"]
 custom_minimum_size = Vector2(40.359, 42.033)
 layout_mode = 2
 focus_mode = 0
@@ -71,7 +83,7 @@ texture_hover = ExtResource("5_h3bkw")
 ignore_texture_size = true
 stretch_mode = 4
 
-[node name="ButtonB" type="TextureButton" parent="MenuContainer/MarginContainer/VBoxContainer/GridContainer"]
+[node name="ButtonB" type="TextureButton" parent="Control/MenuContainer/MarginContainer/VBoxContainer/GridContainer"]
 custom_minimum_size = Vector2(40.359, 42.033)
 layout_mode = 2
 focus_mode = 0
@@ -80,7 +92,7 @@ texture_hover = ExtResource("7_mydwa")
 ignore_texture_size = true
 stretch_mode = 4
 
-[node name="ButtonC" type="TextureButton" parent="MenuContainer/MarginContainer/VBoxContainer/GridContainer"]
+[node name="ButtonC" type="TextureButton" parent="Control/MenuContainer/MarginContainer/VBoxContainer/GridContainer"]
 custom_minimum_size = Vector2(40.359, 42.033)
 layout_mode = 2
 focus_mode = 0
@@ -89,7 +101,7 @@ texture_hover = ExtResource("9_wdq4n")
 ignore_texture_size = true
 stretch_mode = 4
 
-[node name="ButtonD" type="TextureButton" parent="MenuContainer/MarginContainer/VBoxContainer/GridContainer"]
+[node name="ButtonD" type="TextureButton" parent="Control/MenuContainer/MarginContainer/VBoxContainer/GridContainer"]
 custom_minimum_size = Vector2(40.359, 42.033)
 layout_mode = 2
 focus_mode = 0
@@ -98,7 +110,7 @@ texture_hover = ExtResource("11_5fjuf")
 ignore_texture_size = true
 stretch_mode = 4
 
-[node name="Button1" type="TextureButton" parent="MenuContainer/MarginContainer/VBoxContainer/GridContainer"]
+[node name="Button1" type="TextureButton" parent="Control/MenuContainer/MarginContainer/VBoxContainer/GridContainer"]
 custom_minimum_size = Vector2(40.359, 42.033)
 layout_mode = 2
 focus_mode = 0
@@ -107,7 +119,7 @@ texture_hover = ExtResource("13_p6yby")
 ignore_texture_size = true
 stretch_mode = 4
 
-[node name="Button2" type="TextureButton" parent="MenuContainer/MarginContainer/VBoxContainer/GridContainer"]
+[node name="Button2" type="TextureButton" parent="Control/MenuContainer/MarginContainer/VBoxContainer/GridContainer"]
 custom_minimum_size = Vector2(40.359, 42.033)
 layout_mode = 2
 focus_mode = 0
@@ -116,7 +128,7 @@ texture_hover = ExtResource("15_oky2m")
 ignore_texture_size = true
 stretch_mode = 4
 
-[node name="Button3" type="TextureButton" parent="MenuContainer/MarginContainer/VBoxContainer/GridContainer"]
+[node name="Button3" type="TextureButton" parent="Control/MenuContainer/MarginContainer/VBoxContainer/GridContainer"]
 custom_minimum_size = Vector2(40.359, 42.033)
 layout_mode = 2
 focus_mode = 0
@@ -125,7 +137,7 @@ texture_hover = ExtResource("17_1wbn6")
 ignore_texture_size = true
 stretch_mode = 4
 
-[node name="Button4" type="TextureButton" parent="MenuContainer/MarginContainer/VBoxContainer/GridContainer"]
+[node name="Button4" type="TextureButton" parent="Control/MenuContainer/MarginContainer/VBoxContainer/GridContainer"]
 custom_minimum_size = Vector2(40.359, 42.033)
 layout_mode = 2
 focus_mode = 0
@@ -134,7 +146,7 @@ texture_hover = ExtResource("19_5rj0m")
 ignore_texture_size = true
 stretch_mode = 4
 
-[node name="ButtonClear" type="TextureButton" parent="MenuContainer/MarginContainer/VBoxContainer/GridContainer"]
+[node name="ButtonClear" type="TextureButton" parent="Control/MenuContainer/MarginContainer/VBoxContainer/GridContainer"]
 custom_minimum_size = Vector2(40.359, 42.033)
 layout_mode = 2
 focus_mode = 0
@@ -143,11 +155,11 @@ texture_hover = ExtResource("21_ih8ox")
 ignore_texture_size = true
 stretch_mode = 4
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MenuContainer/MarginContainer/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/MenuContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 5
 
-[node name="ButtonSlot1" type="TextureButton" parent="MenuContainer/MarginContainer/VBoxContainer/VBoxContainer"]
+[node name="ButtonSlot1" type="TextureButton" parent="Control/MenuContainer/MarginContainer/VBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 22)
 layout_mode = 2
 focus_mode = 0
@@ -156,7 +168,7 @@ texture_hover = ExtResource("23_k3qeu")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="Label" type="Label" parent="MenuContainer/MarginContainer/VBoxContainer/VBoxContainer/ButtonSlot1"]
+[node name="Label" type="Label" parent="Control/MenuContainer/MarginContainer/VBoxContainer/VBoxContainer/ButtonSlot1"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -176,7 +188,7 @@ theme_override_font_sizes/font_size = 15
 text = "Preset 1"
 horizontal_alignment = 1
 
-[node name="ButtonSlot2" type="TextureButton" parent="MenuContainer/MarginContainer/VBoxContainer/VBoxContainer"]
+[node name="ButtonSlot2" type="TextureButton" parent="Control/MenuContainer/MarginContainer/VBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 23.4)
 layout_mode = 2
 focus_mode = 0
@@ -185,7 +197,7 @@ texture_hover = ExtResource("23_k3qeu")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="Label" type="Label" parent="MenuContainer/MarginContainer/VBoxContainer/VBoxContainer/ButtonSlot2"]
+[node name="Label" type="Label" parent="Control/MenuContainer/MarginContainer/VBoxContainer/VBoxContainer/ButtonSlot2"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -205,7 +217,7 @@ theme_override_font_sizes/font_size = 15
 text = "Preset 2"
 horizontal_alignment = 1
 
-[node name="ButtonSlot3" type="TextureButton" parent="MenuContainer/MarginContainer/VBoxContainer/VBoxContainer"]
+[node name="ButtonSlot3" type="TextureButton" parent="Control/MenuContainer/MarginContainer/VBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 23.4)
 layout_mode = 2
 focus_mode = 0
@@ -214,7 +226,7 @@ texture_hover = ExtResource("23_k3qeu")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="Label" type="Label" parent="MenuContainer/MarginContainer/VBoxContainer/VBoxContainer/ButtonSlot3"]
+[node name="Label" type="Label" parent="Control/MenuContainer/MarginContainer/VBoxContainer/VBoxContainer/ButtonSlot3"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -234,12 +246,12 @@ theme_override_font_sizes/font_size = 15
 text = "Preset 3"
 horizontal_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MenuContainer/MarginContainer/VBoxContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/MenuContainer/MarginContainer/VBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 23.4)
 layout_mode = 2
 theme_override_constants/separation = 1
 
-[node name="ButtonSlot4" type="TextureButton" parent="MenuContainer/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="ButtonSlot4" type="TextureButton" parent="Control/MenuContainer/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(188.07, 23.445)
 layout_mode = 2
 focus_mode = 0
@@ -248,7 +260,7 @@ texture_hover = ExtResource("23_k3qeu")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="Label" type="Label" parent="MenuContainer/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/ButtonSlot4"]
+[node name="Label" type="Label" parent="Control/MenuContainer/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/ButtonSlot4"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -269,7 +281,7 @@ text = "Custom 1"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SaveButton4" type="TextureButton" parent="MenuContainer/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="SaveButton4" type="TextureButton" parent="Control/MenuContainer/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(16.39, 0)
 layout_mode = 2
 texture_normal = ExtResource("23_epstp")
@@ -277,11 +289,11 @@ texture_hover = ExtResource("24_o1hbi")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="MenuContainer/MarginContainer/VBoxContainer/VBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="Control/MenuContainer/MarginContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 1
 
-[node name="ButtonSlot5" type="TextureButton" parent="MenuContainer/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2"]
+[node name="ButtonSlot5" type="TextureButton" parent="Control/MenuContainer/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2"]
 custom_minimum_size = Vector2(188.215, 23.4)
 layout_mode = 2
 focus_mode = 0
@@ -290,7 +302,7 @@ texture_hover = ExtResource("23_k3qeu")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="Label" type="Label" parent="MenuContainer/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2/ButtonSlot5"]
+[node name="Label" type="Label" parent="Control/MenuContainer/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2/ButtonSlot5"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -311,7 +323,7 @@ text = "Custom 2"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="SaveButton5" type="TextureButton" parent="MenuContainer/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2"]
+[node name="SaveButton5" type="TextureButton" parent="Control/MenuContainer/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2"]
 custom_minimum_size = Vector2(16.2, 0)
 layout_mode = 2
 texture_normal = ExtResource("23_epstp")
@@ -319,15 +331,17 @@ texture_hover = ExtResource("24_o1hbi")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="ArrowContainer" type="MarginContainer" parent="."]
+[node name="ArrowContainer" type="MarginContainer" parent="Control"]
+layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_top = -37.0
+offset_top = 611.0
 offset_right = 224.0
+offset_bottom = 648.0
 grow_vertical = 0
 
-[node name="CollapseButton" type="TextureButton" parent="ArrowContainer"]
+[node name="CollapseButton" type="TextureButton" parent="Control/ArrowContainer"]
 custom_minimum_size = Vector2(223, 34.255)
 layout_mode = 2
 size_flags_vertical = 8
@@ -337,20 +351,35 @@ texture_normal = ExtResource("3_ri3rt")
 ignore_texture_size = true
 stretch_mode = 4
 
-[connection signal="pressed" from="MenuContainer/MarginContainer/VBoxContainer/GridContainer/ButtonA" to="." method="_on_button_a_pressed"]
-[connection signal="pressed" from="MenuContainer/MarginContainer/VBoxContainer/GridContainer/ButtonB" to="." method="_on_button_b_pressed"]
-[connection signal="pressed" from="MenuContainer/MarginContainer/VBoxContainer/GridContainer/ButtonC" to="." method="_on_button_c_pressed"]
-[connection signal="pressed" from="MenuContainer/MarginContainer/VBoxContainer/GridContainer/ButtonD" to="." method="_on_button_d_pressed"]
-[connection signal="pressed" from="MenuContainer/MarginContainer/VBoxContainer/GridContainer/Button1" to="." method="_on_button_1_pressed"]
-[connection signal="pressed" from="MenuContainer/MarginContainer/VBoxContainer/GridContainer/Button2" to="." method="_on_button_2_pressed"]
-[connection signal="pressed" from="MenuContainer/MarginContainer/VBoxContainer/GridContainer/Button3" to="." method="_on_button_3_pressed"]
-[connection signal="pressed" from="MenuContainer/MarginContainer/VBoxContainer/GridContainer/Button4" to="." method="_on_button_4_pressed"]
-[connection signal="pressed" from="MenuContainer/MarginContainer/VBoxContainer/GridContainer/ButtonClear" to="." method="_on_button_clear_pressed"]
-[connection signal="pressed" from="MenuContainer/MarginContainer/VBoxContainer/VBoxContainer/ButtonSlot1" to="." method="_on_button_slot_1_pressed"]
-[connection signal="pressed" from="MenuContainer/MarginContainer/VBoxContainer/VBoxContainer/ButtonSlot2" to="." method="_on_button_slot_2_pressed"]
-[connection signal="pressed" from="MenuContainer/MarginContainer/VBoxContainer/VBoxContainer/ButtonSlot3" to="." method="_on_button_slot_3_pressed"]
-[connection signal="pressed" from="MenuContainer/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/ButtonSlot4" to="." method="_on_button_slot_4_pressed"]
-[connection signal="pressed" from="MenuContainer/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/SaveButton4" to="." method="_on_save_button_4_pressed"]
-[connection signal="pressed" from="MenuContainer/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2/ButtonSlot5" to="." method="_on_button_slot_5_pressed"]
-[connection signal="pressed" from="MenuContainer/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2/SaveButton5" to="." method="_on_save_button_5_pressed"]
-[connection signal="pressed" from="ArrowContainer/CollapseButton" to="." method="_on_collapse_button_pressed"]
+[node name="MoveButton" type="Button" parent="Control"]
+unique_name_in_owner = true
+visible = false
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(222, 28)
+layout_mode = 1
+anchors_preset = -1
+offset_top = 284.0
+offset_right = 222.0
+offset_bottom = 312.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+focus_mode = 1
+script = ExtResource("2_cbmco")
+
+[connection signal="pressed" from="Control/MenuContainer/MarginContainer/VBoxContainer/GridContainer/ButtonA" to="." method="_on_button_a_pressed"]
+[connection signal="pressed" from="Control/MenuContainer/MarginContainer/VBoxContainer/GridContainer/ButtonB" to="." method="_on_button_b_pressed"]
+[connection signal="pressed" from="Control/MenuContainer/MarginContainer/VBoxContainer/GridContainer/ButtonC" to="." method="_on_button_c_pressed"]
+[connection signal="pressed" from="Control/MenuContainer/MarginContainer/VBoxContainer/GridContainer/ButtonD" to="." method="_on_button_d_pressed"]
+[connection signal="pressed" from="Control/MenuContainer/MarginContainer/VBoxContainer/GridContainer/Button1" to="." method="_on_button_1_pressed"]
+[connection signal="pressed" from="Control/MenuContainer/MarginContainer/VBoxContainer/GridContainer/Button2" to="." method="_on_button_2_pressed"]
+[connection signal="pressed" from="Control/MenuContainer/MarginContainer/VBoxContainer/GridContainer/Button3" to="." method="_on_button_3_pressed"]
+[connection signal="pressed" from="Control/MenuContainer/MarginContainer/VBoxContainer/GridContainer/Button4" to="." method="_on_button_4_pressed"]
+[connection signal="pressed" from="Control/MenuContainer/MarginContainer/VBoxContainer/GridContainer/ButtonClear" to="." method="_on_button_clear_pressed"]
+[connection signal="pressed" from="Control/MenuContainer/MarginContainer/VBoxContainer/VBoxContainer/ButtonSlot1" to="." method="_on_button_slot_1_pressed"]
+[connection signal="pressed" from="Control/MenuContainer/MarginContainer/VBoxContainer/VBoxContainer/ButtonSlot2" to="." method="_on_button_slot_2_pressed"]
+[connection signal="pressed" from="Control/MenuContainer/MarginContainer/VBoxContainer/VBoxContainer/ButtonSlot3" to="." method="_on_button_slot_3_pressed"]
+[connection signal="pressed" from="Control/MenuContainer/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/ButtonSlot4" to="." method="_on_button_slot_4_pressed"]
+[connection signal="pressed" from="Control/MenuContainer/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/SaveButton4" to="." method="_on_save_button_4_pressed"]
+[connection signal="pressed" from="Control/MenuContainer/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2/ButtonSlot5" to="." method="_on_button_slot_5_pressed"]
+[connection signal="pressed" from="Control/MenuContainer/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2/SaveButton5" to="." method="_on_save_button_5_pressed"]
+[connection signal="pressed" from="Control/ArrowContainer/CollapseButton" to="." method="_on_collapse_button_pressed"]

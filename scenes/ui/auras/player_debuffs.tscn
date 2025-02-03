@@ -1,4 +1,6 @@
-[gd_scene format=3 uid="uid://du2fr4o3nsww0"]
+[gd_scene load_steps=2 format=3 uid="uid://du2fr4o3nsww0"]
+
+[ext_resource type="Script" path="res://scenes/ui/move_ui_button.gd" id="1_2qctn"]
 
 [node name="PlayerDebuffs" type="CanvasLayer"]
 
@@ -29,3 +31,11 @@ size_flags_horizontal = 4
 size_flags_vertical = 8
 mouse_filter = 2
 theme_override_constants/separation = -5
+
+[node name="MoveButton" type="Button" parent="MarginContainer"]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+size_flags_vertical = 8
+focus_mode = 1
+script = ExtResource("1_2qctn")

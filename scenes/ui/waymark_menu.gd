@@ -6,6 +6,7 @@
 extends CanvasLayer
 
 @onready var menu_container: MarginContainer = %MenuContainer
+@onready var move_button : Button = %MoveButton
 @onready var wm_ground_marker: MeshInstance3D = %WMGroundMarker
 @onready var waymark_controller: WaymarkController = %WaymarkController
 
@@ -52,6 +53,7 @@ func clear_waymark():
 
 # Hide/Show Menu Container
 func _on_collapse_button_pressed() -> void:
+	move_button.visible = !move_button.visible
 	menu_container.visible = !menu_container.visible
 
 
