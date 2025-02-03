@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://d1sb4478fx1ht"]
+[gd_scene load_steps=54 format=3 uid="uid://d1sb4478fx1ht"]
 
 [ext_resource type="Texture2D" uid="uid://f7kctrmmkjk" path="res://assets/common/world_markers/A_Marker.png" id="1_6h0up"]
 [ext_resource type="Script" path="res://scenes/common/world_markers/waymarks.gd" id="1_hgd7n"]
@@ -10,48 +10,55 @@
 [ext_resource type="Texture2D" uid="uid://w6ujpxnj6nsr" path="res://assets/common/world_markers/3_Marker.png" id="7_af53e"]
 [ext_resource type="Texture2D" uid="uid://d0c8cti0ky1xx" path="res://assets/common/world_markers/4_Marker.png" id="8_o6uvu"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_noq1t"]
-transparency = 1
-shading_mode = 0
-albedo_color = Color(0.952941, 0.0862745, 0, 0.258824)
-heightmap_enabled = true
-grow_amount = 1.882
-proximity_fade_distance = 0.44
+[sub_resource type="Shader" id="Shader_m1217"]
+code = "shader_type spatial;
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_djcij"]
-material = SubResource("StandardMaterial3D_noq1t")
-top_radius = 2.0
-bottom_radius = 2.0
-height = 0.282
+uniform vec4 color : source_color;
+uniform float intensity : hint_range(-5.0, 5.0);
+
+void fragment() {
+	float uv_y = min(max(UV.y * intensity, 0), 1);
+	ALBEDO = color.rgb;
+	ALPHA = uv_y;
+	EMISSION = color.rgb * uv_y * (intensity * 25.0);
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5yucj"]
+render_priority = 0
+shader = SubResource("Shader_m1217")
+shader_parameter/color = Color(1, 0, 0, 1)
+shader_parameter/intensity = 0.5
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_8deno"]
+material = SubResource("ShaderMaterial_5yucj")
+top_radius = 3.25
+bottom_radius = 3.25
+height = 5.4
+cap_top = false
 cap_bottom = false
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hdx8t"]
-transparency = 1
-shading_mode = 0
-albedo_color = Color(0.952941, 0.0862745, 0, 0.0784314)
-heightmap_enabled = true
-grow_amount = 1.882
-proximity_fade_distance = 0.44
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_j3nko"]
-material = SubResource("StandardMaterial3D_hdx8t")
-top_radius = 1.5
-bottom_radius = 1.5
-height = 8.375
+[sub_resource type="CylinderMesh" id="CylinderMesh_yl43x"]
+material = SubResource("ShaderMaterial_5yucj")
+flip_faces = true
+top_radius = 3.25
+bottom_radius = 3.25
+height = 5.4
+cap_top = false
 cap_bottom = false
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d2y44"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bd01g"]
 transparency = 1
 shading_mode = 0
 albedo_texture = ExtResource("1_6h0up")
 billboard_mode = 1
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_gkywl"]
-material = SubResource("StandardMaterial3D_d2y44")
+material = SubResource("StandardMaterial3D_bd01g")
 size = Vector2(2.5, 2.5)
 orientation = 2
 
-[sub_resource type="Animation" id="Animation_tnyxi"]
+[sub_resource type="Animation" id="Animation_jhf02"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -66,7 +73,7 @@ tracks/0/keys = {
 "values": [Vector3(1.22633, 8.77971, 2.21548)]
 }
 
-[sub_resource type="Animation" id="Animation_tybyf"]
+[sub_resource type="Animation" id="Animation_qgmkw"]
 resource_name = "bounce"
 length = 2.0
 loop_mode = 1
@@ -83,40 +90,33 @@ tracks/0/keys = {
 "values": [Vector3(0, 8.78, 0), Vector3(0, 9.28, 0), Vector3(0, 8.78, 0)]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_3yjmn"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_uqex4"]
 _data = {
-"RESET": SubResource("Animation_tnyxi"),
-"bounce": SubResource("Animation_tybyf")
+"RESET": SubResource("Animation_jhf02"),
+"bounce": SubResource("Animation_qgmkw")
 }
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yc4uv"]
-transparency = 1
-shading_mode = 0
-albedo_color = Color(0.941176, 0.882353, 0, 0.305882)
-heightmap_enabled = true
-grow_amount = 1.882
-proximity_fade_distance = 0.44
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_isaep"]
+render_priority = 0
+shader = SubResource("Shader_m1217")
+shader_parameter/color = Color(0.529412, 0.572549, 0, 1)
+shader_parameter/intensity = 0.5
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_b7eo8"]
-material = SubResource("StandardMaterial3D_yc4uv")
-top_radius = 2.0
-bottom_radius = 2.0
-height = 0.282
+[sub_resource type="CylinderMesh" id="CylinderMesh_hg3xf"]
+material = SubResource("ShaderMaterial_isaep")
+top_radius = 3.25
+bottom_radius = 3.25
+height = 5.4
+cap_top = false
 cap_bottom = false
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ops7w"]
-transparency = 1
-shading_mode = 0
-albedo_color = Color(0.952941, 0.976471, 0, 0.0784314)
-heightmap_enabled = true
-grow_amount = 1.882
-proximity_fade_distance = 0.44
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_33hxy"]
-material = SubResource("StandardMaterial3D_ops7w")
-top_radius = 1.5
-bottom_radius = 1.5
-height = 8.375
+[sub_resource type="CylinderMesh" id="CylinderMesh_8rhpa"]
+material = SubResource("ShaderMaterial_isaep")
+flip_faces = true
+top_radius = 3.25
+bottom_radius = 3.25
+height = 5.4
+cap_top = false
 cap_bottom = false
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2nvdn"]
@@ -130,34 +130,27 @@ material = SubResource("StandardMaterial3D_2nvdn")
 size = Vector2(2.5, 3.5)
 orientation = 2
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_espyy"]
-transparency = 1
-shading_mode = 0
-albedo_color = Color(0, 0.6, 0.913725, 0.305882)
-heightmap_enabled = true
-grow_amount = 1.882
-proximity_fade_distance = 0.44
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_j2lpn"]
+render_priority = 0
+shader = SubResource("Shader_m1217")
+shader_parameter/color = Color(0.12549, 0.54902, 1, 1)
+shader_parameter/intensity = 0.5
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_eoiot"]
-material = SubResource("StandardMaterial3D_espyy")
-top_radius = 2.0
-bottom_radius = 2.0
-height = 0.282
+[sub_resource type="CylinderMesh" id="CylinderMesh_yfdts"]
+material = SubResource("ShaderMaterial_j2lpn")
+top_radius = 3.25
+bottom_radius = 3.25
+height = 5.4
+cap_top = false
 cap_bottom = false
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_aekil"]
-transparency = 1
-shading_mode = 0
-albedo_color = Color(0.580392, 0.690196, 1, 0.0784314)
-heightmap_enabled = true
-grow_amount = 1.882
-proximity_fade_distance = 0.44
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_udaq6"]
-material = SubResource("StandardMaterial3D_aekil")
-top_radius = 1.5
-bottom_radius = 1.5
-height = 8.375
+[sub_resource type="CylinderMesh" id="CylinderMesh_15ly3"]
+material = SubResource("ShaderMaterial_j2lpn")
+flip_faces = true
+top_radius = 3.25
+bottom_radius = 3.25
+height = 5.4
+cap_top = false
 cap_bottom = false
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bri7u"]
@@ -171,34 +164,27 @@ material = SubResource("StandardMaterial3D_bri7u")
 size = Vector2(2.3, 3)
 orientation = 2
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2qtpm"]
-transparency = 1
-shading_mode = 0
-albedo_color = Color(0.705882, 0.364706, 1, 0.305882)
-heightmap_enabled = true
-grow_amount = 1.882
-proximity_fade_distance = 0.44
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nqulo"]
+render_priority = 0
+shader = SubResource("Shader_m1217")
+shader_parameter/color = Color(0.784314, 0.0784314, 1, 1)
+shader_parameter/intensity = 0.5
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_5nj2w"]
-material = SubResource("StandardMaterial3D_2qtpm")
-top_radius = 2.0
-bottom_radius = 2.0
-height = 0.282
+[sub_resource type="CylinderMesh" id="CylinderMesh_wf3tv"]
+material = SubResource("ShaderMaterial_nqulo")
+top_radius = 3.25
+bottom_radius = 3.25
+height = 5.4
+cap_top = false
 cap_bottom = false
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4twki"]
-transparency = 1
-shading_mode = 0
-albedo_color = Color(0.756863, 0.619608, 1, 0.0784314)
-heightmap_enabled = true
-grow_amount = 1.882
-proximity_fade_distance = 0.44
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_uylvy"]
-material = SubResource("StandardMaterial3D_4twki")
-top_radius = 1.5
-bottom_radius = 1.5
-height = 8.375
+[sub_resource type="CylinderMesh" id="CylinderMesh_k3fke"]
+material = SubResource("ShaderMaterial_nqulo")
+flip_faces = true
+top_radius = 3.25
+bottom_radius = 3.25
+height = 5.4
+cap_top = false
 cap_bottom = false
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3lyex"]
@@ -212,6 +198,22 @@ material = SubResource("StandardMaterial3D_3lyex")
 size = Vector2(2.5, 3.5)
 orientation = 2
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g35fn"]
+render_priority = 0
+shader = SubResource("Shader_m1217")
+shader_parameter/color = Color(1, 0, 0, 1)
+shader_parameter/intensity = 0.275
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_uj6j1"]
+lightmap_size_hint = Vector2i(29, 29)
+material = SubResource("ShaderMaterial_g35fn")
+size = Vector2(5.4, 5.4)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_i1ofv"]
+material = SubResource("ShaderMaterial_g35fn")
+flip_faces = true
+size = Vector2(5.4, 5.4)
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q48nw"]
 transparency = 1
 shading_mode = 0
@@ -222,6 +224,22 @@ billboard_mode = 1
 material = SubResource("StandardMaterial3D_q48nw")
 size = Vector2(0.986, 3.305)
 orientation = 2
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dumnu"]
+render_priority = 0
+shader = SubResource("Shader_m1217")
+shader_parameter/color = Color(0.529412, 0.572549, 0, 1)
+shader_parameter/intensity = 0.275
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ktp1r"]
+lightmap_size_hint = Vector2i(29, 29)
+material = SubResource("ShaderMaterial_dumnu")
+size = Vector2(5.4, 5.4)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_1arij"]
+material = SubResource("ShaderMaterial_dumnu")
+flip_faces = true
+size = Vector2(5.4, 5.4)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4dlj1"]
 transparency = 1
@@ -234,6 +252,22 @@ material = SubResource("StandardMaterial3D_4dlj1")
 size = Vector2(2.5, 3.5)
 orientation = 2
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6too1"]
+render_priority = 0
+shader = SubResource("Shader_m1217")
+shader_parameter/color = Color(0.12549, 0.54902, 1, 1)
+shader_parameter/intensity = 0.275
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_avucq"]
+lightmap_size_hint = Vector2i(29, 29)
+material = SubResource("ShaderMaterial_6too1")
+size = Vector2(5.4, 5.4)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_qs1hb"]
+material = SubResource("ShaderMaterial_6too1")
+flip_faces = true
+size = Vector2(5.4, 5.4)
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uw1ou"]
 transparency = 1
 shading_mode = 0
@@ -244,6 +278,22 @@ billboard_mode = 1
 material = SubResource("StandardMaterial3D_uw1ou")
 size = Vector2(2.453, 3.5)
 orientation = 2
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6qvmh"]
+render_priority = 0
+shader = SubResource("Shader_m1217")
+shader_parameter/color = Color(0.784314, 0.0784314, 1, 1)
+shader_parameter/intensity = 0.275
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_e1ux2"]
+lightmap_size_hint = Vector2i(29, 29)
+material = SubResource("ShaderMaterial_6qvmh")
+size = Vector2(5.4, 5.4)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_xn7cl"]
+material = SubResource("ShaderMaterial_6qvmh")
+flip_faces = true
+size = Vector2(5.4, 5.4)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xtly4"]
 transparency = 1
@@ -262,14 +312,16 @@ script = ExtResource("1_hgd7n")
 [node name="WM_A" type="Node3D" parent="."]
 unique_name_in_owner = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="WM_A"]
+[node name="OutFace" type="MeshInstance3D" parent="WM_A"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4, 0)
 layers = 7
-mesh = SubResource("CylinderMesh_djcij")
+mesh = SubResource("CylinderMesh_8deno")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="WM_A"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.107, 0)
+[node name="InFace" type="MeshInstance3D" parent="WM_A"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4, 0)
 layers = 7
-mesh = SubResource("CylinderMesh_j3nko")
+mesh = SubResource("CylinderMesh_yl43x")
+skeleton = NodePath("")
 
 [node name="MeshInstance3D3" type="MeshInstance3D" parent="WM_A"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.22633, 8.77971, 2.21548)
@@ -277,7 +329,7 @@ mesh = SubResource("PlaneMesh_gkywl")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="WM_A"]
 libraries = {
-"": SubResource("AnimationLibrary_3yjmn")
+"": SubResource("AnimationLibrary_uqex4")
 }
 autoplay = "bounce"
 
@@ -285,14 +337,16 @@ autoplay = "bounce"
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.9348, -2.86102e-06, 24.2678)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="WM_B"]
+[node name="OutFace" type="MeshInstance3D" parent="WM_B"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4, 0)
 layers = 7
-mesh = SubResource("CylinderMesh_b7eo8")
+mesh = SubResource("CylinderMesh_hg3xf")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="WM_B"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.107, 0)
+[node name="InFace" type="MeshInstance3D" parent="WM_B"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4, 0)
 layers = 7
-mesh = SubResource("CylinderMesh_33hxy")
+mesh = SubResource("CylinderMesh_8rhpa")
+skeleton = NodePath("")
 
 [node name="MeshInstance3D3" type="MeshInstance3D" parent="WM_B"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.22633, 8.77971, 2.21548)
@@ -300,7 +354,7 @@ mesh = SubResource("PlaneMesh_47m5u")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="WM_B"]
 libraries = {
-"": SubResource("AnimationLibrary_3yjmn")
+"": SubResource("AnimationLibrary_uqex4")
 }
 autoplay = "bounce"
 
@@ -308,14 +362,16 @@ autoplay = "bounce"
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.143, 0, 18.2379)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="WM_C"]
+[node name="OutFace" type="MeshInstance3D" parent="WM_C"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4, 0)
 layers = 7
-mesh = SubResource("CylinderMesh_eoiot")
+mesh = SubResource("CylinderMesh_yfdts")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="WM_C"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.107, 0)
+[node name="InFace" type="MeshInstance3D" parent="WM_C"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4, 0)
 layers = 7
-mesh = SubResource("CylinderMesh_udaq6")
+mesh = SubResource("CylinderMesh_15ly3")
+skeleton = NodePath("")
 
 [node name="MeshInstance3D3" type="MeshInstance3D" parent="WM_C"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.22633, 8.77971, 2.21548)
@@ -323,7 +379,7 @@ mesh = SubResource("PlaneMesh_0u7wr")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="WM_C"]
 libraries = {
-"": SubResource("AnimationLibrary_3yjmn")
+"": SubResource("AnimationLibrary_uqex4")
 }
 autoplay = "bounce"
 
@@ -331,14 +387,16 @@ autoplay = "bounce"
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.8578, -0.211143, 24.4807)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="WM_D"]
+[node name="OutFace" type="MeshInstance3D" parent="WM_D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4, 0)
 layers = 7
-mesh = SubResource("CylinderMesh_5nj2w")
+mesh = SubResource("CylinderMesh_wf3tv")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="WM_D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.107, 0)
+[node name="InFace" type="MeshInstance3D" parent="WM_D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4, 0)
 layers = 7
-mesh = SubResource("CylinderMesh_uylvy")
+mesh = SubResource("CylinderMesh_k3fke")
+skeleton = NodePath("")
 
 [node name="MeshInstance3D3" type="MeshInstance3D" parent="WM_D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.22633, 8.77971, 2.21548)
@@ -346,7 +404,7 @@ mesh = SubResource("PlaneMesh_18el8")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="WM_D"]
 libraries = {
-"": SubResource("AnimationLibrary_3yjmn")
+"": SubResource("AnimationLibrary_uqex4")
 }
 autoplay = "bounce"
 
@@ -354,14 +412,57 @@ autoplay = "bounce"
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.6638, 0, -2.165)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="WM_1"]
-layers = 7
-mesh = SubResource("CylinderMesh_djcij")
+[node name="OutFaces" type="Node3D" parent="WM_1"]
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="WM_1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.107, 0)
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WM_1/OutFaces"]
+transform = Transform3D(1, 4.37114e-08, -4.37114e-08, -4.37114e-08, -4.37114e-08, -1, -4.37114e-08, 1, -4.37114e-08, 0, 2.7, 2.7)
 layers = 7
-mesh = SubResource("CylinderMesh_j3nko")
+mesh = SubResource("PlaneMesh_uj6j1")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D1" type="MeshInstance3D" parent="WM_1/OutFaces"]
+transform = Transform3D(-4.37114e-08, 1, -4.37114e-08, 0, -4.37114e-08, -1, -1, -4.37114e-08, 1.91069e-15, 2.7, 2.7, 0)
+layers = 7
+mesh = SubResource("PlaneMesh_uj6j1")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="WM_1/OutFaces"]
+transform = Transform3D(-1, -8.74228e-08, 9.01611e-15, 1.64203e-15, -4.37114e-08, -1, 8.74228e-08, -1, 4.37114e-08, 0, 2.7, -2.7)
+layers = 7
+mesh = SubResource("PlaneMesh_uj6j1")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="WM_1/OutFaces"]
+transform = Transform3D(8.74228e-08, -1, 4.37114e-08, 4.37114e-08, -4.37114e-08, -1, 1, 8.74228e-08, 4.37114e-08, -2.7, 2.7, 0)
+layers = 7
+mesh = SubResource("PlaneMesh_uj6j1")
+skeleton = NodePath("")
+
+[node name="InFaces" type="Node3D" parent="WM_1"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WM_1/InFaces"]
+transform = Transform3D(1, 4.37114e-08, -4.37114e-08, -4.37114e-08, -4.37114e-08, -1, -4.37114e-08, 1, -4.37114e-08, 0, 2.7, 2.7)
+layers = 7
+mesh = SubResource("PlaneMesh_i1ofv")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D1" type="MeshInstance3D" parent="WM_1/InFaces"]
+transform = Transform3D(-4.37114e-08, 1, -4.37114e-08, 0, -4.37114e-08, -1, -1, -4.37114e-08, 1.91069e-15, 2.7, 2.7, 0)
+layers = 7
+mesh = SubResource("PlaneMesh_i1ofv")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="WM_1/InFaces"]
+transform = Transform3D(-1, -8.74228e-08, 9.01611e-15, 1.64203e-15, -4.37114e-08, -1, 8.74228e-08, -1, 4.37114e-08, 0, 2.7, -2.7)
+layers = 7
+mesh = SubResource("PlaneMesh_i1ofv")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="WM_1/InFaces"]
+transform = Transform3D(8.74228e-08, -1, 4.37114e-08, 4.37114e-08, -4.37114e-08, -1, 1, 8.74228e-08, 4.37114e-08, -2.7, 2.7, 0)
+layers = 7
+mesh = SubResource("PlaneMesh_i1ofv")
+skeleton = NodePath("")
 
 [node name="MeshInstance3D3" type="MeshInstance3D" parent="WM_1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.22633, 8.77971, 2.21548)
@@ -369,7 +470,7 @@ mesh = SubResource("PlaneMesh_nlg7y")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="WM_1"]
 libraries = {
-"": SubResource("AnimationLibrary_3yjmn")
+"": SubResource("AnimationLibrary_uqex4")
 }
 autoplay = "bounce"
 
@@ -377,14 +478,57 @@ autoplay = "bounce"
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.8001, -3.8147e-06, -28.6744)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="WM_2"]
-layers = 7
-mesh = SubResource("CylinderMesh_b7eo8")
+[node name="OutFaces" type="Node3D" parent="WM_2"]
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="WM_2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.107, 0)
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WM_2/OutFaces"]
+transform = Transform3D(1, 4.37114e-08, -4.37114e-08, -4.37114e-08, -4.37114e-08, -1, -4.37114e-08, 1, -4.37114e-08, 0, 2.7, 2.7)
 layers = 7
-mesh = SubResource("CylinderMesh_33hxy")
+mesh = SubResource("PlaneMesh_ktp1r")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D1" type="MeshInstance3D" parent="WM_2/OutFaces"]
+transform = Transform3D(-4.37114e-08, 1, -4.37114e-08, 0, -4.37114e-08, -1, -1, -4.37114e-08, 1.91069e-15, 2.7, 2.7, 0)
+layers = 7
+mesh = SubResource("PlaneMesh_ktp1r")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="WM_2/OutFaces"]
+transform = Transform3D(-1, -8.74228e-08, 9.01611e-15, 1.64203e-15, -4.37114e-08, -1, 8.74228e-08, -1, 4.37114e-08, 0, 2.7, -2.7)
+layers = 7
+mesh = SubResource("PlaneMesh_ktp1r")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="WM_2/OutFaces"]
+transform = Transform3D(8.74228e-08, -1, 4.37114e-08, 4.37114e-08, -4.37114e-08, -1, 1, 8.74228e-08, 4.37114e-08, -2.7, 2.7, 0)
+layers = 7
+mesh = SubResource("PlaneMesh_ktp1r")
+skeleton = NodePath("")
+
+[node name="InFaces" type="Node3D" parent="WM_2"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WM_2/InFaces"]
+transform = Transform3D(1, 4.37114e-08, -4.37114e-08, -4.37114e-08, -4.37114e-08, -1, -4.37114e-08, 1, -4.37114e-08, 0, 2.7, 2.7)
+layers = 7
+mesh = SubResource("PlaneMesh_1arij")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D1" type="MeshInstance3D" parent="WM_2/InFaces"]
+transform = Transform3D(-4.37114e-08, 1, -4.37114e-08, 0, -4.37114e-08, -1, -1, -4.37114e-08, 1.91069e-15, 2.7, 2.7, 0)
+layers = 7
+mesh = SubResource("PlaneMesh_1arij")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="WM_2/InFaces"]
+transform = Transform3D(-1, -8.74228e-08, 9.01611e-15, 1.64203e-15, -4.37114e-08, -1, 8.74228e-08, -1, 4.37114e-08, 0, 2.7, -2.7)
+layers = 7
+mesh = SubResource("PlaneMesh_1arij")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="WM_2/InFaces"]
+transform = Transform3D(8.74228e-08, -1, 4.37114e-08, 4.37114e-08, -4.37114e-08, -1, 1, 8.74228e-08, 4.37114e-08, -2.7, 2.7, 0)
+layers = 7
+mesh = SubResource("PlaneMesh_1arij")
+skeleton = NodePath("")
 
 [node name="MeshInstance3D3" type="MeshInstance3D" parent="WM_2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.22633, 8.77971, 2.21548)
@@ -392,7 +536,7 @@ mesh = SubResource("PlaneMesh_oyefj")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="WM_2"]
 libraries = {
-"": SubResource("AnimationLibrary_3yjmn")
+"": SubResource("AnimationLibrary_uqex4")
 }
 autoplay = "bounce"
 
@@ -400,14 +544,57 @@ autoplay = "bounce"
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.33815, -2.86102e-06, -22.3895)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="WM_3"]
-layers = 7
-mesh = SubResource("CylinderMesh_eoiot")
+[node name="OutFaces" type="Node3D" parent="WM_3"]
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="WM_3"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.107, 0)
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WM_3/OutFaces"]
+transform = Transform3D(1, 4.37114e-08, -4.37114e-08, -4.37114e-08, -4.37114e-08, -1, -4.37114e-08, 1, -4.37114e-08, 0, 2.7, 2.7)
 layers = 7
-mesh = SubResource("CylinderMesh_udaq6")
+mesh = SubResource("PlaneMesh_avucq")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D1" type="MeshInstance3D" parent="WM_3/OutFaces"]
+transform = Transform3D(-4.37114e-08, 1, -4.37114e-08, 0, -4.37114e-08, -1, -1, -4.37114e-08, 1.91069e-15, 2.7, 2.7, 0)
+layers = 7
+mesh = SubResource("PlaneMesh_avucq")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="WM_3/OutFaces"]
+transform = Transform3D(-1, -8.74228e-08, 9.01611e-15, 1.64203e-15, -4.37114e-08, -1, 8.74228e-08, -1, 4.37114e-08, 0, 2.7, -2.7)
+layers = 7
+mesh = SubResource("PlaneMesh_avucq")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="WM_3/OutFaces"]
+transform = Transform3D(8.74228e-08, -1, 4.37114e-08, 4.37114e-08, -4.37114e-08, -1, 1, 8.74228e-08, 4.37114e-08, -2.7, 2.7, 0)
+layers = 7
+mesh = SubResource("PlaneMesh_avucq")
+skeleton = NodePath("")
+
+[node name="InFaces" type="Node3D" parent="WM_3"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WM_3/InFaces"]
+transform = Transform3D(1, 4.37114e-08, -4.37114e-08, -4.37114e-08, -4.37114e-08, -1, -4.37114e-08, 1, -4.37114e-08, 0, 2.7, 2.7)
+layers = 7
+mesh = SubResource("PlaneMesh_qs1hb")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D1" type="MeshInstance3D" parent="WM_3/InFaces"]
+transform = Transform3D(-4.37114e-08, 1, -4.37114e-08, 0, -4.37114e-08, -1, -1, -4.37114e-08, 1.91069e-15, 2.7, 2.7, 0)
+layers = 7
+mesh = SubResource("PlaneMesh_qs1hb")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="WM_3/InFaces"]
+transform = Transform3D(-1, -8.74228e-08, 9.01611e-15, 1.64203e-15, -4.37114e-08, -1, 8.74228e-08, -1, 4.37114e-08, 0, 2.7, -2.7)
+layers = 7
+mesh = SubResource("PlaneMesh_qs1hb")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="WM_3/InFaces"]
+transform = Transform3D(8.74228e-08, -1, 4.37114e-08, 4.37114e-08, -4.37114e-08, -1, 1, 8.74228e-08, 4.37114e-08, -2.7, 2.7, 0)
+layers = 7
+mesh = SubResource("PlaneMesh_qs1hb")
+skeleton = NodePath("")
 
 [node name="MeshInstance3D3" type="MeshInstance3D" parent="WM_3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.22633, 8.77971, 2.21548)
@@ -415,7 +602,7 @@ mesh = SubResource("PlaneMesh_fobpu")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="WM_3"]
 libraries = {
-"": SubResource("AnimationLibrary_3yjmn")
+"": SubResource("AnimationLibrary_uqex4")
 }
 autoplay = "bounce"
 
@@ -423,14 +610,57 @@ autoplay = "bounce"
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.1109, -0.211143, -28.5609)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="WM_4"]
-layers = 7
-mesh = SubResource("CylinderMesh_5nj2w")
+[node name="OutFaces" type="Node3D" parent="WM_4"]
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="WM_4"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.107, 0)
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WM_4/OutFaces"]
+transform = Transform3D(1, 4.37114e-08, -4.37114e-08, -4.37114e-08, -4.37114e-08, -1, -4.37114e-08, 1, -4.37114e-08, 0, 2.7, 2.7)
 layers = 7
-mesh = SubResource("CylinderMesh_uylvy")
+mesh = SubResource("PlaneMesh_e1ux2")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D1" type="MeshInstance3D" parent="WM_4/OutFaces"]
+transform = Transform3D(-4.37114e-08, 1, -4.37114e-08, 0, -4.37114e-08, -1, -1, -4.37114e-08, 1.91069e-15, 2.7, 2.7, 0)
+layers = 7
+mesh = SubResource("PlaneMesh_e1ux2")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="WM_4/OutFaces"]
+transform = Transform3D(-1, -8.74228e-08, 9.01611e-15, 1.64203e-15, -4.37114e-08, -1, 8.74228e-08, -1, 4.37114e-08, 0, 2.7, -2.7)
+layers = 7
+mesh = SubResource("PlaneMesh_e1ux2")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="WM_4/OutFaces"]
+transform = Transform3D(8.74228e-08, -1, 4.37114e-08, 4.37114e-08, -4.37114e-08, -1, 1, 8.74228e-08, 4.37114e-08, -2.7, 2.7, 0)
+layers = 7
+mesh = SubResource("PlaneMesh_e1ux2")
+skeleton = NodePath("")
+
+[node name="InFaces" type="Node3D" parent="WM_4"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WM_4/InFaces"]
+transform = Transform3D(1, 4.37114e-08, -4.37114e-08, -4.37114e-08, -4.37114e-08, -1, -4.37114e-08, 1, -4.37114e-08, 0, 2.7, 2.7)
+layers = 7
+mesh = SubResource("PlaneMesh_xn7cl")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D1" type="MeshInstance3D" parent="WM_4/InFaces"]
+transform = Transform3D(-4.37114e-08, 1, -4.37114e-08, 0, -4.37114e-08, -1, -1, -4.37114e-08, 1.91069e-15, 2.7, 2.7, 0)
+layers = 7
+mesh = SubResource("PlaneMesh_xn7cl")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="WM_4/InFaces"]
+transform = Transform3D(-1, -8.74228e-08, 9.01611e-15, 1.64203e-15, -4.37114e-08, -1, 8.74228e-08, -1, 4.37114e-08, 0, 2.7, -2.7)
+layers = 7
+mesh = SubResource("PlaneMesh_xn7cl")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="WM_4/InFaces"]
+transform = Transform3D(8.74228e-08, -1, 4.37114e-08, 4.37114e-08, -4.37114e-08, -1, 1, 8.74228e-08, 4.37114e-08, -2.7, 2.7, 0)
+layers = 7
+mesh = SubResource("PlaneMesh_xn7cl")
+skeleton = NodePath("")
 
 [node name="MeshInstance3D3" type="MeshInstance3D" parent="WM_4"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.22633, 8.77971, 2.21548)
@@ -438,6 +668,6 @@ mesh = SubResource("PlaneMesh_y7det")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="WM_4"]
 libraries = {
-"": SubResource("AnimationLibrary_3yjmn")
+"": SubResource("AnimationLibrary_uqex4")
 }
 autoplay = "bounce"
