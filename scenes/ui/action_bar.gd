@@ -41,7 +41,7 @@ func _unhandled_input(event : InputEvent) -> void:
 		elif keycode == keybinds["ab3_dash"]:
 			dash_action_button._on_pressed()
 		elif keycode == keybinds["reset"]:
-			if Input.is_action_just_pressed("reset"):  # Needed to stop ghost input from hanging after reset.
+			if not Global.is_moving_ui and Input.is_action_just_pressed("reset"):  # Needed to stop ghost input from hanging after reset.
 				parent_node._on_reset_button_pressed()
 	# Controller button binds (non-configurable)
 	elif event is InputEventJoypadButton:
@@ -54,7 +54,8 @@ func _unhandled_input(event : InputEvent) -> void:
 			JOY_BUTTON_B:
 				dash_action_button._on_pressed()
 			JOY_BUTTON_Y:  # BUG: InputEvent hangs on this input after reset.
-				parent_node._on_reset_button_pressed()
+				if not Global.is_moving_ui:
+					parent_node._on_reset_button_pressed()
 
 
 func on_party_ready() -> void:
