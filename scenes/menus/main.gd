@@ -10,7 +10,8 @@ var seq_scene_paths := {
 	1: "res://scenes/p3/p3_ur_main.tscn",
 	2: "res://scenes/p3/p3_apoc_main.tscn",
 	3: "res://scenes/p4/p4_dd_main.tscn",
-	4: "res://scenes/p4/p4_ct_main.tscn"
+	4: "res://scenes/p4/p4_ct_main.tscn",
+	5: "res://scenes/p5/p5_main.tscn"
 }
 
 

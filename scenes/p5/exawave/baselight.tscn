@@ -1,0 +1,225 @@
+[gd_scene load_steps=12 format=3 uid="uid://bu7tad7tj6l6e"]
+
+[ext_resource type="Script" path="res://scenes/p5/exawave/baselight.gd" id="1_wxa3h"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_quso3"]
+resource_local_to_scene = true
+render_priority = 3
+transparency = 1
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 0.0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_u2y07"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_quso3")
+size = Vector2(140, 0.1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uqsqu"]
+resource_local_to_scene = true
+render_priority = 1
+transparency = 1
+albedo_color = Color(0.894118, 0.662745, 0.211765, 0.027451)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_eg0ix"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_uqsqu")
+size = Vector2(140, 2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ywr2t"]
+resource_local_to_scene = true
+render_priority = 1
+transparency = 1
+albedo_color = Color(0.576471, 0.00392157, 0.509804, 0.0313726)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_6db2m"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_ywr2t")
+size = Vector2(140, 2)
+
+[sub_resource type="Animation" id="Animation_k73hf"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BaseBeam:mesh:material:albedo_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("GoldBaselight:mesh:material:albedo_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.894118, 0.662745, 0.211765, 0.027451)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("PurpBaselight:mesh:material:albedo_color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.576471, 0.00392157, 0.509804, 0.0313726)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_w7ent"]
+resource_local_to_scene = true
+resource_name = "fade_in"
+length = 0.4
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BaseBeam:mesh:material:albedo_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("GoldBaselight:mesh:material:albedo_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.894, 0.664, 0.212, 0), Color(0.894118, 0.662745, 0.211765, 0.027451)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("PurpBaselight:mesh:material:albedo_color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.576, 0.004, 0.51, 0), Color(0.576471, 0.00392157, 0.509804, 0.0313726)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_co48l"]
+resource_local_to_scene = true
+resource_name = "fade_out"
+length = 0.2
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BaseBeam:mesh:material:albedo_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("GoldBaselight:mesh:material:albedo_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.894118, 0.662745, 0.211765, 0.027451), Color(0.894, 0.664, 0.212, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("PurpBaselight:mesh:material:albedo_color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.576471, 0.00392157, 0.509804, 0.0313726), Color(0.576, 0.004, 0.51, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.2),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6e6vh"]
+_data = {
+"RESET": SubResource("Animation_k73hf"),
+"fade_in": SubResource("Animation_w7ent"),
+"fade_out": SubResource("Animation_co48l")
+}
+
+[node name="Baselight" type="Node3D"]
+visible = false
+script = ExtResource("1_wxa3h")
+
+[node name="BaseBeam" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_u2y07")
+skeleton = NodePath("../..")
+
+[node name="GoldBaselight" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+mesh = SubResource("PlaneMesh_eg0ix")
+
+[node name="PurpBaselight" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+mesh = SubResource("PlaneMesh_6db2m")
+
+[node name="BaselightAnim" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_6e6vh")
+}

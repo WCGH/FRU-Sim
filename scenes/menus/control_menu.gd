@@ -5,19 +5,20 @@
 
 extends CanvasLayer
 
-enum {SPRINT, ARMS, DASH}
+enum {SPRINT, ARMS, DASH, RESET}
 
 @onready var sprint_key_button: Button = %SprintKeyButton
 @onready var arms_key_button: Button = %ArmsKeyButton
 @onready var dash_key_button: Button = %DashKeyButton
-@onready var buttons := [%SprintKeyButton, %ArmsKeyButton, %DashKeyButton]
+@onready var reset_key_button: Button = %ResetKeyButton
+@onready var buttons := [%SprintKeyButton, %ArmsKeyButton, %DashKeyButton, %ResetKeyButton]
 @onready var mouse_sens_h_slider: HSlider = %MouseSensHSlider
 @onready var x_sens_h_slider: HSlider = %XSensHSlider
 @onready var y_sens_h_slider: HSlider = %YSensHSlider
 @onready var invert_y_check_button: CheckButton = %InvertYCheckButton
 
 var awaited_key: Variant
-var saved_var_keys := ["ab1_sprint", "ab2_arms", "ab3_dash"]
+var saved_var_keys := ["ab1_sprint", "ab2_arms", "ab3_dash", "reset"]
 
 
 func _ready() -> void:
@@ -26,6 +27,7 @@ func _ready() -> void:
 	sprint_key_button.set_text(OS.get_keycode_string(SavedVariables.save_data["keybinds"]["ab1_sprint"]))
 	arms_key_button.set_text(OS.get_keycode_string(SavedVariables.save_data["keybinds"]["ab2_arms"]))
 	dash_key_button.set_text(OS.get_keycode_string(SavedVariables.save_data["keybinds"]["ab3_dash"]))
+	reset_key_button.set_text(OS.get_keycode_string(SavedVariables.save_data["keybinds"]["reset"]))
 	# Set sliders
 	mouse_sens_h_slider.set_value_no_signal(SavedVariables.save_data["settings"]["mouse_sens"])
 	x_sens_h_slider.set_value_no_signal(SavedVariables.save_data["settings"]["x_sens"])
@@ -72,6 +74,13 @@ func _on_dash_key_button_pressed() -> void:
 		return
 	awaited_key = DASH
 	dash_key_button.set_text("Press Key")
+
+
+func _on_reset_key_button_pressed() -> void:
+	if awaited_key != null:
+		return
+	awaited_key = RESET
+	reset_key_button.set_text("Press Key")
 
 
 func _on_mouse_sens_h_slider_drag_ended(value_changed: bool) -> void:

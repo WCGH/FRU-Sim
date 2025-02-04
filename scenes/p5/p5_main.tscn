@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://dn43lysx7adqc"]
+[gd_scene load_steps=36 format=3 uid="uid://dn43lysx7adqc"]
 
 [ext_resource type="Script" path="res://scenes/p5/p5_main.gd" id="1_cu2pk"]
 [ext_resource type="PackedScene" uid="uid://b23aj0fsxbgap" path="res://scenes/menus/control_menu.tscn" id="2_10nki"]
@@ -20,15 +20,18 @@
 [ext_resource type="PackedScene" uid="uid://b5a8l81gltuhy" path="res://scenes/common/ground_markers/death_wall.tscn" id="19_5bphk"]
 [ext_resource type="PackedScene" uid="uid://cypkdpypuypj4" path="res://scenes/common/enemies/hitbox_ring.tscn" id="20_unrbk"]
 [ext_resource type="PackedScene" uid="uid://dodhm04hsn2ep" path="res://scenes/p3/enemies/oracle.tscn" id="21_nmrph"]
+[ext_resource type="PackedScene" uid="uid://26kmxqrmgwq" path="res://scenes/p5/controllers/exawave_controller.tscn" id="22_c8582"]
 [ext_resource type="Texture2D" uid="uid://bmcxcd6diyj1x" path="res://assets/common/world_markers/wm_ground_marker.png" id="24_jfovo"]
 [ext_resource type="PackedScene" uid="uid://jcbpndkhehjl" path="res://scenes/ui/coords.tscn" id="28_aipha"]
 [ext_resource type="Script" path="res://scenes/ui/role_select_button.gd" id="29_gqa2w"]
 [ext_resource type="PackedScene" uid="uid://ce72svh5khi1u" path="res://scenes/ui/sequence_select_button.tscn" id="32_d6fpf"]
 [ext_resource type="Script" path="res://scenes/ui/spectate_button.gd" id="33_x6ks6"]
-[ext_resource type="PackedScene" uid="uid://cmakti71sjg46" path="res://scenes/ui/version_label.tscn" id="36_qcegl"]
+[ext_resource type="PackedScene" uid="uid://cmakti71sjg46" path="res://scenes/ui/info_box.tscn" id="36_qcegl"]
 
 [sub_resource type="Animation" id="Animation_r07vk"]
 resource_name = "p5_seq"
+length = 90.0
+step = 0.1
 tracks/0/type = "method"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -36,9 +39,15 @@ tracks/0/path = NodePath(".")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(),
-"transitions": PackedFloat32Array(),
-"values": []
+"times": PackedFloat32Array(2.1, 4),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"oracle_swing"
+}, {
+"args": [],
+"method": &"start_exalines"
+}]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_sn5bc"]
@@ -173,10 +182,13 @@ mesh = SubResource("PlaneMesh_5pk2k")
 [node name="SpecialMarkers" type="Node3D" parent="GroundMarkers"]
 unique_name_in_owner = true
 
+[node name="ExawaveController" parent="GroundMarkers/SpecialMarkers" instance=ExtResource("22_c8582")]
+unique_name_in_owner = true
+
 [node name="Buttons" type="Node3D" parent="."]
 
 [node name="Coords" parent="Buttons" instance=ExtResource("28_aipha")]
-visible = true
+visible = false
 
 [node name="ResetButton" type="Button" parent="Buttons"]
 offset_left = 28.0
@@ -224,6 +236,7 @@ script = ExtResource("29_gqa2w")
 [node name="SequenceSelectButton" parent="Buttons" instance=ExtResource("32_d6fpf")]
 
 [node name="SpectateButton" type="CheckButton" parent="Buttons"]
+visible = false
 offset_left = 149.0
 offset_top = 55.0
 offset_right = 315.0

@@ -31,7 +31,8 @@ var save_data: Dictionary = {
 	"keybinds": {
 		"ab1_sprint": KEY_1,
 		"ab2_arms": KEY_2,
-		"ab3_dash": KEY_3
+		"ab3_dash": KEY_3,
+		"reset": KEY_R
 	},
 	"waymarks": {
 		"active": "preset_1",

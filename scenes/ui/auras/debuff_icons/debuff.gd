@@ -3,6 +3,9 @@
 # This file is released under "GNU General Public License 3.0".
 # Please see the LICENSE file that should have been included as part of this package.
 
+## DEBUG: If debuff is showing 99s duration, make sure you called set_debuff() after instantiating.
+
+
 extends VBoxContainer
 class_name Debuff
 
@@ -14,7 +17,7 @@ signal debuff_timeout(owner_key : String)
 @onready var timer : Timer = %Timer
 
 var debuff_name : String
-var remaining_duration := 20.0
+var remaining_duration := 99.0
 var owner_key : String
 var stackable : bool
 var stacks := 0
@@ -46,6 +49,10 @@ func set_debuff(debuff_icon_scene: PackedScene, new_owner_key: String, debuff_du
 	if stackable:
 		stacks = 1
 		stacks_label.text = str(stacks)
+	if remaining_duration < 60.0:
+		duration_label.text = str("%.0f" % remaining_duration)
+	else:
+		duration_label.text = str("%dm" % (int(remaining_duration) / int(60)))
 
 
 func add_stack() -> void:
@@ -59,7 +66,7 @@ func get_stacks() -> int:
 
 # This debuff handles whole number durations only. For float durations, use debuff_float.
 func _on_timer_timeout() -> void:
-	if remaining_duration >= 1.0:
+	if remaining_duration > 1.0:
 		remaining_duration -= 1.0
 	else:
 		debuff_timeout.emit(owner_key)

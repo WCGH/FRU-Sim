@@ -1,0 +1,123 @@
+[gd_scene load_steps=6 format=3 uid="uid://bc70djyqj0lrc"]
+
+[ext_resource type="Script" path="res://scenes/p5/exawave/wave_controller.gd" id="1_fbixp"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tqubg"]
+resource_local_to_scene = true
+render_priority = 1
+transparency = 1
+albedo_color = Color(0.943968, 0.592937, 0.17747, 0.389)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_0bsxq"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_tqubg")
+size = Vector2(0, 11.855)
+center_offset = Vector3(-70, 0, 0)
+
+[sub_resource type="Animation" id="Animation_ng2vc"]
+resource_local_to_scene = true
+resource_name = "wave_hit"
+length = 1.6
+step = 0.05
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.6),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"snapshot_hit"
+}, {
+"args": [],
+"method": &"move_wave"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("WavePosition/WaveVisual:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(1, 1, 0.7), Vector3(1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("WavePosition/WaveVisual/MeshInstance3D:mesh:center_offset")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(-70, 0, 0), Vector3(0, 0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("WavePosition/WaveVisual/MeshInstance3D:mesh:size")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 11.855), Vector2(140, 11.855)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("WavePosition/WaveVisual/MeshInstance3D:mesh:material:albedo_color")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(1.2, 1.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.943968, 0.592937, 0.17747, 0.389), Color(0.894, 0.62, 0.306, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ig2tl"]
+_data = {
+"wave_hit": SubResource("Animation_ng2vc")
+}
+
+[node name="LightWave" type="Node3D"]
+script = ExtResource("1_fbixp")
+
+[node name="WavePosition" type="Node3D" parent="."]
+unique_name_in_owner = true
+
+[node name="WaveVisual" type="Node3D" parent="WavePosition"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.7, 0, 0, -5.927)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WavePosition/WaveVisual"]
+mesh = SubResource("PlaneMesh_0bsxq")
+skeleton = NodePath("../../..")
+
+[node name="WaveAnim" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_ig2tl")
+}

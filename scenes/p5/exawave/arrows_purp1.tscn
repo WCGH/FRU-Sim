@@ -1,0 +1,203 @@
+[gd_scene load_steps=8 format=3 uid="uid://dv8du2gq3ok0n"]
+
+[ext_resource type="Texture2D" uid="uid://c8y7luqm41bjl" path="res://assets/p5/arrow purp.png" id="1_3dsou"]
+[ext_resource type="Script" path="res://scenes/p5/exawave/arrows_controller.gd" id="1_u2j4s"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xxgt3"]
+resource_local_to_scene = true
+render_priority = 5
+transparency = 1
+cull_mode = 2
+albedo_color = Color(1, 0.52, 0.927, 0)
+albedo_texture = ExtResource("1_3dsou")
+emission_enabled = true
+emission = Color(0.53394, 0.0111454, 0.401813, 1)
+emission_energy_multiplier = 0.35
+
+[sub_resource type="QuadMesh" id="QuadMesh_srbkw"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_xxgt3")
+size = Vector2(3.5, 3)
+orientation = 0
+
+[sub_resource type="Animation" id="Animation_bjnu0"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Arrow1/MeshInstance3D:mesh:material:albedo_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 0.52, 0.927, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, -2.5)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_yn3rl"]
+resource_local_to_scene = true
+resource_name = "arrow_arc"
+length = 1.3
+step = 0.005
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Arrow1/MeshInstance3D:mesh:material:albedo_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.366667, 1.03333, 1.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 0.52, 0.927, 0), Color(1, 0.520271, 0.92671, 1), Color(1, 0.520271, 0.92671, 1), Color(1, 0.52, 0.927, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.118, 0.236, 0.354, 0.472, 0.65, 0.708, 0.826, 0.944, 1.062, 1.18, 1.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, -2.5), Vector3(0, 1, -3), Vector3(0, 1.8, -4), Vector3(0, 2.4, -5), Vector3(0, 2.8, -6), Vector3(0, 3.025, -7.5), Vector3(0, 3, -8), Vector3(0, 2.8, -9), Vector3(0, 2.4, -10), Vector3(0, 1.8, -11), Vector3(0, 1, -12), Vector3(0, 0, -13)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(-1.8326, 0, 0), Vector3(-4.10152, 0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.5, 1, 1.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(1, 0.2, 0.2), Vector3(1, 1, 1), Vector3(1, 1, 1), Vector3(1, 0.5, 0.5)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_f0a2a"]
+_data = {
+"RESET": SubResource("Animation_bjnu0"),
+"arrow_arc": SubResource("Animation_yn3rl")
+}
+
+[node name="ArrowsPurp1" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.5)
+script = ExtResource("1_u2j4s")
+
+[node name="Arrow1" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Arrow1"]
+mesh = SubResource("QuadMesh_srbkw")
+skeleton = NodePath("../..")
+
+[node name="Arrow2" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Arrow2"]
+mesh = SubResource("QuadMesh_srbkw")
+skeleton = NodePath("../..")
+
+[node name="Arrow3" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Arrow3"]
+mesh = SubResource("QuadMesh_srbkw")
+skeleton = NodePath("../..")
+
+[node name="Arrow4" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Arrow4"]
+mesh = SubResource("QuadMesh_srbkw")
+skeleton = NodePath("../..")
+
+[node name="Arrow5" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Arrow5"]
+mesh = SubResource("QuadMesh_srbkw")
+skeleton = NodePath("../..")
+
+[node name="Arrow6" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Arrow6"]
+mesh = SubResource("QuadMesh_srbkw")
+skeleton = NodePath("../..")
+
+[node name="Arrow7" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Arrow7"]
+mesh = SubResource("QuadMesh_srbkw")
+skeleton = NodePath("../..")
+
+[node name="Arrow8" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Arrow8"]
+mesh = SubResource("QuadMesh_srbkw")
+skeleton = NodePath("../..")
+
+[node name="Arrow9" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Arrow9"]
+mesh = SubResource("QuadMesh_srbkw")
+skeleton = NodePath("../..")
+
+[node name="ArrowsAnim" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_f0a2a")
+}

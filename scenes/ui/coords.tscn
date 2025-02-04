@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://jcbpndkhehjl"]
+[gd_scene load_steps=6 format=3 uid="uid://jcbpndkhehjl"]
 
 [ext_resource type="Script" path="res://scenes/ui/coords.gd" id="1_0hb85"]
 [ext_resource type="Script" path="res://scenes/ui/coords_canvaslayer.gd" id="1_ede2p"]
@@ -41,5 +41,13 @@ size_flags_horizontal = 0
 size_flags_vertical = 0
 focus_mode = 1
 script = ExtResource("2_mh6vw")
+
+[node name="FPSLabel" type="Label" parent="MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_top = 16.0
+offset_right = 44.86
+offset_bottom = 39.0
+label_settings = SubResource("LabelSettings_n540m")
 
 [connection signal="visibility_changed" from="MarginContainer/Coords" to="MarginContainer/Coords" method="_on_visibility_changed"]

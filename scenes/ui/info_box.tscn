@@ -1,0 +1,75 @@
+[gd_scene load_steps=2 format=3 uid="uid://cmakti71sjg46"]
+
+[ext_resource type="Script" path="res://scenes/ui/info_box.gd" id="1_jdn8w"]
+
+[node name="InfoBox" type="CanvasLayer"]
+script = ExtResource("1_jdn8w")
+
+[node name="VersionLabel" type="Label" parent="."]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -85.0
+offset_top = -58.0
+offset_right = -6.0
+offset_bottom = -33.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 12
+text = "Beta v1.6.0
+"
+horizontal_alignment = 2
+
+[node name="ControlsLabel" type="Label" parent="."]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -129.0
+offset_top = -39.0
+offset_right = -6.0
+offset_bottom = -2.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 12
+text = "'p': Pause
+'Esc': Control Options"
+horizontal_alignment = 2
+
+[node name="CoordsLabel" type="Label" parent="."]
+unique_name_in_owner = true
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -108.0
+offset_top = -98.0
+offset_right = -6.0
+offset_bottom = -61.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 12
+text = "0.00, 0.00
+Angle: 180"
+horizontal_alignment = 2
+
+[node name="FPSLabel" type="Label" parent="."]
+unique_name_in_owner = true
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -85.0
+offset_top = -116.0
+offset_right = -6.0
+offset_bottom = -91.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 12
+text = "FPS: 165"
+horizontal_alignment = 2

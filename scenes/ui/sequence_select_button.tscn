@@ -17,7 +17,7 @@ action_mode = 1
 button_mask = 3
 selected = 0
 fit_to_longest_item = false
-item_count = 5
+item_count = 6
 popup/item_0/text = "Light Rampant"
 popup/item_1/text = "Ultimate Relativity"
 popup/item_1/id = 1
@@ -27,6 +27,8 @@ popup/item_3/text = "Darklit Dragonsong"
 popup/item_3/id = 3
 popup/item_4/text = "Crystallize Time"
 popup/item_4/id = 4
+popup/item_5/text = "P5: Fulgent Blade"
+popup/item_5/id = 5
 script = ExtResource("1_hfr61")
 
 [connection signal="item_selected" from="." to="." method="_on_item_selected"]

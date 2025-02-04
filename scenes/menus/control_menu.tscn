@@ -9,7 +9,7 @@ bg_color = Color(0.131587, 0.159062, 0.305638, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_gflx1"]
 font = ExtResource("2_wk86u")
-font_size = 45
+font_size = 42
 outline_size = 4
 outline_color = Color(1, 0.603922, 0.176471, 1)
 
@@ -52,14 +52,14 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_8m74l")
 [node name="MarginContainer" type="MarginContainer" parent="KeybindsMenuContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 40
-theme_override_constants/margin_top = 30
+theme_override_constants/margin_top = 27
 theme_override_constants/margin_right = 40
-theme_override_constants/margin_bottom = 38
+theme_override_constants/margin_bottom = 28
 
 [node name="LeftButtonsVBox" type="VBoxContainer" parent="KeybindsMenuContainer/MarginContainer"]
 custom_minimum_size = Vector2(500, 550)
 layout_mode = 2
-theme_override_constants/separation = 21
+theme_override_constants/separation = 20
 
 [node name="HeaderLabel" type="Label" parent="KeybindsMenuContainer/MarginContainer/LeftButtonsVBox"]
 custom_minimum_size = Vector2(0, 46.865)
@@ -68,12 +68,32 @@ text = "Controls"
 label_settings = SubResource("LabelSettings_gflx1")
 horizontal_alignment = 1
 
+[node name="ResetContainer" type="HBoxContainer" parent="KeybindsMenuContainer/MarginContainer/LeftButtonsVBox"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="ResetLabel" type="Label" parent="KeybindsMenuContainer/MarginContainer/LeftButtonsVBox/ResetContainer"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 1
+text = "Reset"
+label_settings = SubResource("LabelSettings_iqfvl")
+
+[node name="ResetKeyButton" type="Button" parent="KeybindsMenuContainer/MarginContainer/LeftButtonsVBox/ResetContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+focus_mode = 0
+theme_override_font_sizes/font_size = 18
+text = "R"
+
 [node name="SprintContainer" type="HBoxContainer" parent="KeybindsMenuContainer/MarginContainer/LeftButtonsVBox"]
 layout_mode = 2
 theme_override_constants/separation = 12
 
 [node name="SprintLabel" type="Label" parent="KeybindsMenuContainer/MarginContainer/LeftButtonsVBox/SprintContainer"]
-unique_name_in_owner = true
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 size_flags_horizontal = 0
@@ -225,6 +245,7 @@ theme_override_fonts/font = ExtResource("4_cg2fi")
 theme_override_font_sizes/font_size = 42
 text = "Close"
 
+[connection signal="pressed" from="KeybindsMenuContainer/MarginContainer/LeftButtonsVBox/ResetContainer/ResetKeyButton" to="." method="_on_reset_key_button_pressed"]
 [connection signal="pressed" from="KeybindsMenuContainer/MarginContainer/LeftButtonsVBox/SprintContainer/SprintKeyButton" to="." method="_on_sprint_key_button_pressed"]
 [connection signal="pressed" from="KeybindsMenuContainer/MarginContainer/LeftButtonsVBox/ArmsContainer/ArmsKeyButton" to="." method="_on_arms_key_button_pressed"]
 [connection signal="pressed" from="KeybindsMenuContainer/MarginContainer/LeftButtonsVBox/DashContainer/DashKeyButton" to="." method="_on_dash_key_button_pressed"]

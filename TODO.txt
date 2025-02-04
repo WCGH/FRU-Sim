@@ -4,6 +4,8 @@
 
 	- DD: Mami (EU) (https://raidplan.io/plan/scWeh81_SDmJyOsn)
 	- DD: Vertical (JP) spreads (https://ffxiv.tuufless.com/ultimates/fru/)
+	- DD/LR: Fix fail list bot name on Lightsteeped fail check.
+	- Apoc: Move snapshotted aoe earlier.
 
 ### Other fixes:
 	- UR: Add missing rewind debuff timer (https://github.com/WCGH/FRU-Sim/issues/12)

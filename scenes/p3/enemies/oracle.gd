@@ -29,3 +29,7 @@ func play_hide() -> void:
 
 func play_show() -> void:
 	state_machine.travel("fade_in_idle")
+
+
+func play_slash() -> void:
+	state_machine.travel("slash_cast")

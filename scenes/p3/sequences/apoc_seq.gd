@@ -392,6 +392,7 @@ func move_t2_out():
 func snapshot_jump():
 	jump_target = get_farthest_target()
 	snap_jump_pos = get_char(jump_target).global_position
+	jump_hit()
 
 ## 43.5
 # Sixth Apoc hit

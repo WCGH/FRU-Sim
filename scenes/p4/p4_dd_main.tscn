@@ -35,7 +35,7 @@
 [ext_resource type="Script" path="res://scenes/ui/spectate_button.gd" id="33_788op"]
 [ext_resource type="Script" path="res://scenes/p4/am_select_button.gd" id="33_yqvyr"]
 [ext_resource type="Script" path="res://scenes/p4/strat_select_button_dd.gd" id="34_c6fxa"]
-[ext_resource type="PackedScene" uid="uid://cmakti71sjg46" path="res://scenes/ui/version_label.tscn" id="34_j1suw"]
+[ext_resource type="PackedScene" uid="uid://cmakti71sjg46" path="res://scenes/ui/info_box.tscn" id="34_j1suw"]
 
 [sub_resource type="Animation" id="Animation_6yukl"]
 resource_name = "darklit"
@@ -460,7 +460,7 @@ transform = Transform3D(-3.25269, 0, -3.25269, 0, 4.6, 0, 3.25269, 0, -3.25269, 
 [node name="Buttons" type="Node3D" parent="."]
 
 [node name="Coords" parent="Buttons" instance=ExtResource("29_ofjjt")]
-visible = true
+visible = false
 
 [node name="ResetButton" type="Button" parent="Buttons"]
 offset_left = 28.0

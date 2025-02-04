@@ -5,7 +5,7 @@
 
 extends Node
 
-enum Strat {NA, EU, ELE}
+enum Strat {NA, EU, ELE, MANA}
 
 # Debuff Icon Scenes
 const CHAINS_LOCKED = preload("res://scenes/ui/auras/debuff_icons/p2/chains_locked.tscn")
@@ -89,7 +89,7 @@ func start_sequence(new_party: Dictionary) -> void:
 	lockon_controller.pre_load([10, 11])
 	lr_chains_controller.preload_resources()
 	strat = SavedVariables.save_data["settings"]["p2_lr_strat"]
-	if strat >= Strat.size():
+	if strat is not int or strat >= Strat.size() or strat < 0:
 		push_warning("Invalid strat selected. Defaulting to NA.")
 		GameEvents.emit_variable_saved("settings", "p2_lr_strat", 0)
 		strat = Strat.NA
@@ -109,7 +109,7 @@ func cast_lr() -> void:
 
 
 func move_pre_pos() -> void:
-	if strat == Strat.ELE:
+	if strat in [Strat.ELE, Strat.MANA]:
 		move_party(party, LRPosNA.pre_pos_44_ele)
 	else:
 		move_party(party, LRPosNA.pre_pos_44)
@@ -148,20 +148,25 @@ func assing_debuffs() -> void:
 ## 09.75
 # Spread markers move.
 func move_puddles_tower_lineup() -> void:
-	if strat == Strat.NA or strat == Strat.ELE:
+	if strat in [Strat.NA,Strat.ELE]:
 		party[lr_party["n_puddle"]].move_to(LRPosNA.tower_lineup["n_puddle"])
 		party[lr_party["s_puddle"]].move_to(LRPosNA.tower_lineup["s_puddle"])
-	else: 
+	elif strat == Strat.ELE: 
 		party[lr_party["n_puddle"]].move_to(LRPosEU.tower_lineup["n_puddle"])
 		party[lr_party["s_puddle"]].move_to(LRPosEU.tower_lineup["s_puddle"])
+	elif strat == Strat.MANA:
+		party[lr_party["n_puddle"]].move_to(LRPosJP.tower_lineup["n_puddle"])
+		party[lr_party["s_puddle"]].move_to(LRPosJP.tower_lineup["s_puddle"])
 
 ## 10.75
 # Chains first move.
 func move_tower_lineup() -> void:
-	if strat == Strat.NA or strat == Strat.ELE:
+	if strat in [Strat.NA, Strat.ELE]:
 		move_lr_party(LRPosNA.tower_lineup)
-	else:
+	elif strat == Strat.EU:
 		move_lr_party(LRPosEU.tower_lineup)
+	elif strat == Strat.MANA:
+		move_lr_party(LRPosJP.tower_lineup)
 
 ## 11.00
 # Solo towers spawn
@@ -176,10 +181,12 @@ func spawn_solo_towers() -> void:
 ## 12.75
 # Chains move to towers.
 func move_tower_soak():
-	if strat == Strat.NA  or strat == Strat.ELE:
+	if strat in [Strat.NA, Strat.ELE]:
 		move_lr_party(LRPosNA.tower_soak)
-	else:
+	elif strat == Strat.EU:
 		move_lr_party(LRPosEU.tower_soak)
+	elif strat == Strat.MANA:
+		move_lr_party(LRPosJP.tower_soak)
 
 ## 15.60
 # First puddle snapshot (fades after 11s)
@@ -195,30 +202,36 @@ func first_puddle_snapshot() -> void:
 	# Spawn first AoE
 	drop_puddles()
 	# Move spread players
-	if strat == Strat.NA  or strat == Strat.ELE:
+	if strat in [Strat.NA, Strat.ELE]:
 		move_lr_party(LRPosNA.puddle_dodge_1)
-	else:
+	elif strat == Strat.EU:
 		move_lr_party(LRPosEU.puddle_dodge_1)
+	elif strat == Strat.MANA:
+		move_lr_party(LRPosJP.puddle_dodge_1)
 
 
 ## 17.20
 # Second puddle snapshot
 func second_puddle_snapshot() -> void:
 	drop_puddles()
-	if strat == Strat.NA  or strat == Strat.ELE:
+	if strat in [Strat.NA, Strat.ELE]:
 		move_lr_party(LRPosNA.puddle_dodge_2)
-	else:
+	elif strat == Strat.EU:
 		move_lr_party(LRPosEU.puddle_dodge_2)
+	elif strat == Strat.MANA:
+		move_lr_party(LRPosJP.puddle_dodge_2)
 
 
 ## 18.80
 # Third puddle snapshot
 func third_puddle_snapshot() -> void:
 	drop_puddles()
-	if strat == Strat.NA  or strat == Strat.ELE:
+	if strat in [Strat.NA, Strat.ELE]:
 		move_lr_party(LRPosNA.puddle_dodge_3)
-	else:
+	elif strat == Strat.EU:
 		move_lr_party(LRPosEU.puddle_dodge_3)
+	elif strat == Strat.MANA:
+		move_lr_party(LRPosJP.puddle_dodge_3)
 
 
 ## 19.00
@@ -241,10 +254,12 @@ func towers_snapshot() -> void:
 # Move soakers to N/S
 # Spawn first orb trio
 func move_post_tower() -> void:
-	if strat == Strat.NA or strat == Strat.ELE:
-		move_lr_party(LRPosNA.post_tower)
-	else:
-		move_lr_party(LRPosEU.post_tower)
+	# Movement excludes puddles and should be universal.
+	move_lr_party(LRPosNA.post_tower) 
+	#if strat in [Strat.NA, Strat.ELE]:
+		#move_lr_party(LRPosNA.post_tower)
+	#else:
+		#move_lr_party(LRPosEU.post_tower)
 	first_orbs_spawn()
 
 
@@ -263,10 +278,12 @@ func first_orbs_spawn () -> void:
 # Forth puddle snapshot
 func forth_puddle_snapshot() -> void:
 	drop_puddles()
-	if strat == Strat.NA or strat == Strat.ELE:
+	if strat in [Strat.NA, Strat.ELE]:
 		move_lr_party(LRPosNA.puddle_dodge_4)
-	else:
+	elif strat == Strat.EU:
 		move_lr_party(LRPosEU.puddle_dodge_4)
+	elif strat == Strat.MANA:
+		move_lr_party(LRPosJP.puddle_dodge_4)
 
 
 ## 22.00 
@@ -274,10 +291,12 @@ func forth_puddle_snapshot() -> void:
 # First orb telegraph (grow in)
 func fifth_puddle_snapshot() -> void:
 	drop_puddles()
-	if strat == Strat.NA or strat == Strat.ELE:
+	if strat in [Strat.NA, Strat.ELE]:
 		move_lr_party(LRPosNA.puddle_dodge_5)
-	else:
+	elif strat == Strat.EU:
 		move_lr_party(LRPosEU.puddle_dodge_5)
+	elif strat == Strat.MANA:
+		move_lr_party(LRPosJP.puddle_dodge_5)
 	first_orbs_telegraph()
 
 
@@ -303,17 +322,16 @@ func second_orbs_spawn () -> void:
 
 # Intermediate dodge to simulate slower movement leading up to shared hit
 func move_to_intermediate_spot() -> void:
-	if strat == Strat.NA or strat == Strat.ELE:
+	if strat in [Strat.NA, Strat.ELE, Strat.MANA]:
 		move_lr_party(LRPosNA.inter_dodge)
-	else:
+	elif strat == Strat.EU:
 		move_lr_party(LRPosEU.inter_dodge)
-	
 
 
 ## 24.50
 # Move groups to first safe spot
 func move_safe_spot_1() -> void:
-	if strat == Strat.NA  or strat == Strat.ELE:
+	if strat in [Strat.NA, Strat.ELE, Strat.MANA]:
 		if n_orb_pattern:
 			move_lr_party(LRPosNA.north_orb_first_dodge)
 		else:
@@ -323,7 +341,6 @@ func move_safe_spot_1() -> void:
 			move_lr_party(LRPosEU.north_orb_first_dodge)
 		else:
 			move_lr_party(LRPosEU.south_orb_first_dodge)
-	
 
 
 ## 25.00
@@ -373,12 +390,12 @@ func first_orbs_hit() -> void:
 # Move group to second safe spot
 # Remove chains
 func move_safe_spot_2() -> void:
-	if strat == Strat.NA or strat == Strat.ELE:
+	if strat in [Strat.NA, Strat.ELE, Strat.MANA]:
 		if n_orb_pattern:
 			move_lr_party(LRPosNA.north_orb_second_dodge)
 		else:
 			move_lr_party(LRPosNA.south_orb_second_dodge)
-	else:
+	elif strat == Strat.EU:
 		if n_orb_pattern:
 			move_lr_party(LRPosEU.north_orb_second_dodge)
 		else:
@@ -402,12 +419,12 @@ func second_orbs_hit() -> void:
 
 
 func move_middle_safe_spot() -> void:
-	if strat == Strat.NA or strat == Strat.ELE:
+	if strat in [Strat.NA, Strat.ELE, Strat.MANA]:
 		if n_orb_pattern:
 			move_lr_party(LRPosNA.n_pattern_middle_dodge)
 		else:
 			move_lr_party(LRPosNA.s_pattern_middle_dodge)
-	else:
+	elif strat == Strat.EU:
 		if n_orb_pattern:
 			move_lr_party(LRPosEU.n_pattern_middle_dodge)
 		else:
@@ -447,9 +464,15 @@ func middle_tower_snapshot() -> void:
 # Move to spread/pair spots
 func move_spread_pairs() -> void:
 	if halo_spread_pattern:
-		move_party(party, LRPosNA.spread_clocks)
+		if strat == Strat.MANA:
+			move_party(party, LRPosJP.spread_clocks)
+		else:
+			move_party(party, LRPosNA.spread_clocks)
 	else:
-		move_party(party, LRPosNA.pairs)
+		if strat == Strat.MANA:
+			move_party(party, LRPosJP.pairs)
+		else:
+			move_party(party, LRPosNA.pairs)
 
 
 ## 37.1
@@ -460,7 +483,7 @@ func spread_pairs_hit() -> void:
 			ground_aoe_controller.spawn_circle(v2(party[pc_key].global_position), SPREAD_AOE_RADIUS,
 				SPREAD_AOE_LIFETIME, SPREAD_AOE_COLOR, [1, 1, "Banish III Divided (Spread AoE)"])
 	else:
-		# Coin flip for supports or dps being pair targets
+		# Coin flip for supports or dps being pair targets.
 		var keys = support_keys if randi() % 2 == 0 else dps_keys
 		for key in keys:
 			ground_aoe_controller.spawn_circle(v2(party[key].global_position), PAIRS_AOE_RADIUS,
@@ -471,7 +494,10 @@ func spread_pairs_hit() -> void:
 ## 38.0
 # Move to clock pos
 func move_to_clock_pos() -> void:
-	move_party(party, LRPosNA.spread_clocks)
+	if strat == Strat.MANA:
+		move_party(party, LRPosJP.spread_clocks)
+	else:
+		move_party(party, LRPosNA.spread_clocks)
 
 
 ## 40.0
@@ -510,7 +536,7 @@ func four_four_party_setup() -> void:
 		spread_prio = na_we_spread_prio
 	elif strat == Strat.EU:
 		spread_prio = eu_ns_spread_prio
-	elif strat == Strat.ELE:
+	elif strat in [Strat.ELE, Strat.MANA]:
 		spread_prio = na_we_spread_prio
 		lr_south_lineup = lr_south_lineup_ele
 	# LR assigments: 2 puddles, 6 chains, 2 chained orbs

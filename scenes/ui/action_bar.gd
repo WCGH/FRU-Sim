@@ -11,11 +11,9 @@ extends MovableCanvasLayer
 @onready var parent_node: Sequence = $".."
 @onready var control_menu: CanvasLayer = %ControlMenu
 
+
 var player: Player
 var keybinds: Dictionary
-#"ab1_sprint": KEY_1,
-#"ab2_arms": KEY_2,
-#"ab3_dash": KEY_3
 
 
 func _ready() -> void:
@@ -42,6 +40,9 @@ func _unhandled_input(event : InputEvent) -> void:
 			arms_action_button._on_pressed()
 		elif keycode == keybinds["ab3_dash"]:
 			dash_action_button._on_pressed()
+		elif keycode == keybinds["reset"]:
+			if Input.is_action_just_pressed("reset"):  # Needed to stop ghost input from hanging after reset.
+				parent_node._on_reset_button_pressed()
 	# Controller button binds (non-configurable)
 	elif event is InputEventJoypadButton:
 		var button_index: int = event.get_button_index()
@@ -52,18 +53,8 @@ func _unhandled_input(event : InputEvent) -> void:
 				arms_action_button._on_pressed()
 			JOY_BUTTON_B:
 				dash_action_button._on_pressed()
-			JOY_BUTTON_Y:
+			JOY_BUTTON_Y:  # BUG: InputEvent hangs on this input after reset.
 				parent_node._on_reset_button_pressed()
-
-
-#
-#func _process(_delta: float) -> void:
-	#if Input.is_action_just_pressed("ab1_sprint", true):
-		#sprint_action_button._on_pressed()
-	#if Input.is_action_just_pressed("ab2_arms", true):
-		#arms_action_button._on_pressed()
-	#if Input.is_action_just_pressed("ab3_dash", true):
-		#dash_action_button._on_pressed()
 
 
 func on_party_ready() -> void:

@@ -1,0 +1,277 @@
+[gd_scene load_steps=15 format=3 uid="uid://dyjn775k2aiya"]
+
+[ext_resource type="Script" path="res://scenes/p5/exawave/box_highlight.gd" id="1_3gksf"]
+[ext_resource type="PackedScene" uid="uid://dghq8gfmuj7mc" path="res://scenes/p5/exawave/arrows_gold1.tscn" id="1_aht3q"]
+[ext_resource type="PackedScene" uid="uid://b5ye7t1j70f1i" path="res://scenes/p5/exawave/arrows_gold2.tscn" id="2_vek0c"]
+[ext_resource type="PackedScene" uid="uid://dv8du2gq3ok0n" path="res://scenes/p5/exawave/arrows_purp1.tscn" id="3_iav5p"]
+[ext_resource type="PackedScene" uid="uid://cqo3kl7l3401b" path="res://scenes/p5/exawave/arrows_purp2.tscn" id="4_f4bby"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0ym8s"]
+resource_local_to_scene = true
+render_priority = 3
+transparency = 1
+albedo_color = Color(1, 1, 1, 0)
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 7.36
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_3e20i"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_0ym8s")
+size = Vector2(140, 0.7)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_co8hx"]
+resource_local_to_scene = true
+render_priority = 1
+transparency = 1
+albedo_color = Color(0.808, 0.796, 0.816, 0.146)
+emission_enabled = true
+emission = Color(0.807843, 0.796078, 0.815686, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_6dxp7"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_co8hx")
+size = Vector2(140, 11.855)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qw06e"]
+render_priority = 1
+transparency = 1
+albedo_color = Color(0.757, 0.181, 0.69, 0.217)
+emission_enabled = true
+emission = Color(0.756793, 0.181376, 0.689658, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_7dq80"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_qw06e")
+size = Vector2(140, 11.855)
+
+[sub_resource type="Animation" id="Animation_yciyf"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("HighBeam:mesh:material:albedo_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("GoldHighlight:mesh:material:albedo_color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.808, 0.796, 0.816, 0.146)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("PurpHighlight:mesh:material:albedo_color")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.757, 0.181, 0.69, 0.217)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("HighBeam:mesh:material:emission_energy_multiplier")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [7.36]
+}
+
+[sub_resource type="Animation" id="Animation_0pfmr"]
+resource_local_to_scene = true
+resource_name = "fade_in_out"
+length = 2.0
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.9),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("HighBeam:mesh:material:albedo_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4, 1.4, 1.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("GoldHighlight:mesh:material:albedo_color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.4, 1.4, 1.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(0.808, 0.796, 0.816, 0), Color(0.808, 0.796, 0.816, 0.146), Color(0.808, 0.796, 0.816, 0.146), Color(0.808, 0.796, 0.816, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("PurpHighlight:mesh:material:albedo_color")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.4, 1.4, 1.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(0.757, 0.181, 0.69, 0), Color(0.757, 0.181, 0.69, 0.217), Color(0.757, 0.181, 0.69, 0.217), Color(0.757, 0.181, 0.69, 0)]
+}
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("GoldHighlight/ArrowsOffset/ArrowsGold1")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.25),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"play_arrow_arc"
+}]
+}
+tracks/5/type = "method"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("GoldHighlight/ArrowsOffset/ArrowsGold2")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"play_arrow_arc"
+}]
+}
+tracks/6/type = "method"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("PurpHighlight/ArrowsOffset/ArrowsPurp1")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0.25),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"play_arrow_arc"
+}]
+}
+tracks/7/type = "method"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("PurpHighlight/ArrowsOffset/ArrowsPurp2")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"play_arrow_arc"
+}]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("HighBeam:mesh:material:emission_energy_multiplier")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 0.4, 1.4, 1.90235),
+"transitions": PackedFloat32Array(1.41421, 1, 0.233259, 1),
+"update": 0,
+"values": [0.0, 7.36, 7.36, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_irokq"]
+_data = {
+"RESET": SubResource("Animation_yciyf"),
+"fade_in_out": SubResource("Animation_0pfmr")
+}
+
+[node name="BoxHighlight" type="Node3D"]
+visible = false
+script = ExtResource("1_3gksf")
+
+[node name="HighBeam" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_3e20i")
+skeleton = NodePath("../..")
+
+[node name="GoldHighlight" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 5.928)
+mesh = SubResource("PlaneMesh_6dxp7")
+
+[node name="ArrowsOffset" type="Node3D" parent="GoldHighlight"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5.928)
+
+[node name="ArrowsGold1" parent="GoldHighlight/ArrowsOffset" instance=ExtResource("1_aht3q")]
+unique_name_in_owner = true
+
+[node name="ArrowsGold2" parent="GoldHighlight/ArrowsOffset" instance=ExtResource("2_vek0c")]
+unique_name_in_owner = true
+
+[node name="PurpHighlight" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5.928)
+mesh = SubResource("PlaneMesh_7dq80")
+
+[node name="ArrowsOffset" type="Node3D" parent="PurpHighlight"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5.928)
+
+[node name="ArrowsPurp1" parent="PurpHighlight/ArrowsOffset" instance=ExtResource("3_iav5p")]
+unique_name_in_owner = true
+
+[node name="ArrowsPurp2" parent="PurpHighlight/ArrowsOffset" instance=ExtResource("4_f4bby")]
+unique_name_in_owner = true
+
+[node name="BoxHighlightAnim" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_irokq")
+}

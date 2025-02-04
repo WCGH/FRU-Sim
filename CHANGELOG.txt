@@ -10,3 +10,11 @@
 - Apoc: Increased Water AoE size.
 - UR: Added missing Return debuff, which should accurately count down until Rewind Stun is applied.
 - General: Fixed bug with players getting stuck after rewind or knockback.
+
+
+# v1.6.0
+- Added P5 Fulgent Blade mechanic. Rest of P5 to be added later.
+- Apoc: Moved Darkest Dance AoE hit earlier, to better line up with when it snapshots in game.
+- LR: Added Mana DC positioning (Credit to WaterBoiledPizza). Will add waymark preset for Mana later.
+- General: Added Reset keybind ('R' by default).
+- General: Debuff timers should now appear and expire more accurately.
