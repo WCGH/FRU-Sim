@@ -1,8 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://du2fr4o3nsww0"]
+[gd_scene load_steps=3 format=3 uid="uid://du2fr4o3nsww0"]
 
 [ext_resource type="Script" path="res://scenes/ui/move_ui_button.gd" id="1_2qctn"]
+[ext_resource type="Script" path="res://scenes/ui/auras/player_debuffs.gd" id="1_f7l8c"]
 
 [node name="PlayerDebuffs" type="CanvasLayer"]
+script = ExtResource("1_f7l8c")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchors_preset = 8

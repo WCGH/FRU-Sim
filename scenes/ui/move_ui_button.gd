@@ -1,4 +1,8 @@
+class_name MoveUiButton
 extends Button
+
+signal save_position()
+signal reset_position()
 
 @onready var parent_node : Node = get_parent()
 
@@ -16,8 +20,14 @@ func _process(delta):
 		parent_node.position += move_position
 		previous_position = current_position
 
+		if abs(move_position.x) + abs(move_position.y) > 0:
+			save_position.emit()
+
 func _gui_input(event: InputEvent) -> void:
-	if event is not InputEventMouse:
+	if is_button_pressed and event is InputEventKey and event.keycode == KEY_R:
+		move_button_up()
+		reset_position.emit()
+	elif event is not InputEventMouse:
 		accept_event()
 
 func move_button_down() -> void:

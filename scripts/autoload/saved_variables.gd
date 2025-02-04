@@ -49,6 +49,7 @@ var save_data: Dictionary = {
 
 func _ready() -> void:
 	GameEvents.variable_saved.connect(on_variable_saved)
+	GameEvents.variable_removed.connect(on_variable_removed)
 	config_file = ConfigFile.new()
 	load_save_file()
 	set_defaults()
@@ -66,6 +67,9 @@ func load_save_file() -> void:
 	# Load data.
 	for section in config_file.get_sections():
 		for key in config_file.get_section_keys(section):
+			if not save_data.has(section):
+				save_data[section] = {}
+
 			save_data[section][key] = config_file.get_value(section, key)
 
 
@@ -82,11 +86,24 @@ func set_defaults() -> void:
 
 
 func on_variable_saved(section: String, key: String, value: Variant) -> void:
+	if not save_data.has(section):
+		save_data[section] = {}
+
 	save_data[section][key] = value
 	config_file.set_value(section, key, value)
 	save()
 	if section == "keybinds":
 		set_keybinds()
+
+
+func on_variable_removed(section: String, key: String) -> void:
+	if save_data.has(section):
+		save_data[section].erase(key)
+	
+	if config_file.has_section_key(section, key):
+		config_file.erase_section_key(section, key)
+
+	save()
 
 
 func set_keybinds() -> void:

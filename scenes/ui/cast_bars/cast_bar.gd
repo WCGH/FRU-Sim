@@ -3,7 +3,7 @@
 # This file is released under "GNU General Public License 3.0".
 # Please see the LICENSE file that should have been included as part of this package.
 
-extends CanvasLayer
+extends MovableCanvasLayer
 class_name CastBar
 
 @onready var label : Label = $MarginContainer/VBoxContainer/Label
@@ -11,6 +11,13 @@ class_name CastBar
 @onready var timer : Timer = $Timer
 
 var casting := false
+
+
+func _ready():
+	await get_tree().process_frame
+	section_key = "cast_bar"
+	init_position()
+
 
 func _process(_delta : float) -> void:
 	if casting:

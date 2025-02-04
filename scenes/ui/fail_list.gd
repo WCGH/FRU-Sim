@@ -3,12 +3,17 @@
 # This file is released under "GNU General Public License 3.0".
 # Please see the LICENSE file that should have been included as part of this package.
 
-extends CanvasLayer
+extends MovableCanvasLayer
 class_name FailList
 
 @export var label_scene : PackedScene
 
 @onready var v_box_container : VBoxContainer = $MarginContainer/VBoxContainer
+
+
+func _ready():
+	section_key = "fail_list"
+	init_position()
 
 
 func add_fail(text: String) -> void:

@@ -3,7 +3,7 @@
 # This file is released under "GNU General Public License 3.0".
 # Please see the LICENSE file that should have been included as part of this package.
 
-extends CanvasLayer
+extends MovableCanvasLayer
 
 @onready var sprint_action_button: ActionButton = $MarginContainer/ButtonsContainer/SprintActionButton
 @onready var arms_action_button: ActionButton = $MarginContainer/ButtonsContainer/ArmsActionButton
@@ -19,6 +19,9 @@ var keybinds: Dictionary
 
 
 func _ready() -> void:
+	section_key = "action_bar"
+	init_position()
+
 	GameEvents.party_ready.connect(on_party_ready)
 	sprint_action_button.action_pressed.connect(on_sprint_pressed)
 	arms_action_button.action_pressed.connect(on_arms_pressed)
