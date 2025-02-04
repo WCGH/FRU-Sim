@@ -3,7 +3,7 @@
 # This file is released under "GNU General Public License 3.0".
 # Please see the LICENSE file that should have been included as part of this package.
 
-extends CanvasLayer
+extends MovableCanvasLayer
 
 @onready var sprint_action_button: ActionButton = $MarginContainer/ButtonsContainer/SprintActionButton
 @onready var arms_action_button: ActionButton = $MarginContainer/ButtonsContainer/ArmsActionButton
@@ -17,6 +17,9 @@ var keybinds: Dictionary
 
 
 func _ready() -> void:
+	section_key = "action_bar"
+	init_position()
+
 	GameEvents.party_ready.connect(on_party_ready)
 	sprint_action_button.action_pressed.connect(on_sprint_pressed)
 	arms_action_button.action_pressed.connect(on_arms_pressed)
@@ -38,7 +41,7 @@ func _unhandled_input(event : InputEvent) -> void:
 		elif keycode == keybinds["ab3_dash"]:
 			dash_action_button._on_pressed()
 		elif keycode == keybinds["reset"]:
-			if Input.is_action_just_pressed("reset"):  # Needed to stop ghost input from hanging after reset.
+			if not Global.is_moving_ui and Input.is_action_just_pressed("reset"):  # Needed to stop ghost input from hanging after reset.
 				parent_node._on_reset_button_pressed()
 	# Controller button binds (non-configurable)
 	elif event is InputEventJoypadButton:
@@ -51,7 +54,8 @@ func _unhandled_input(event : InputEvent) -> void:
 			JOY_BUTTON_B:
 				dash_action_button._on_pressed()
 			JOY_BUTTON_Y:  # BUG: InputEvent hangs on this input after reset.
-				parent_node._on_reset_button_pressed()
+				if not Global.is_moving_ui:
+					parent_node._on_reset_button_pressed()
 
 
 func on_party_ready() -> void:

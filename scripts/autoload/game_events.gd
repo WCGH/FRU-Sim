@@ -6,6 +6,7 @@
 extends Node
 
 signal variable_saved(section: String, key: String, value: Variant)
+signal variable_removed(section: String, key: String)
 signal party_ready()
 signal spectate_mode_changed()
 
@@ -13,6 +14,8 @@ signal spectate_mode_changed()
 func emit_variable_saved(section: String, key: String, value: Variant) -> void:
 	variable_saved.emit(section, key, value)
 
+func emit_variable_removed(section: String, key: String) -> void:
+	variable_removed.emit(section, key)
 
 func emit_party_ready() -> void:
 	party_ready.emit()

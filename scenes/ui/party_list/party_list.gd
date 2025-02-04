@@ -3,7 +3,7 @@
 # This file is released under "GNU General Public License 3.0".
 # Please see the LICENSE file that should have been included as part of this package.
 
-extends CanvasLayer
+extends MovableCanvasLayer
 class_name PartyList
 
 @export var aura_container_scene : PackedScene
@@ -15,6 +15,10 @@ class_name PartyList
 
 var aura_containers : Dictionary
 
+
+func _ready():
+	section_key = "party_list"
+	init_position()
 
 func create_party_list(player_role_key : String) -> void:
 	# Add player first
