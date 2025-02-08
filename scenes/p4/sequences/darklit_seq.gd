@@ -5,7 +5,7 @@
 
 extends Node
 
-enum Strat {NA, EU, JP}
+enum Strat {NA, EU, JP, MANA}
 
 # Debuff Icon Scenes
 const DARK_WATER_ICON = preload("res://scenes/ui/auras/debuff_icons/p3/dark_water_icon.tscn")
@@ -61,6 +61,8 @@ const NAUR_LINEUP := ["h1", "h2", "t1", "t2", "r1", "r2", "m1", "m2"]
 # If you want to change the dps lineup, do it here.
 const EU_JP_WE_PRIO := ["t1", "t2", "h1", "h2", "m1", "m2", "r1", "r2"]
 const EU_JP_DPS_LINEUP := ["m1", "m2", "r1", "r2"]  # W>E or S>N
+# Mana Prios.
+const MANA_WE_PRIO := ["h1", "h2", "t1", "t2", "m1", "m2", "r1", "r2"]
 
 # Entity Positions
 const USURPER_POS := {"final": Vector3(0, 0, -6), "final_rota": 135.0}
@@ -145,7 +147,10 @@ func start_sequence(new_party: Dictionary) -> void:
 ## 2.0
 # Move part mid
 func move_mid():
-	move_party(DDPos.MID_STACK_PARTY)
+	if strat == Strat.MANA:
+		move_party(DDPos.MANA_STACK_PARTY)
+	else:
+		move_party(DDPos.MID_STACK_PARTY)
 
 
 ## 3.2
@@ -169,6 +174,8 @@ func move_first_spread() -> void:
 		move_party(DDPos.POST_AA_PARTY_EU)
 	elif strat == Strat.JP:
 		move_party(DDPos.POST_AA_PARTY_JP)
+	elif strat == Strat.MANA:
+		move_party(DDPos.POST_AA_PARTY_MANA)
 
 ## 9.3
 # First AoE's hit on snapshot positions
@@ -194,6 +201,8 @@ func move_lr_pre_pos():
 		move_party(DDPos.LR_PARTY_EU)
 	elif strat == Strat.JP:
 		move_party(DDPos.LR_PARTY_JP)
+	elif strat == Strat.MANA:
+		move_party(DDPos.LR_PARTY_MANA)
 
 
 ## 14.7
@@ -331,6 +340,10 @@ func move_spirit_spread():
 		for key: String in spirit_spread_dd:
 			var pc: PlayableCharacter = party[spirit_spread_dd[key]]
 			pc.move_to(DDPos.SPIRIT_DD_SP_NA[key])
+	elif strat == Strat.MANA:
+		for key: String in spirit_spread_dd:
+			var pc: PlayableCharacter = party[spirit_spread_dd[key]]
+			pc.move_to(DDPos.SPIRIT_DD_SP_MANA[key])
 	elif strat == Strat.EU:
 		move_party_dd(DDPos.SPIRIT_DD_EU)
 	elif strat == Strat.JP:
@@ -408,9 +421,11 @@ func move_tank_1_inter_bait():
 	var oracle_z := oracle_boss.global_position.z
 	# If Oracle is close enough to mid, send tank to bait where wings hit.
 	# If Oracle is on East side of arena, tanks bait West
+	# Note: Mana baits tank opposite of where the wings hit
+	var DANCE_INTER_TANK_POS
 	if oracle_z > MID_BAIT_THRESHOLD or\
 		((oracle_z < MID_BAIT_THRESHOLD and oracle_z > -MID_BAIT_THRESHOLD) and !east_wing):
-		tank_bait_east = false
+		tank_bait_east = false if strat == Strat.NA else true
 		# Check if movement is needed (tank is already West of inter pos).
 		if party["t1"].global_position.z < DDPos.DANCE_NW_INTER_TANK.y:
 			return
@@ -418,25 +433,32 @@ func move_tank_1_inter_bait():
 		# Tank is North.
 		if party["t1"].global_position.x > 0:
 			# If tank is already on correct side, skip this movement.
-			party["t1"].move_to(DDPos.DANCE_NW_INTER_TANK)
+			DANCE_INTER_TANK_POS = DDPos.DANCE_NW_INTER_TANK if strat == Strat.NA else DDPos.DANCE_NE_INTER_TANK
+			#party["t1"].move_to(DDPos.DANCE_NW_INTER_TANK)
 		# Tank is South.
 		else:
-			party["t1"].move_to(DDPos.DANCE_SW_INTER_TANK)
+			DANCE_INTER_TANK_POS = DDPos.DANCE_SW_INTER_TANK if strat == Strat.NA else DDPos.DANCE_SE_INTER_TANK
+			#party["t1"].move_to(DDPos.DANCE_SW_INTER_TANK)
 	# If Oracle is on West side of arena, tanks baits East
 	elif oracle_z < -MID_BAIT_THRESHOLD or\
 		((oracle_z < MID_BAIT_THRESHOLD and oracle_z > -MID_BAIT_THRESHOLD) and east_wing):
-		tank_bait_east = true
+		tank_bait_east = true if strat == Strat.NA else false
 		# Check if movement is needed (tank is already East of inter pos).
 		if party["t1"].global_position.z > DDPos.DANCE_NW_INTER_TANK.y:
 			return
 		# Tank is North.
 		if party["t1"].global_position.x > 0:
-			party["t1"].move_to(DDPos.DANCE_NE_INTER_TANK)
+			DANCE_INTER_TANK_POS = DDPos.DANCE_NE_INTER_TANK if strat == Strat.NA else DDPos.DANCE_NW_INTER_TANK
+			#party["t1"].move_to(DDPos.DANCE_NE_INTER_TANK)
 		# Tank is South.
 		else:
-			party["t1"].move_to(DDPos.DANCE_SE_INTER_TANK)
+			DANCE_INTER_TANK_POS = DDPos.DANCE_SE_INTER_TANK if strat == Strat.NA else DDPos.DANCE_SW_INTER_TANK
+			#party["t1"].move_to(DDPos.DANCE_SE_INTER_TANK)
 	else:
 		print_debug("Logic error in Tank inter bait movement.")
+		
+	if DANCE_INTER_TANK_POS:
+		party["t1"].move_to(DANCE_INTER_TANK_POS)
 
 
 ## 40.5
@@ -477,12 +499,16 @@ func move_tank_bait():
 # Move party towards Oracle, move tank 1 to final bait position.
 func move_party_bait():
 	if tank_bait_east:
-		#move_party_dd(DDPos.DANCE_W_DD)
-		move_party_dd(DDPos.DANCE_MID_DD)
+		if strat == Strat.MANA:
+			move_party_dd(DDPos.DANCE_E_DD)
+		else:
+			move_party_dd(DDPos.DANCE_MID_DD)
 		party["t1"].move_to(DDPos.DANCE_E_TANK)
 	else:
-		#move_party_dd(DDPos.DANCE_E_DD)
-		move_party_dd(DDPos.DANCE_MID_DD)
+		if strat == Strat.MANA:
+			move_party_dd(DDPos.DANCE_W_DD)
+		else:
+			move_party_dd(DDPos.DANCE_MID_DD)
 		party["t1"].move_to(DDPos.DANCE_W_TANK)
 
 
@@ -600,8 +626,8 @@ func instantiate_party(new_party: Dictionary) -> void:
 	# Standard role keys
 	party = new_party
 	# NAUR Party setup
-	if strat == Strat.NA:
-		na_party_setup()
+	if strat == Strat.NA or strat == Strat.MANA:
+		na_mana_party_setup()
 	elif strat == Strat.EU or strat == Strat.JP:
 		eu_jp_party_setup()
 	else:
@@ -611,7 +637,7 @@ func instantiate_party(new_party: Dictionary) -> void:
 	east_wing = randi() % 2 == 0
 
 
-func na_party_setup() -> void:
+func na_mana_party_setup() -> void:
 	# Shuffle tank, healers and dps (tank/healer/dps[0] + dps[1] will be LR tethers)
 	var tanks = Global.TANK_ROLE_KEYS.duplicate()
 	var healers = Global.HEALER_ROLE_KEYS.duplicate()
@@ -671,8 +697,10 @@ func na_party_setup() -> void:
 	
 	# Handle water debuffs and potential swap
 	var non_tethers := [healers[1], tanks[1], dps[2], dps[3]]  # [nw, ne, se, sw]
+	
 	# Swap DPS based on W>E prio
-	if NAUR_WE_PRIO.find(dps[2]) < NAUR_WE_PRIO.find(dps[3]):
+	var PRIO = NAUR_WE_PRIO if strat == Strat.NA else MANA_WE_PRIO
+	if PRIO.find(dps[2]) < PRIO.find(dps[3]):
 		non_tethers[2] = dps[3]
 		non_tethers[3] = dps[2]
 	# Store pre-swap positions, to be used for bot movement.
@@ -732,12 +760,13 @@ func na_party_setup() -> void:
 		"w_sup": party_dd["nw_bait"], "w_dps": party_dd["sw_bait"],
 		"e_sup": party_dd["ne_bait"], "e_dps": party_dd["se_bait"]
 	}
-	if west_swapped:
-		spirit_spread_dd["w_sup"] = party_dd["sw_bait"]
-		spirit_spread_dd["w_dps"] = party_dd["nw_bait"]
-	elif east_swapped:
-		spirit_spread_dd["e_sup"] = party_dd["se_bait"]
-		spirit_spread_dd["e_dps"] = party_dd["ne_bait"]
+	if strat == Strat.NA:
+		if west_swapped:
+			spirit_spread_dd["w_sup"] = party_dd["sw_bait"]
+			spirit_spread_dd["w_dps"] = party_dd["nw_bait"]
+		elif east_swapped:
+			spirit_spread_dd["e_sup"] = party_dd["se_bait"]
+			spirit_spread_dd["e_dps"] = party_dd["ne_bait"]
 
 
 func eu_jp_party_setup() -> void:

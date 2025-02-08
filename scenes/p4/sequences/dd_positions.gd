@@ -20,6 +20,8 @@ const SE := Vector2(-1, 1)
 const SW := Vector2(-1, -1)
 const MID := Vector2(0, 0)
 
+# Mana Akh
+const MARKER_OFFSET := 19.0
 # Dodge towards LR Spots
 const AA_NS := Vector2(16.4, 10.1)
 const AA_EW := Vector2(10.1, 16.4)
@@ -69,6 +71,11 @@ const MID_STACK_PARTY := {
 	"m1": MID - RS1, "m2": MID - RS2, "r1": MID - RS3, "r2": MID
 	}
 
+const MANA_STACK_PARTY := {
+	"t1": NW * MARKER_OFFSET, "t2": NE * MARKER_OFFSET + RS1, "h1": NE * MARKER_OFFSET + RS2, "h2": NE * MARKER_OFFSET + RS3,
+	"m1": NE * MARKER_OFFSET - RS1, "m2": NE * MARKER_OFFSET - RS2, "r1": NE * MARKER_OFFSET - RS3, "r2": NE * MARKER_OFFSET
+	}
+
 # Post AA spread, NA
 const POST_AA_PARTY_NA := {
 	"t1": AA_NS * NE, "t2": AA_EW * NE,
@@ -90,7 +97,12 @@ const POST_AA_PARTY_JP := {
 	"m1": AA_EW * SE, "m2": AA_E * SE,
 	"r1": AA_E * NE, "r2": AA_EW * NE
 	}
-
+# MANA
+const POST_AA_PARTY_MANA := {
+	"t1": MID, "t2": MID + RS1, "h1": MID + RS2, "h2": MID + RS3,
+	"m1": MID - RS1, "m2": MID - RS2, "r1": MID - RS3, "r2": MID
+	}
+	
 # Move to LR pre-pos, NA
 const LR_PARTY_NA := {
 	"t1": LR_NS * NE + S_OFFSET, "t2": LR_EW * NE + S_OFFSET,
@@ -112,7 +124,14 @@ const LR_PARTY_JP := {
 	"m1": LR_JP * NE + (S_OFFSET * 3), "m2": LR_JP * NE + (S_OFFSET * 2),
 	"r1": LR_JP * NE + S_OFFSET, "r2": LR_JP * NE
 	}
-
+# MANA
+const LR_PARTY_MANA := {
+	"t1": LR_NS * NE + S_OFFSET, "t2": LR_EW * NE + S_OFFSET,
+	"h1": LR_EW * NW + S_OFFSET, "h2": LR_NS * NW + S_OFFSET,
+	"m1": LR_EW * SW + S_OFFSET, "m2": LR_NS * SW + S_OFFSET,
+	"r1": LR_NS * SE + S_OFFSET, "r2": LR_EW * SE + S_OFFSET
+	}
+	
 # Bowtie positions
 const BOWTIE_DD := {
 	"nw_tether": TOWER * NW, "ne_tether": TOWER * NE,
@@ -127,6 +146,13 @@ const SPIRIT_DD_SP_NA := {
 	"se_tether": SP_TETHER * SE, "sw_tether": SP_TETHER * SW,
 	"w_sup": SP_W_SUP, "w_dps": SP_W_DPS,
 	"e_sup": SP_E_SUP, "e_dps": SP_E_DPS
+}
+# Spirit Taker spread, MANA (special keys for non-tethers)
+const SPIRIT_DD_SP_MANA := {
+	"nw_tether": AA_NS * NW, "ne_tether": AA_NS * NE,
+	"se_tether": SP_S_T * SE, "sw_tether": SP_S_T * SW,
+	"w_sup": SP_W_DPS, "w_dps": SP_S_NT * SW,
+	"e_sup": SP_E_SUP, "e_dps": SP_S_NT * SE
 }
 # EU (static spreads)
 const SPIRIT_DD_EU := {
