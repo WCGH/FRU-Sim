@@ -3,12 +3,12 @@
 # This file is released under "GNU General Public License 3.0".
 # Please see the LICENSE file that should have been included as part of this package.
 
-extends OptionButton
+extends CheckButton
 
 
 func _ready() -> void:
-	self.selected = Global.p4_ct_selected_debuff
+	button_pressed = Global.p4_ct_aeros_plant
 
 
-func _on_item_selected(index: int) -> void:
-	Global.p4_ct_selected_debuff = index
+func _on_pressed() -> void:
+	Global.p4_ct_aeros_plant = button_pressed

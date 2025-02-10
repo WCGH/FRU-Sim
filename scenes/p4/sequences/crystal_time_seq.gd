@@ -6,6 +6,7 @@
 extends Node
 
 enum Intercards {NW, NE, SE, SW}
+enum Strat {NA, MUR}
 
 # Debuff Icon Scenes
 const AERO_ICON = preload("res://scenes/ui/auras/debuff_icons/p4/aero.tscn")
@@ -66,6 +67,8 @@ const AKH_MORN_LIGHT_COLOR := Color.GOLD
 const AKH_MORN_DARK_COLOR := Color.DARK_VIOLET
 
 const NA_WE_PRIO := ["h2", "h1", "t2", "t1", "m1", "m2", "r1", "r2"]
+const MUR_WE_PRIO := ["h1", "r1", "m1", "t1", "t2", "m2", "r2", "h2"]
+
 const DEBUFF_ASSIGNMENTS := {
 	"r_aero_sw": {AERO_ICON: 14, WYRMCLAW_ICON: 40, RETURN_ICON: 33},
 	"r_aero_se": {AERO_ICON: 14, WYRMCLAW_ICON: 40, RETURN_ICON: 33},
@@ -137,12 +140,18 @@ var scan_count := 0
 var ew_kb_targets := []
 var ns_kb_targets := []
 var puddles_positions: Dictionary
-
+var strat: Strat
 
 func start_sequence(new_party: Dictionary) -> void:
 	assert(new_party != null, "Error. Where the party at?")
 	ground_aoe_controller.preload_aoe(["line", "circle", "donut"])
 	#lockon_controller.pre_load([13])
+	# Get Strat.
+	strat = SavedVariables.save_data["settings"]["p4_ct_strat"]
+	if strat is not int or strat >= Strat.size() or strat < 0:
+		# Fix invalid SavedVariables, defaults to NA.
+		GameEvents.emit_variable_saved("settings", "p4_ct_strat", 0)
+		strat = Strat.NA
 	instantiate_party(new_party)
 	# Connect signals
 	dragon_e.collided_with_body.connect(on_dragon_collision)
@@ -215,9 +224,15 @@ func show_tethers() -> void:
 # Move to pre-hg positions
 func move_pre_hg():
 	if nw_tether:
-		move_party_ct(CTPos.PRE_HG_1_NW)
+		if aeros_plant():
+			move_party_ct(CTPos.PRE_HG_1_NW_AEROS_PLANT)
+		else:
+			move_party_ct(CTPos.PRE_HG_1_NW)
 	else:
-		move_party_ct(CTPos.PRE_HG_1_NE)
+		if aeros_plant():
+			move_party_ct(CTPos.PRE_HG_1_NE_AEROS_PLANT)
+		else:
+			move_party_ct(CTPos.PRE_HG_1_NE)
 
 ## 15.3
 # Start moving dragons
@@ -249,10 +264,26 @@ func hg_1_hit():
 ## 18.0
 # Move to post HG 1 positions
 func move_pre_aero():
-	if nw_tether:
-		move_party_ct(CTPos.POST_HG_1_NW)
+	if aeros_plant():
+		# Calculate positions of the players getting knocked back relative to the current position of the aero player. 
+		var aero_target: Vector2
+		var positions := {}
+
+		if nw_tether:
+			positions["r_aero_sw"] = CTPos.AERO_SOURCE * CTPos.SW # Aero not knocking back the party can move
+			aero_target = v2(get_char("r_aero_se").global_position) + CTPos.AERO_TARGET_OFFSET * CTPos.SE
+		else:
+			positions["r_aero_se"] = CTPos.AERO_SOURCE * CTPos.SE # Aero not knocking back the party can move
+			aero_target = v2(get_char("r_aero_sw").global_position) + CTPos.AERO_TARGET_OFFSET * CTPos.SW
+		positions["b_ice"] = aero_target + CTPos.RS1
+		positions["b_ud"] = aero_target + CTPos.RS2
+		positions["b_water"] = aero_target + CTPos.RS3
+		move_party_ct(positions)
 	else:
-		move_party_ct(CTPos.POST_HG_1_NE)
+		if nw_tether:
+			move_party_ct(CTPos.POST_HG_1_NW)
+		else:
+			move_party_ct(CTPos.POST_HG_1_NE)
 
 ## 18.7
 # Water hits.
@@ -754,7 +785,10 @@ func instantiate_party(new_party: Dictionary) -> void:
 	# Standard role keys
 	party = new_party
 	# NA Party setup
-	na_party_setup()
+	if strat == Strat.NA:
+		party_setup(NA_WE_PRIO)
+	elif strat == Strat.MUR:
+		party_setup(MUR_WE_PRIO)
 	# Randomize Tether spawn
 	nw_tether = randi() % 2 == 0
 	# Pick 3 Quietus targets
@@ -769,33 +803,32 @@ func instantiate_party(new_party: Dictionary) -> void:
 	north_exa = (exaline_spawns == Intercards.NE or exaline_spawns == Intercards.NW)
 
 
-func na_party_setup() -> void:
+func party_setup(prio) -> void:
 	# Shuffle dps/sup roles
 	var shuffle_list := party.keys()
 	shuffle_list.shuffle()
 	
 	# Handle manual debuff selection from user.
-	if Global.p4_selected_debuff != 0:
+	if Global.p4_ct_selected_debuff != 0:
 		var player_role_key = get_tree().get_first_node_in_group("player").get_role()
 		# Remove player index and insert at selected key
 		shuffle_list.erase(player_role_key)
 		# For DPS need to convert 1,2,3 index to 3,2,1
-		shuffle_list.insert(Global.p4_selected_debuff - 1, player_role_key)
+		shuffle_list.insert(Global.p4_ct_selected_debuff - 1, player_role_key)
 	
 	# Check if red/aero (0, 6) are in prio order, otherwise swap them.
-	if NA_WE_PRIO.find(shuffle_list[0]) > NA_WE_PRIO.find(shuffle_list[6]):
+	if prio.find(shuffle_list[0]) > prio.find(shuffle_list[6]):
 		var temp = shuffle_list[0]
 		shuffle_list[0] = shuffle_list[6]
 		shuffle_list[6] = temp
 	# Check if red/ice (1, 7) are in prio order, otherwise swap them.
-	if NA_WE_PRIO.find(shuffle_list[1]) > NA_WE_PRIO.find(shuffle_list[7]):
+	if prio.find(shuffle_list[1]) > prio.find(shuffle_list[7]):
 		var temp = shuffle_list[1]
 		shuffle_list[1] = shuffle_list[7]
 		shuffle_list[7] = temp
 	# Add keys to CT dictionary
 	for i in ASSIGNMENT_INDEX.size():
 		party_ct[ASSIGNMENT_INDEX[i]] = shuffle_list[i]
-
 
 # Returns the PlayableCharacter for the assigned key.
 func get_char(ct_key) -> PlayableCharacter:
@@ -843,6 +876,9 @@ func _on_area_3d_area_entered(area: Area3D) -> void:
 			return
 		fail_list.add_fail("Fragment of Fate was hit by %s." % area.spell_name)
 
+# True if aero player knocking back the party should stay planted in their original spot until knockback occurs.
+func aeros_plant() -> bool:
+	return Global.p4_ct_aeros_plant
 
 func v2(vec3: Vector3) -> Vector2:
 	return Vector2(vec3.x, vec3.z)

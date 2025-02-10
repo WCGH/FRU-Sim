@@ -7,8 +7,8 @@ extends OptionButton
 
 
 func _ready() -> void:
-	self.selected = Global.p4_ct_selected_debuff
+	self.selected = SavedVariables.save_data["settings"]["p4_ct_strat"]
 
 
 func _on_item_selected(index: int) -> void:
-	Global.p4_ct_selected_debuff = index
+	GameEvents.emit_variable_saved("settings", "p4_ct_strat", index)

@@ -33,6 +33,9 @@ var spectate_mode := false
 # P2 Light Rampant
 var p2_force_puddles := false
 
+# P3 Ultimate Relativity
+var p3_selected_debuff := 0  # [random, short, med, long]
+
 # P3 Apoc
 var p3_t1_bait := false
 var p3_apoc_force_swap := false
@@ -41,9 +44,9 @@ var p3_apoc_force_swap := false
 var p4_dd_solo_dance := false
 var p4_dd_force_tether := false
 
-# P3 Ultimate Relativity
-var p3_selected_debuff := 0  # [random, short, med, long]
-var p4_selected_debuff := 0  # [random, red/aero, red/ice, blue/eruption, blue/ice, blue,unholy, blue/water]
+# P4 Crystallize Time
+var p4_ct_aeros_plant := false
+var p4_ct_selected_debuff := 0  # [random, red/aero, red/ice, blue/eruption, blue/ice, blue,unholy, blue/water]
 
 # Waymarks
 var waymarks := {
