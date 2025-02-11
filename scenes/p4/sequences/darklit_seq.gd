@@ -5,7 +5,7 @@
 
 extends Node
 
-enum Strat {NA, EU, JP}
+enum Strat {NA, EU, JP, MUR}
 
 # Debuff Icon Scenes
 const DARK_WATER_ICON = preload("res://scenes/ui/auras/debuff_icons/p3/dark_water_icon.tscn")
@@ -61,6 +61,9 @@ const NAUR_LINEUP := ["h1", "h2", "t1", "t2", "r1", "r2", "m1", "m2"]
 # If you want to change the dps lineup, do it here.
 const EU_JP_WE_PRIO := ["t1", "t2", "h1", "h2", "m1", "m2", "r1", "r2"]
 const EU_JP_DPS_LINEUP := ["m1", "m2", "r1", "r2"]  # W>E or S>N
+# MUR Prios.
+const MUR_WE_PRIO := ["h1", "h2", "t1", "t2", "r1", "r2", "m1", "m2"]
+const MUR_LINEUP := ["h1", "h2", "t1", "t2", "r1", "r2", "m1", "m2"]
 
 # Entity Positions
 const USURPER_POS := {"final": Vector3(0, 0, -6), "final_rota": 135.0}
@@ -163,7 +166,7 @@ func snapshot_ahk_aoe() -> void:
 ## 7.2
 # Move to first spread positions
 func move_first_spread() -> void:
-	if strat == Strat.NA:
+	if strat == Strat.NA or strat == Strat.MUR:
 		move_party(DDPos.POST_AA_PARTY_NA)
 	elif strat == Strat.EU:
 		move_party(DDPos.POST_AA_PARTY_EU)
@@ -188,7 +191,7 @@ func show_oracle():
 
 
 func move_lr_pre_pos():
-	if strat == Strat.NA:
+	if strat == Strat.NA or strat == Strat.MUR:
 		move_party(DDPos.LR_PARTY_NA)
 	elif strat == Strat.EU:
 		move_party(DDPos.LR_PARTY_EU)
@@ -327,7 +330,7 @@ func cast_spirit_taker():
 ## 33.5
 # Move to Spirit spread pos
 func move_spirit_spread():
-	if strat == Strat.NA:
+	if strat == Strat.NA or strat == Strat.MUR:
 		for key: String in spirit_spread_dd:
 			var pc: PlayableCharacter = party[spirit_spread_dd[key]]
 			pc.move_to(DDPos.SPIRIT_DD_SP_NA[key])
@@ -600,8 +603,8 @@ func instantiate_party(new_party: Dictionary) -> void:
 	# Standard role keys
 	party = new_party
 	# NAUR Party setup
-	if strat == Strat.NA:
-		na_party_setup()
+	if strat == Strat.NA or strat == Strat.MUR:
+		na_mur_party_setup()
 	elif strat == Strat.EU or strat == Strat.JP:
 		eu_jp_party_setup()
 	else:
@@ -611,11 +614,19 @@ func instantiate_party(new_party: Dictionary) -> void:
 	east_wing = randi() % 2 == 0
 
 
-func na_party_setup() -> void:
+func na_mur_party_setup() -> void:
 	# Shuffle tank, healers and dps (tank/healer/dps[0] + dps[1] will be LR tethers)
 	var tanks = Global.TANK_ROLE_KEYS.duplicate()
 	var healers = Global.HEALER_ROLE_KEYS.duplicate()
 	var dps = Global.DPS_ROLE_KEYS.duplicate()
+
+	# Default to NAUR lineup/prio
+	var lineup = NAUR_LINEUP
+	var prio = NAUR_WE_PRIO
+	if strat == Strat.MUR:
+		lineup = MUR_LINEUP
+		prio = MUR_WE_PRIO
+	
 	tanks.shuffle()
 	healers.shuffle()
 	dps.shuffle()
@@ -647,7 +658,7 @@ func na_party_setup() -> void:
 	# Use lineup to determine which dps is East/West
 	var east_dps
 	var west_dps 
-	if NAUR_LINEUP.find(dps[0]) < NAUR_LINEUP.find(dps[1]):
+	if lineup.find(dps[0]) < lineup.find(dps[1]):
 		west_dps = dps[0]
 		east_dps = dps[1]
 	else:
@@ -672,7 +683,7 @@ func na_party_setup() -> void:
 	# Handle water debuffs and potential swap
 	var non_tethers := [healers[1], tanks[1], dps[2], dps[3]]  # [nw, ne, se, sw]
 	# Swap DPS based on W>E prio
-	if NAUR_WE_PRIO.find(dps[2]) < NAUR_WE_PRIO.find(dps[3]):
+	if prio.find(dps[2]) < prio.find(dps[3]):
 		non_tethers[2] = dps[3]
 		non_tethers[3] = dps[2]
 	# Store pre-swap positions, to be used for bot movement.

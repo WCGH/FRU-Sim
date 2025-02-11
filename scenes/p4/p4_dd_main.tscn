@@ -35,7 +35,7 @@
 [ext_resource type="Script" path="res://scenes/ui/spectate_button.gd" id="33_788op"]
 [ext_resource type="Script" path="res://scenes/p4/am_select_button.gd" id="33_yqvyr"]
 [ext_resource type="Script" path="res://scenes/p4/strat_select_button_dd.gd" id="34_c6fxa"]
-[ext_resource type="PackedScene" uid="uid://cmakti71sjg46" path="res://scenes/ui/info_box.tscn" id="34_j1suw"]
+[ext_resource type="PackedScene" uid="uid://cmakti71sjg46" path="res://scenes/ui/version_label.tscn" id="34_j1suw"]
 
 [sub_resource type="Animation" id="Animation_6yukl"]
 resource_name = "darklit"
@@ -594,12 +594,14 @@ action_mode = 1
 button_mask = 3
 selected = 0
 fit_to_longest_item = false
-item_count = 3
+item_count = 4
 popup/item_0/text = "NAUR"
 popup/item_1/text = "Mami (EU)"
 popup/item_1/id = 1
 popup/item_2/text = "Vertical (JP)"
 popup/item_2/id = 2
+popup/item_3/text = "MUR"
+popup/item_3/id = 3
 script = ExtResource("34_c6fxa")
 
 [node name="Label" type="Label" parent="Buttons/StratSelectButton2"]
