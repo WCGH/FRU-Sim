@@ -26,7 +26,8 @@ var save_data: Dictionary = {
 		"p3_sa_swap": 0,   # [Freepoc, Permaswap]
 		"p3_ur_strat": 0,   # [NAUR, LPDU]
 		"p4_dd_strat": 0,  # [NA, EU, JP]
-		"p4_dd_am_strat": 0  # [4-4, 7-1]
+		"p4_dd_am_strat": 0,  # [4-4, 7-1]
+		"p4_ct_strat": 0  # [NAUR, MUR]
 	},
 	"keybinds": {
 		"ab1_sprint": KEY_1,
