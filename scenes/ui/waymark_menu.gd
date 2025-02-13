@@ -3,7 +3,7 @@
 # This file is released under "GNU General Public License 3.0".
 # Please see the LICENSE file that should have been included as part of this package.
 
-extends CanvasLayer
+extends MovableCanvasLayer
 
 @onready var menu_container: MarginContainer = %MenuContainer
 @onready var wm_ground_marker: MeshInstance3D = %WMGroundMarker
@@ -13,6 +13,13 @@ var camera: Camera3D
 var circle_active := false
 var selected_key: String
 var ray_collision: Dictionary
+
+
+func _ready():
+	await get_tree().process_frame
+	section_key = "waymark_menu"
+	init_position()
+
 
 func _process(_delta: float) -> void:
 	if !circle_active:
@@ -52,6 +59,7 @@ func clear_waymark():
 
 # Hide/Show Menu Container
 func _on_collapse_button_pressed() -> void:
+	move_button.visible = !move_button.visible
 	menu_container.visible = !menu_container.visible
 
 

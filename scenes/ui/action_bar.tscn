@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cg0h4uysscvtc"]
+[gd_scene load_steps=9 format=3 uid="uid://cg0h4uysscvtc"]
 
 [ext_resource type="PackedScene" uid="uid://bw67wbi2y10qu" path="res://scenes/ui/action_button.tscn" id="1_oxg47"]
 [ext_resource type="Script" path="res://scenes/ui/action_bar.gd" id="1_pgg3b"]
@@ -6,6 +6,11 @@
 [ext_resource type="Texture2D" uid="uid://cxqgvoxf8p8nc" path="res://assets/common/icons/action_icons/arms_hl_icon.png" id="3_6ea2t"]
 [ext_resource type="Texture2D" uid="uid://5i4mreo11eq3" path="res://assets/common/icons/action_icons/avant_icon.png" id="4_ln20o"]
 [ext_resource type="Texture2D" uid="uid://7wp50uql53uc" path="res://assets/common/icons/action_icons/avant_hl_icon.png" id="5_vknay"]
+[ext_resource type="Script" path="res://scenes/ui/move_ui_button.gd" id="7_vtfgi"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_1yoec"]
+outline_size = 2
+outline_color = Color(1, 0.65098, 0, 1)
 
 [node name="ActionBar" type="CanvasLayer"]
 script = ExtResource("1_pgg3b")
@@ -18,7 +23,6 @@ anchor_right = 0.63
 anchor_bottom = 0.831
 offset_top = -4.79999
 offset_bottom = 0.100037
-grow_horizontal = 2
 grow_vertical = 0
 size_flags_horizontal = 4
 size_flags_vertical = 8
@@ -26,6 +30,14 @@ size_flags_vertical = 8
 [node name="ButtonsContainer" type="HBoxContainer" parent="MarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = 0
+
+[node name="Label" type="Label" parent="MarginContainer/ButtonsContainer"]
+custom_minimum_size = Vector2(24, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "1"
+label_settings = SubResource("LabelSettings_1yoec")
+horizontal_alignment = 1
 
 [node name="SprintActionButton" parent="MarginContainer/ButtonsContainer" instance=ExtResource("1_oxg47")]
 custom_minimum_size = Vector2(45, 45)
@@ -51,3 +63,12 @@ size_flags_vertical = 0
 texture_normal = ExtResource("4_ln20o")
 texture_hover = ExtResource("5_vknay")
 cooldown = 1.0
+
+[node name="MoveButton" type="Button" parent="MarginContainer"]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(24, 42)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+focus_mode = 1
+script = ExtResource("7_vtfgi")

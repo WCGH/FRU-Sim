@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://cidk1e7u3l0ya"]
+[gd_scene load_steps=5 format=3 uid="uid://cidk1e7u3l0ya"]
 
 [ext_resource type="Script" path="res://scenes/ui/fail_list.gd" id="1_2wya2"]
 [ext_resource type="PackedScene" uid="uid://c3pv5d4jy0ae1" path="res://scenes/ui/fail_label.tscn" id="2_mll7f"]
+[ext_resource type="Script" path="res://scenes/ui/move_ui_button.gd" id="3_e2hi6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_giu5l"]
 
 [node name="FailList" type="CanvasLayer" groups=["fail_list"]]
 script = ExtResource("1_2wya2")
@@ -23,3 +26,21 @@ color = Color(0, 0, 0, 0.184314)
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
+
+[node name="MoveButton" type="Button" parent="MarginContainer"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+focus_mode = 1
+theme_override_constants/h_separation = 0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_giu5l")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_giu5l")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_giu5l")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_giu5l")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_giu5l")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_giu5l")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_giu5l")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_giu5l")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_giu5l")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_giu5l")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_giu5l")
+script = ExtResource("3_e2hi6")

@@ -29,6 +29,7 @@ var player_role_key : String
 var selected_role_index := 4
 var selected_sequence_index := 0
 var spectate_mode := false
+var is_moving_ui := false
 
 # P2 Light Rampant
 var p2_force_puddles := false
