@@ -6,7 +6,7 @@
 extends Node
 
 enum {NONE, SHORT, MED, LONG}  # Water debuff durations.
-enum Strat {NAUR, LPDU, MUR}
+enum Strat {NAUR, LPDU, MUR, MANA}
 enum Spread {STATIC, PERMA}   # Freepoc, Permaswap
 
 const DARK_WATER_ICON = preload("res://scenes/ui/auras/debuff_icons/p3/dark_water_icon.tscn")
@@ -34,6 +34,9 @@ const FLANK_STACK_DIST := 11.0
 # All rotations are clockwise.
 const CW_ROTATION_MAP := {0: -45, 45: 0, 90: -135, 135: -90}
 const CCW_ROTATION_MAP := {0: -135, 45: -90, 90: -45, 135: 0}
+# MANA rotations
+const MANA_CW_ROTATION_MAP := {0: -45, 45: 0, 90: -135, 135: -90}
+const MANA_CCW_ROTATION_MAP := {0: 45, 45: 90, 90: -45, 135: 0}
 # Determines where T2 goes for bait (assuming no swap)
 const T2_ROTATION_CW := {0: -45, 45: 0, 90: -135, 135: -90}
 const T2_ROTATION_CCW := {0: -45, 45: 0, 90: 45, 135: 90}
@@ -133,6 +136,9 @@ func cast_refrain():
 func move_to_setup():
 	if strat == Strat.NAUR or strat == Strat.MUR:
 		move_party_sa_static(ApocPos.ROLE_SETUP_NA)
+	elif strat == Strat.MANA:
+		#move_party_sa_static(ApocPos.ROLE_SETUP_MANA)
+		move_party_sa_static_rotated(ApocPos.ROLE_SETUP_EU, 22.5)
 	else:
 		move_party_sa_static(ApocPos.ROLE_SETUP_EU)
 
@@ -189,6 +195,9 @@ func cast_apoc():
 func move_to_swap_pos():
 	if strat == Strat.NAUR or strat == Strat.MUR:
 		move_party_sa(ApocPos.SWAP_SETUP_NA)
+	elif strat == Strat.MANA:
+		#move_party_sa(ApocPos.ROLE_SETUP_MANA)
+		move_party_sa_rotated(ApocPos.SWAP_SETUP_EU, 22.5)
 	else:
 		move_party_sa(ApocPos.SWAP_SETUP_EU)
 
@@ -213,6 +222,9 @@ func start_lock_cd(duration):
 func move_stack_1():
 	if strat == Strat.NAUR or strat == Strat.MUR:
 		move_party_sa(ApocPos.STACK_1_NA)
+	elif strat == Strat.MANA:
+		#move_party_sa(ApocPos.STACK_1_MANA)
+		move_party_sa_rotated(ApocPos.STACK_1_EU, 22.5)
 	else:
 		move_party_sa(ApocPos.STACK_1_EU)
 
@@ -247,6 +259,9 @@ func water_hit(duration: int):
 func move_to_spread_pos():
 	if strat == Strat.NAUR  or strat == Strat.MUR:
 		move_party_sa(ApocPos.SPREAD_NA)
+	elif strat == Strat.MANA:
+		#move_party_sa(ApocPos.SPREAD_MANA)
+		move_party_sa_rotated(ApocPos.SPREAD_EU, 22.5)
 	else:
 		move_party_sa(ApocPos.SPREAD_EU)
 
@@ -275,16 +290,24 @@ func pre_move_swaps():
 ## 28.0
 # Move to Apoc Spread pos (move bots as late as possible).
 func move_apoc_spread():
-	if cw_light:
-		if apoc_spread == Spread.STATIC:
-			move_party_sa_static_rotated(ApocPos.APOC_SPREAD_CW, CW_ROTATION_MAP[arena_rotation_deg])
-		else:
-			move_party_sa_rotated(ApocPos.APOC_SPREAD_CW, CW_ROTATION_MAP[arena_rotation_deg])
+	var check_cw = "CW" if cw_light else "CCW"
+	var check_map = "MANA_%s_ROTATION_MAP" if strat == Strat.MANA else "%s_ROTATION_MAP"
+	var ROTATION_MAP = get(check_map % check_cw)
+	var APOC_SPREAD = ApocPos.APOC_SPREAD_CW if cw_light else ApocPos.APOC_SPREAD_CCW
+	if apoc_spread == Spread.STATIC:
+		move_party_sa_static_rotated(APOC_SPREAD, ROTATION_MAP[arena_rotation_deg])
 	else:
-		if apoc_spread == Spread.STATIC:
-			move_party_sa_static_rotated(ApocPos.APOC_SPREAD_CCW, CCW_ROTATION_MAP[arena_rotation_deg])
-		else:
-			move_party_sa_rotated(ApocPos.APOC_SPREAD_CCW, CCW_ROTATION_MAP[arena_rotation_deg])
+		move_party_sa_rotated(APOC_SPREAD, ROTATION_MAP[arena_rotation_deg])
+	#if cw_light:
+		#if apoc_spread == Spread.STATIC:
+			#move_party_sa_static_rotated(ApocPos.APOC_SPREAD_CW, CW_ROTATION_MAP[arena_rotation_deg])
+		#else:
+			#move_party_sa_rotated(ApocPos.APOC_SPREAD_CW, CW_ROTATION_MAP[arena_rotation_deg])
+	#else:
+		#if apoc_spread == Spread.STATIC:
+			#move_party_sa_static_rotated(ApocPos.APOC_SPREAD_CCW, CCW_ROTATION_MAP[arena_rotation_deg])
+		#else:
+			#move_party_sa_rotated(ApocPos.APOC_SPREAD_CCW, CCW_ROTATION_MAP[arena_rotation_deg])
 
 
 ## 30.9
@@ -438,11 +461,16 @@ func long_lock_cd():
 # Move to pre-kb position
 func move_pre_kb():
 	var flank_positions := get_oracle_flank_pos()
+	# Check Supp Anchor (H2) distance
+	var dist_check_0 = v2(get_char("h2").global_position).distance_to(flank_positions[0])
+	var dist_check_1 = v2(get_char("h2").global_position).distance_to(flank_positions[1])
+	var supp_pos = 0 if dist_check_0 < dist_check_1 else 1
+	
 	for key: String in party_keys_sa:
 		if key.contains("sup"):
-			get_char_sa(key).move_to(flank_positions[0])
+			get_char_sa(key).move_to(flank_positions[supp_pos])
 		else:
-			get_char_sa(key).move_to(flank_positions[1])
+			get_char_sa(key).move_to(flank_positions[1 - supp_pos])
 
 
 ## 47.1
@@ -495,7 +523,8 @@ func party_setup() -> void:
 	var dps_keys: Array # LP1 keys for MUR
 	#var sup_keys: Array # LP2 keys for MUR
 	# Handle strat specific variables.
-	if strat == Strat.NAUR or strat == Strat.LPDU:
+	#if strat == Strat.NAUR or strat == Strat.LPDU:
+	if strat in [Strat.NAUR, Strat.LPDU, Strat.MANA]:
 		party_keys_sa = PARTY_SA_STATIC.duplicate()
 		dps_adjust_prio = DPS_ADJUST_PRIO_NA.duplicate()
 		sup_adjust_prio = SUP_ADJUST_PRIO_NA.duplicate()
