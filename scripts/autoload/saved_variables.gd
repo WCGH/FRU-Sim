@@ -20,6 +20,7 @@ var save_data: Dictionary = {
 		"x_sens": 1.0,
 		"y_sens": 1.0,
 		"invert_y": false,
+		"invert_x": false,
 		"selected_seq": 0,
 		"p2_lr_strat": 0,  # [NAUR, LPDU]
 		"p3_sa_strat": 0,  # [NAUR, LPDU]
