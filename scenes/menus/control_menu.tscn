@@ -231,6 +231,21 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 6
 
+[node name="InvertXContainer" type="HBoxContainer" parent="KeybindsMenuContainer/MarginContainer/LeftButtonsVBox"]
+layout_mode = 2
+theme_override_constants/separation = 57
+
+[node name="InvertXLabel" type="Label" parent="KeybindsMenuContainer/MarginContainer/LeftButtonsVBox/InvertXContainer"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+text = "Invert X"
+label_settings = SubResource("LabelSettings_iqfvl")
+
+[node name="InvertXCheckButton" type="CheckButton" parent="KeybindsMenuContainer/MarginContainer/LeftButtonsVBox/InvertXContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 6
+
 [node name="BottomHBoxContainer" type="HBoxContainer" parent="KeybindsMenuContainer/MarginContainer/LeftButtonsVBox"]
 layout_mode = 2
 size_flags_vertical = 10
@@ -253,4 +268,5 @@ text = "Close"
 [connection signal="drag_ended" from="KeybindsMenuContainer/MarginContainer/LeftButtonsVBox/XSensContainer/XSensHSlider" to="." method="_on_x_sens_h_slider_drag_ended"]
 [connection signal="drag_ended" from="KeybindsMenuContainer/MarginContainer/LeftButtonsVBox/YSensContainer2/YSensHSlider" to="." method="_on_y_sens_h_slider_drag_ended"]
 [connection signal="toggled" from="KeybindsMenuContainer/MarginContainer/LeftButtonsVBox/InvertYContainer/InvertYCheckButton" to="." method="_on_invert_y_check_button_toggled"]
+[connection signal="toggled" from="KeybindsMenuContainer/MarginContainer/LeftButtonsVBox/InvertXContainer/InvertXCheckButton" to="." method="_on_invert_x_check_button_toggled"]
 [connection signal="pressed" from="KeybindsMenuContainer/MarginContainer/LeftButtonsVBox/BottomHBoxContainer/BackButton" to="." method="_on_back_button_pressed"]

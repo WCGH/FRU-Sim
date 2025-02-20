@@ -38,6 +38,7 @@ var mouse_position := Vector2(950.0, 480.0)
 var mouse_travel := Vector2.ZERO
 # Controller
 var invert_y := false
+var invert_x := false
 var x_sensitivity := BASE_X_SENS
 var y_sensitivity := BASE_Y_SENS
 # Movement
@@ -69,6 +70,7 @@ func _ready() -> void:
 	x_sensitivity *= SavedVariables.save_data["settings"]["x_sens"]
 	y_sensitivity *= SavedVariables.save_data["settings"]["y_sens"]
 	invert_y = SavedVariables.save_data["settings"]["invert_y"]
+	invert_x = SavedVariables.save_data["settings"]["invert_x"]
 	spectate_mode = Global.spectate_mode
 	GameEvents.spectate_mode_changed.connect(on_spectate_mode_changed)
 	GameEvents.variable_saved.connect(on_variable_saved)
@@ -144,7 +146,10 @@ func _physics_process(delta : float) -> void:
 	# Handle Controller right stick (camera)
 	var cam_input := Input.get_vector("look_left", "look_right", "look_up", "look_down")
 	if cam_input.length_squared() > 0.0:
-		twist_input = - cam_input.x * x_sensitivity
+		if invert_x:
+			twist_input = cam_input.x * x_sensitivity
+		else:
+			twist_input = - cam_input.x * x_sensitivity
 		if invert_y:
 			pitch_input = cam_input.y * y_sensitivity
 		else:
@@ -206,8 +211,14 @@ func _unhandled_input(event : InputEvent) -> void:
 	# Mouse motion.
 	if event is InputEventMouseMotion:
 		if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
-			twist_input = - event.relative.x * mouse_sensitivity
-			pitch_input = - event.relative.y * mouse_sensitivity
+			if invert_x:
+				twist_input = event.relative.x * mouse_sensitivity
+			else:
+				twist_input = - event.relative.x * mouse_sensitivity
+			if invert_y:
+				pitch_input = event.relative.y * mouse_sensitivity
+			else:
+				pitch_input = - event.relative.y * mouse_sensitivity
 			# Get left click movement to exclude click/drags
 			mouse_travel += event.relative
 	# Mouse button pressed.
@@ -287,11 +298,12 @@ func on_spectate_mode_changed() -> void:
 
 # Used to update sensitivity when changed in controls menu.
 func on_variable_saved(_section: String, key: String, _value: Variant) -> void:
-	if key.contains("sens") or key == "invert_y":
+	if key.contains("sens") or key.contains("invert_"):
 		mouse_sensitivity = BASE_MOUSE_SENS * SavedVariables.save_data["settings"]["mouse_sens"]
 		x_sensitivity = BASE_Y_SENS * SavedVariables.save_data["settings"]["x_sens"]
 		y_sensitivity = BASE_Y_SENS * SavedVariables.save_data["settings"]["y_sens"]
 		invert_y = SavedVariables.save_data["settings"]["invert_y"]
+		invert_x = SavedVariables.save_data["settings"]["invert_x"]
 
 
 # Resets camera position to fix it getting desync'd when leaving spectate mode.
