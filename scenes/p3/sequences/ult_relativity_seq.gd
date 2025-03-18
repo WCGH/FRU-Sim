@@ -56,8 +56,8 @@ var na_dps_prio := ["r2", "r1", "m1", "m2"]
 var na_sup_prio := ["h2", "h1", "t1", "t2"]
 var eu_dps_prio := ["r1", "m1", "m2", "r2"]
 var eu_sup_prio := ["h1", "t1", "t2", "h2"]
-var grey_dps_prio := ["r2", "m2", "m1", "r1"]
-var grey_sup_prio := ["h2", "t2", "t1", "h1"]
+var grey_dps_prio := ["r2", "r1", "m2", "m1"]
+var grey_sup_prio := ["h2", "h1", "t2", "t1"]
 var party_keys_ur := {
 	"f1_dps_sw": "", "f1_dps_se": "", "f1_sup": "",
 	"f2_dps": "", "f2_sup": "",
