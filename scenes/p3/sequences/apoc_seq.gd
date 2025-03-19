@@ -57,7 +57,7 @@ const DPS_ADJUST_PRIO_NA := ["m1", "m2", "r1", "r2"]
 const SUP_ADJUST_PRIO_NA := ["t1", "t2", "h1", "h2"]
 # Adjust prios for both HA
 const DPS_ADJUST_PRIO_HR := ["r2", "r1", "m2", "m1"]
-const SUP_ADJUST_PRIO_HR := ["h1", "h2", "t2", "t1"]
+const SUP_ADJUST_PRIO_HR := ["h2", "h1", "t2", "t1"]
 # Adjust prio for MUR (Panto prio)
 const DPS_ADJUST_PRIO_MUR := ["t2", "m2", "r2", "h2"] # LP2
 const SUP_ADJUST_PRIO_MUR := ["t1", "m1", "r1", "h1"] # LP1
