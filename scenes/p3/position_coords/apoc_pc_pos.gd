@@ -103,6 +103,10 @@ const APOC_SPREAD_CW := {
 	"nl_sup": APOC_NEAR_CARD * N, "nr_sup": APOC_NEAR_INTER * NW, "fl_sup": APOC_FAR * NE, "fr_sup": APOC_FAR * NW,
 	"nl_dps": APOC_NEAR_CARD * S, "nr_dps": APOC_NEAR_INTER * SE, "fl_dps": APOC_FAR * SW, "fr_dps": APOC_FAR * SE
 }
+const APOC_SPREAD_CW_HR := {
+	"nr_sup": APOC_NEAR_CARD * N, "nl_sup": APOC_NEAR_INTER * NW, "fl_sup": APOC_FAR * NE, "fr_sup": APOC_FAR * NW,
+	"nr_dps": APOC_NEAR_CARD * S, "nl_dps": APOC_NEAR_INTER * SE, "fl_dps": APOC_FAR * SW, "fr_dps": APOC_FAR * SE
+}
 # Positions are rotated up to 135 deg CCW, NW/SE relative.
 const APOC_SPREAD_CCW := {
 	"nl_sup": APOC_NEAR_INTER * NE, "nr_sup": APOC_NEAR_CARD * N, "fl_sup": APOC_FAR * NE, "fr_sup": APOC_FAR * NW,

@@ -6,7 +6,7 @@
 extends Node
 
 enum {NONE, SHORT, MED, LONG}  # Water debuff durations.
-enum Strat {NAUR, LPDU, MUR, MANA}
+enum Strat {NAUR, LPDU, MUR, MANA, HR}
 enum Spread {STATIC, PERMA}   # Freepoc, Permaswap
 
 const DARK_WATER_ICON = preload("res://scenes/ui/auras/debuff_icons/p3/dark_water_icon.tscn")
@@ -55,6 +55,9 @@ const PARTY_SA_STATIC_MUR := {
 # Adjust prios for both NA and EU
 const DPS_ADJUST_PRIO_NA := ["m1", "m2", "r1", "r2"]
 const SUP_ADJUST_PRIO_NA := ["t1", "t2", "h1", "h2"]
+# Adjust prios for both HA
+const DPS_ADJUST_PRIO_HR := ["r2", "r1", "m2", "m1"]
+const SUP_ADJUST_PRIO_HR := ["h1", "h2", "t2", "t1"]
 # Adjust prio for MUR (Panto prio)
 const DPS_ADJUST_PRIO_MUR := ["t2", "m2", "r2", "h2"] # LP2
 const SUP_ADJUST_PRIO_MUR := ["t1", "m1", "r1", "h1"] # LP1
@@ -120,6 +123,9 @@ func start_sequence(new_party: Dictionary) -> void:
 		# Fix invalid SavedVariables, defaults to Static.
 		GameEvents.emit_variable_saved("settings", "p3_sa_swap", 0)
 		apoc_spread = Spread.STATIC
+	# Hanging Rabbit strat only uses PERMA
+	if strat == Strat.HR:
+		apoc_spread = Spread.PERMA
 	instantiate_party(new_party)
 	apoc_anim.play("apoc")
 
@@ -135,7 +141,7 @@ func cast_refrain():
 ## 2.2
 # Move to inital role positions.
 func move_to_setup():
-	if strat in [Strat.NAUR, Strat.MUR]:
+	if strat in [Strat.NAUR, Strat.MUR, Strat.HR]:
 		move_party_sa_static(ApocPos.ROLE_SETUP_NA)
 	elif strat == Strat.MANA:
 		move_party_sa_static_rotated(ApocPos.ROLE_SETUP_EU, MANA_ROTATION_OFFSET)
@@ -193,7 +199,7 @@ func cast_apoc():
 ## 15.6
 # Make swaps if needed
 func move_to_swap_pos():
-	if strat in [Strat.NAUR, Strat.MUR]:
+	if strat in [Strat.NAUR, Strat.MUR, Strat.HR]:
 		move_party_sa(ApocPos.SWAP_SETUP_NA)
 	elif strat == Strat.MANA:
 		move_party_sa_rotated(ApocPos.SWAP_SETUP_EU, MANA_ROTATION_OFFSET)
@@ -219,7 +225,7 @@ func start_lock_cd(duration):
 ## 20.2
 # Move to stack pos
 func move_stack_1():
-	if strat in [Strat.NAUR, Strat.MUR]:
+	if strat in [Strat.NAUR, Strat.MUR, Strat.HR]:
 		move_party_sa(ApocPos.STACK_1_NA)
 	elif strat == Strat.MANA:
 		move_party_sa_rotated(ApocPos.STACK_1_EU, MANA_ROTATION_OFFSET)
@@ -255,7 +261,7 @@ func water_hit(duration: int):
 ## 23.8
 # Return to spread pos.
 func move_to_spread_pos():
-	if strat in [Strat.NAUR, Strat.MUR]:
+	if strat in [Strat.NAUR, Strat.MUR, Strat.HR]:
 		move_party_sa(ApocPos.SPREAD_NA)
 	elif strat == Strat.MANA:
 		move_party_sa_rotated(ApocPos.SPREAD_EU, MANA_ROTATION_OFFSET)
@@ -297,13 +303,13 @@ func move_apoc_spread():
 			move_party_sa_static_rotated(APOC_SPREAD, ROTATION_MAP[arena_rotation_deg])
 		else:
 			move_party_sa_rotated(APOC_SPREAD, ROTATION_MAP[arena_rotation_deg])
-	
 	else:
 		if cw_light:
+			var apoc_pos = ApocPos.APOC_SPREAD_CW if strat != Strat.HR else ApocPos.APOC_SPREAD_CW_HR
 			if apoc_spread == Spread.STATIC:
-				move_party_sa_static_rotated(ApocPos.APOC_SPREAD_CW, CW_ROTATION_MAP[arena_rotation_deg])
+				move_party_sa_static_rotated(apoc_pos, CW_ROTATION_MAP[arena_rotation_deg])
 			else:
-				move_party_sa_rotated(ApocPos.APOC_SPREAD_CW, CW_ROTATION_MAP[arena_rotation_deg])
+				move_party_sa_rotated(apoc_pos, CW_ROTATION_MAP[arena_rotation_deg])
 		else:
 			if apoc_spread == Spread.STATIC:
 				move_party_sa_static_rotated(ApocPos.APOC_SPREAD_CCW, CCW_ROTATION_MAP[arena_rotation_deg])
@@ -398,14 +404,19 @@ func med_water_hit():
 ## 41.8
 func move_t2_short():
 	bait_tank_key = "t2" if !Global.p3_t1_bait else "t1"
+	# Hanging Rabbit strat specifies that the bait tank is t1
+	bait_tank_key = "t1" if strat == Strat.HR else bait_tank_key
 	bait_rotation_dict = T2_ROTATION_CW if cw_light else T2_ROTATION_CCW
 	bait_rotation_offset = 0
-	# If tank swapped, send them to opposite side.
-	if (!Global.p3_t1_bait and t2_swapped) or (Global.p3_t1_bait and t1_swapped):
-		bait_rotation_offset += 180
-	# If MUR strat, account for T2 starting on East side.
-	if strat == Strat.MUR and !Global.p3_t1_bait:
-		bait_rotation_offset += 180
+	
+	# T1/D1 is not swap in Hanging Rabbit strat
+	if strat != Strat.HR:
+		# If tank swapped, send them to opposite side.
+		if (!Global.p3_t1_bait and t2_swapped) or (Global.p3_t1_bait and t1_swapped):
+			bait_rotation_offset += 180
+		# If MUR strat, account for T2 starting on East side.
+		if strat == Strat.MUR and !Global.p3_t1_bait:
+			bait_rotation_offset += 180
 	get_char(bait_tank_key).move_to(t2_nw_bait_pos_close.rotated(deg_to_rad(bait_rotation_dict[arena_rotation_deg] + bait_rotation_offset)))
 
 
@@ -540,6 +551,11 @@ func party_setup() -> void:
 		dps_adjust_prio = DPS_ADJUST_PRIO_MUR.duplicate()
 		sup_adjust_prio = SUP_ADJUST_PRIO_MUR.duplicate()
 		dps_keys = DPS_ADJUST_PRIO_MUR
+	elif strat == Strat.HR:
+		party_keys_sa = PARTY_SA_STATIC.duplicate()
+		dps_adjust_prio = DPS_ADJUST_PRIO_HR.duplicate()
+		sup_adjust_prio = SUP_ADJUST_PRIO_HR.duplicate()
+		dps_keys = Global.DPS_ROLE_KEYS
 	# Assign water debuffs
 	var debuff_lengths := [NONE, NONE, SHORT, SHORT, MED, MED, LONG, LONG]
 	var shuffle_list := party.keys()
