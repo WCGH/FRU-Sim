@@ -48,6 +48,7 @@ var p4_dd_force_spirit := false
 
 # P4 Crystallize Time
 var p4_ct_selected_debuff := 0  # [random, red/aero, red/ice, blue/eruption, blue/ice, blue,unholy, blue/water]
+var p4_ct_selected_debuffs := []
 var p4_ct_force_spirit := false
 var p4_ct_hide_bots := false
 

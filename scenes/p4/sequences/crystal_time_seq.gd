@@ -305,7 +305,7 @@ func water_hit():
 # Fireworks go off.
 # Aero's hit + snapshot knockback.
 # Blizzards hit.
-# Eruption his.
+# Eruption hits.
 func fireworks():
 	# Spawn Aero AoE's and snapshot targets with source of kb.
 	var aero_1_circle: CircleAoe = ground_aoe_controller.spawn_circle(v2(get_char("r_aero_sw").global_position),
@@ -840,13 +840,22 @@ func na_mur_party_setup() -> void:
 	var shuffle_list := party.keys()
 	shuffle_list.shuffle()
 	
+	## Handle manual debuff selection from user.
+	#if Global.p4_ct_selected_debuff != 0:
+		#var player_role_key = get_tree().get_first_node_in_group("player").get_role()
+		## Remove player index and insert at selected key
+		#shuffle_list.erase(player_role_key)
+		## For DPS need to convert 1,2,3 index to 3,2,1
+		#shuffle_list.insert(Global.p4_ct_selected_debuff - 1, player_role_key)
+		
 	# Handle manual debuff selection from user.
-	if Global.p4_ct_selected_debuff != 0:
+	if not Global.p4_ct_selected_debuffs.is_empty():
+		var rng_debuff = Global.p4_ct_selected_debuffs.pick_random()
 		var player_role_key = get_tree().get_first_node_in_group("player").get_role()
 		# Remove player index and insert at selected key
 		shuffle_list.erase(player_role_key)
 		# For DPS need to convert 1,2,3 index to 3,2,1
-		shuffle_list.insert(Global.p4_ct_selected_debuff - 1, player_role_key)
+		shuffle_list.insert(rng_debuff - 1, player_role_key)
 	
 	# Check if red/aero (0, 6) are in prio order, otherwise swap them.
 	if we_prio.find(shuffle_list[0]) > we_prio.find(shuffle_list[6]):

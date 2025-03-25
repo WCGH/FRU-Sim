@@ -1,17 +1,15 @@
 [gd_scene load_steps=9 format=4 uid="uid://genonltkscip"]
 
+[ext_resource type="Texture2D" uid="uid://344rd7r2xvok" path="res://assets/p4/enemies/wind_up_ryne/WindUpRyne_mt_m8300b0001_a_d.png" id="1_64bu5"]
 [ext_resource type="Texture2D" uid="uid://igma6sc2xqk3" path="res://assets/p4/enemies/wind_up_ryne/WindUpRyne_mt_m8300b0001_a_e.png" id="2_3jaeb"]
 [ext_resource type="Texture2D" uid="uid://c3sxf4orpa3cd" path="res://assets/p4/enemies/wind_up_ryne/WindUpRyne_mt_m8300b0001_a_n.png" id="3_1rpfg"]
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_1ob04"]
-load_path = "res://.godot/imported/WindUpRyne_mt_m8300b0001_a_d.png-4fdfa0c63dc73919627d08632c91af31.s3tc.ctex"
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dkwrc"]
 resource_name = "mt_m8300b0001_a"
 transparency = 4
 cull_mode = 2
 vertex_color_use_as_albedo = true
-albedo_texture = SubResource("CompressedTexture2D_1ob04")
+albedo_texture = ExtResource("1_64bu5")
 metallic = 1.0
 roughness = 0.929289
 emission_enabled = true
