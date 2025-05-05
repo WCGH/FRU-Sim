@@ -639,7 +639,7 @@ action_mode = 1
 button_mask = 3
 selected = 0
 fit_to_longest_item = false
-item_count = 5
+item_count = 6
 popup/item_0/text = "NAUR"
 popup/item_1/text = "Mami (EU)"
 popup/item_1/id = 1
@@ -649,6 +649,8 @@ popup/item_3/text = "Mana"
 popup/item_3/id = 3
 popup/item_4/text = "MUR"
 popup/item_4/id = 4
+popup/item_5/text = "KOR"
+popup/item_5/id = 5
 script = ExtResource("34_c6fxa")
 
 [node name="Label" type="Label" parent="Buttons/StratSelectButton"]

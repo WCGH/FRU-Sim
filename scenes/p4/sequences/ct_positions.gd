@@ -73,6 +73,8 @@ const M2_SPREAD_NW := Vector2(0, 14)
 const R1_SPREAD_NW := Vector2(-29, -29)
 const R2_SPREAD_NW := Vector2(29, 29)
 
+const KOR_SPREAD := Vector2(20.5, 20.5)
+
 # Akh Morn
 const AM_STACK_LEFT := Vector2(8, 0)
 const AM_STACK_RIGHT := Vector2(-8, 0)
@@ -314,6 +316,20 @@ const REWIND_SW := {
 	"r1": G1_PARTY_SW + RS1, "r2": G2_PARTY_SW + RS1, 
 	"h1": G1_PARTY_SW + RS2, "h2": G2_PARTY_SW + RS2
 }
+# KOR Rewind Positions
+const KOR_REWIND_REF := [KOR_REWIND_N, KOR_REWIND_N, KOR_REWIND_S, KOR_REWIND_S]
+const KOR_REWIND_N := {
+	"t1": FIRST_HG_DODGE * NW, "t2": FIRST_HG_DODGE * NE,
+	"m1": Vector2(5, 0) + RS1, "m2": Vector2(5, 0) + RS2,
+	"r1": Vector2(5, 0) + RS3, "r2": Vector2(5, 0) - RS1,
+	"h1": Vector2(5, 0) - RS2, "h2": Vector2(5, 0) - RS3
+}
+const KOR_REWIND_S := {
+	"t1": FIRST_HG_DODGE * SW, "t2": FIRST_HG_DODGE * SE,
+	"m1": Vector2(-5, 0) + RS1, "m2": Vector2(-5, 0) + RS2,
+	"r1": Vector2(-5, 0) + RS3, "r2": Vector2(-5, 0) - RS1,
+	"h1": Vector2(-5, 0) - RS2, "h2": Vector2(-5, 0) - RS3
+}
 
 const JUMP_SPREAD_NE := {
 	"t1": T1_SPREAD_NE, "t2": T2_SPREAD_NE,
@@ -326,6 +342,11 @@ const JUMP_SPREAD_NW := {
 	"m1": M1_SPREAD_NW, "m2": M2_SPREAD_NW, 
 	"r1": R1_SPREAD_NW, "r2": R2_SPREAD_NW, 
 	"h1": H1_SPREAD_NW, "h2": H2_SPREAD_NW
+}
+const KOR_JUMP_SPREAD := {
+	"m1": KOR_SPREAD * SW, "m2": KOR_SPREAD * SE, 
+	"r1": KOR_SPREAD * NW, "r2": KOR_SPREAD * NE,
+	"h1": Vector2(-29.0, 0), "h2": MID
 }
 
 const AKH_MORN := {

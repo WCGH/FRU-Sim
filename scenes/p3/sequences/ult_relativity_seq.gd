@@ -5,7 +5,7 @@
 
 extends Node
 
-enum Strat {NA, EU, GREY}
+enum Strat {NA, EU, GREY, KOR}
 
 # Debuff Icon Scenes
 const STUN_ICON = preload("res://scenes/ui/auras/debuff_icons/common/stun_icon.tscn")
@@ -58,6 +58,8 @@ var eu_dps_prio := ["r1", "m1", "m2", "r2"]
 var eu_sup_prio := ["h1", "t1", "t2", "h2"]
 var grey_dps_prio := ["r2", "m2", "m1", "r1"]
 var grey_sup_prio := ["h2", "t2", "t1", "h1"]
+var kor_dps_prio := ["r2", "r1", "m2", "m1"]
+var kor_sup_prio := ["h2", "t2", "t1", "h1"]
 var party_keys_ur := {
 	"f1_dps_sw": "", "f1_dps_se": "", "f1_sup": "",
 	"f2_dps": "", "f2_sup": "",
@@ -373,7 +375,7 @@ func move_third_bait() -> void:
 			var pc: PlayableCharacter = get_ur_player(hourglass_soakers[key])
 			var pos_key = hourglass_soakers[key]
 			# Need to swap E/W soaker keys if Grey-9
-			if selected_strat == Strat.GREY and pos_key in ["f2_dps", "f2_sup"]:
+			if selected_strat in [Strat.GREY, Strat.KOR] and pos_key in ["f2_dps", "f2_sup"]:
 				if pos_key == "f2_dps":
 					pc = get_ur_player("f2_sup")
 					pos_key = "f2_sup_g9"
@@ -400,7 +402,7 @@ func move_final() -> void:
 func look_out() -> void:
 	for key in party_keys_ur:
 		var pos_key = String(key)
-		if selected_strat == Strat.GREY and pos_key in ["f2_dps", "f2_sup"]:
+		if selected_strat in [Strat.GREY, Strat.KOR] and pos_key in ["f2_dps", "f2_sup"]:
 			pos_key = str(pos_key + "_g9")
 		get_ur_player(key).look_at_direction(v3(UltRelativityPcPos.look_direction[pos_key].rotated(deg_to_rad(arena_rotation_deg))))
 
@@ -530,6 +532,9 @@ func party_setup() -> void:
 	elif selected_strat == Strat.GREY:
 		dps_prio = grey_dps_prio.duplicate()
 		sup_prio = grey_sup_prio.duplicate()
+	elif selected_strat == Strat.KOR:
+		dps_prio = kor_dps_prio.duplicate()
+		sup_prio = kor_sup_prio.duplicate()
 	else:
 		# If user changes saved_variable to something invalid, reset it.
 		GameEvents.emit_variable_saved("settings", "p3_ur_strat", 0)
@@ -598,7 +603,7 @@ func move_party(party_dict: Dictionary, pos: Dictionary) -> void:
 func move_party_ur_rotated(pos: Dictionary) -> void:
 	for key: String in party_keys_ur:
 		var pos_key = String(key)
-		if selected_strat == Strat.GREY and key in ["f2_dps", "f2_sup"]:
+		if selected_strat in [Strat.GREY, Strat.KOR] and key in ["f2_dps", "f2_sup"]:
 			pos_key = str(pos_key + "_g9")
 		var pc: PlayableCharacter = get_ur_player(key)
 		if pc.is_player() and !Global.spectate_mode:

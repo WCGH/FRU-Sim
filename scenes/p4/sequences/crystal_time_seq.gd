@@ -6,7 +6,7 @@
 extends Node
 
 enum Intercards {NW, NE, SE, SW}
-enum Strat {NA, MUR}
+enum Strat {NA, MUR, KOR}
 
 # Debuff Icon Scenes
 const AERO_ICON = preload("res://scenes/ui/auras/debuff_icons/p4/aero.tscn")
@@ -70,6 +70,7 @@ const AKH_MORN_DARK_COLOR := Color.DARK_VIOLET
 
 const NA_WE_PRIO := ["h2", "h1", "t2", "t1", "m1", "m2", "r1", "r2"]
 const MUR_WE_PRIO := ["h1", "r1", "m1", "t1", "t2", "m2", "r2", "h2"]
+const KOR_WE_PRIO := ["h1", "t1", "t2", "m1", "m2", "r1", "r2", "h2"]
 const DEBUFF_ASSIGNMENTS := {
 	"r_aero_sw": {AERO_ICON: 14, WYRMCLAW_ICON: 40, RETURN_ICON: 33},
 	"r_aero_se": {AERO_ICON: 14, WYRMCLAW_ICON: 40, RETURN_ICON: 33},
@@ -512,7 +513,10 @@ func move_post_exa_4():
 ## 35.8
 # Move to Rewind posistions.
 func move_rewind():
-	move_party(party, CTPos.REWIND_REF[exaline_spawns])
+	if strat in [Strat.NA, Strat.MUR]:
+		move_party(party, CTPos.REWIND_REF[exaline_spawns])
+	elif strat == Strat.KOR: # Only care about North(0,1) and South(2,3)
+		move_party(party, CTPos.KOR_REWIND_REF[exaline_spawns])
 
 
 ## 39.6
@@ -542,23 +546,36 @@ func snapshot_rewinds():
 # We do this now to give the scanner enough frames to cross the entire arena.
 func clone_cast_spirit():
 	clone_cast_bar.cast_clone("Spirit Taker", 2.7, 1)
-	
-	# E/W Scan
-	if east_exa:
-		line_scanner.scan_line(v2(USURPER_POS["e"]), v2(USURPER_POS["w"]), 1.5)
+	if strat == Strat.KOR:
+		var target_keys = rewind_positions.keys()
+		if east_exa:
+			target_keys.sort_custom(func(a, b):
+				return rewind_positions[a].y > rewind_positions[b].y)
+		else:
+			target_keys.sort_custom(func(a, b):
+				return rewind_positions[a].y < rewind_positions[b].y)
+		ew_kb_targets = target_keys.slice(0, 4)
 	else:
-		line_scanner.scan_line(v2(USURPER_POS["w"]), v2(USURPER_POS["e"]), 1.5)
+		# E/W Scan
+		if east_exa:
+			line_scanner.scan_line(v2(USURPER_POS["e"]), v2(USURPER_POS["w"]), 1.5)
+		else:
+			line_scanner.scan_line(v2(USURPER_POS["w"]), v2(USURPER_POS["e"]), 1.5)
 
 
 ## 40.6
 # Move to post-rewind spread.
 func move_jump_spread():
-	if exaline_spawns == Intercards.NW:
-		for key: String in CTPos.JUMP_SPREAD_NW:
-			party[key].move_to(CTPos.JUMP_SPREAD_NW[key])
-	else:
-		for key: String in CTPos.JUMP_SPREAD_NE:
-			party[key].move_to(CTPos.JUMP_SPREAD_NE[key].rotated(arena_rotation[exaline_spawns]))
+	if strat == Strat.KOR:
+		for key: String in CTPos.KOR_JUMP_SPREAD:
+			party[key].move_to(CTPos.KOR_JUMP_SPREAD[key])
+	elif strat in [Strat.NA, Strat.MUR]:
+		if exaline_spawns == Intercards.NW:
+			for key: String in CTPos.JUMP_SPREAD_NW:
+				party[key].move_to(CTPos.JUMP_SPREAD_NW[key])
+		else:
+			for key: String in CTPos.JUMP_SPREAD_NE:
+				party[key].move_to(CTPos.JUMP_SPREAD_NE[key].rotated(arena_rotation[exaline_spawns]))
 
 
 ## 41.0
@@ -575,11 +592,21 @@ func tele_usurper_mid():
 ## 42
 # Run N/S scan
 func scan_rewind_ns():
-	# First kb will come East to West
-	if north_exa:
-		line_scanner.scan_line(v2(USURPER_POS["n"]), v2(USURPER_POS["s"]), 1.5)
+	if strat == Strat.KOR:
+		var target_keys = rewind_positions.keys()
+		if north_exa:
+			target_keys.sort_custom(func(a, b):
+				return rewind_positions[a].x > rewind_positions[b].x)
+		else:
+			target_keys.sort_custom(func(a, b):
+				return rewind_positions[a].x < rewind_positions[b].x)
+		ns_kb_targets = target_keys.slice(0, 4)
 	else:
-		line_scanner.scan_line(v2(USURPER_POS["s"]), v2(USURPER_POS["n"]), 1.5)
+		# First kb will come East to West
+		if north_exa:
+			line_scanner.scan_line(v2(USURPER_POS["n"]), v2(USURPER_POS["s"]), 1.5)
+		else:
+			line_scanner.scan_line(v2(USURPER_POS["s"]), v2(USURPER_POS["n"]), 1.5)
 
 func on_scan_finished(areas: Array):
 	if areas.size() < 4:
@@ -632,6 +659,17 @@ func jump_hit():
 	var pc: PlayableCharacter = party[jump_target]
 	ground_aoe_controller.spawn_circle(v2(pc.global_position), JUMP_RADIUS,
 		JUMP_LIFETIME, JUMP_COLOR, [1, 1, "Spirit Taker (Oracle Jump)", [pc]])
+
+
+## 45.6
+# Cast Arm's Length/Surecast for KOR strat
+func cast_kb_resist():
+	for key in party:
+		var pc: PlayableCharacter = party[key]
+		if pc.is_player() and !pc.spectate_mode:
+			continue
+		# TODO: connect to PlayerMovementController arms_length
+		arms_length(pc)
 
 
 ## 46.6
@@ -706,7 +744,8 @@ func knockback_2_hit():
 	for key in ns_kb_targets:
 		var pc: PlayableCharacter = get_char(key)
 		if pc.has_debuff("magic_vuln"):
-			fail_list.add_fail(str(pc.get_name(), " failed Hallowed Wings (2 stacks of Magic Vuln)"))
+			if strat != Strat.KOR:
+				fail_list.add_fail(str(pc.get_name(), " failed Hallowed Wings (2 stacks of Magic Vuln)"))
 		else:
 			pc.add_debuff(MAGIC_VULN_ICON, MAGIC_VULN_DURATION)
 
@@ -811,7 +850,7 @@ func instantiate_party(new_party: Dictionary) -> void:
 	# Standard role keys
 	party = new_party
 	# NA/MUR Party setup
-	na_mur_party_setup()
+	na_mur_kor_party_setup()
 	# Randomize Tether spawn
 	nw_tether = randi() % 2 == 0
 	# Pick 3 Quietus targets
@@ -829,12 +868,14 @@ func instantiate_party(new_party: Dictionary) -> void:
 	north_exa = (exaline_spawns == Intercards.NE or exaline_spawns == Intercards.NW)
 
 
-func na_mur_party_setup() -> void:
+func na_mur_kor_party_setup() -> void:
 	var we_prio
 	if strat == Strat.NA:
 		we_prio = NA_WE_PRIO
 	elif strat == Strat.MUR:
 		we_prio = MUR_WE_PRIO
+	elif strat == Strat.KOR:
+		we_prio = KOR_WE_PRIO
 	
 	# Shuffle dps/sup roles
 	var shuffle_list := party.keys()
@@ -917,6 +958,16 @@ func on_toggle_bots_visible() -> void:
 		if pc.is_player():
 			continue
 		pc.visible = bots_visible
+
+
+func arms_length(pc: PlayableCharacter) -> void:
+	var arms_length_duration := 6.0
+	pc.kb_resist = true
+	var timer: Timer = Timer.new()
+	timer.wait_time = arms_length_duration
+	add_child(timer)
+	timer.timeout.connect(func() -> void: pc.kb_resist = false)
+	timer.start()
 
 
 func v2(vec3: Vector3) -> Vector2:

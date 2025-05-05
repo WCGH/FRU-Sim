@@ -5,7 +5,7 @@
 
 extends Node
 
-enum Strat {NA, EU, JP, MANA, MUR}
+enum Strat {NA, EU, JP, MANA, MUR, KOR}
 enum DanceStrat {SHARED, T1SOLO, T2SOLO}
 
 # Debuff Icon Scenes
@@ -66,6 +66,8 @@ const EU_JP_DPS_LINEUP := ["m1", "m2", "r1", "r2"]  # W>E or S>N
 const EU_JP_WE_PRIO := ["t1", "t2", "h1", "h2", "m1", "m2", "r1", "r2"]
 # Mana Prio, matches lineup.
 const MANA_WE_PRIO := ["h1", "h2", "t1", "t2", "m1", "m2", "r1", "r2"]
+# KOR Prio.
+const KOR_SN_PRIO := ["t1", "t2", "h1", "h2", "m1", "m2", "r1", "r2"]
 
 # Entity Positions
 const USURPER_POS := {"final": Vector3(0, 0, -6), "final_rota": 135.0}
@@ -152,7 +154,7 @@ func start_sequence(new_party: Dictionary) -> void:
 ## 2.0
 # Move part mid
 func move_mid():
-	if strat == Strat.MANA:
+	if strat in [Strat.MANA, Strat.KOR]:
 		move_party(DDPos.MANA_STACK_PARTY)
 	else:
 		move_party(DDPos.MID_STACK_PARTY)
@@ -181,6 +183,8 @@ func move_first_spread() -> void:
 		move_party(DDPos.POST_AA_PARTY_JP)
 	elif strat == Strat.MANA:
 		move_party(DDPos.POST_AA_PARTY_MANA)
+	elif strat == Strat.KOR:
+		move_party(DDPos.POST_AA_PARTY_KOR)
 
 ## 9.3
 # First AoE's hit on snapshot positions
@@ -208,6 +212,8 @@ func move_lr_pre_pos():
 		move_party(DDPos.LR_PARTY_JP)
 	elif strat == Strat.MANA:
 		move_party(DDPos.LR_PARTY_MANA)
+	elif strat == Strat.KOR:
+		move_party(DDPos.LR_PARTY_KOR)
 
 
 ## 14.7
@@ -348,7 +354,7 @@ func move_spirit_spread():
 			pc.move_to(DDPos.SPIRIT_DD_SP_NA[key])
 	elif strat == Strat.EU:
 		move_party_dd(DDPos.SPIRIT_DD_EU)
-	elif strat in [Strat.JP, Strat.MANA]:
+	elif strat in [Strat.JP, Strat.MANA, Strat.KOR]:
 		move_party_dd(DDPos.SPIRIT_DD_JP)
 
 ## 35.5
@@ -628,6 +634,8 @@ func instantiate_party(new_party: Dictionary) -> void:
 	# Vetical/EU setup
 	elif strat in [Strat.EU, Strat.JP]:
 		eu_jp_party_setup()
+	elif strat == Strat.KOR:
+		kor_party_setup()
 	else:
 		assert(false, "Error. Invalid Strat selection in party setup.")
 	# Pick Usurper Jump target
@@ -899,6 +907,135 @@ func eu_jp_party_setup() -> void:
 	elif east_swapped:
 		spirit_spread_dd["e_sup"] = party_dd["se_bait"]
 		spirit_spread_dd["e_dps"] = party_dd["ne_bait"]
+
+
+func kor_party_setup() -> void:
+	# Shuffle tank, healers and dps (tank/healer/dps[0] + dps[1] will be LR tethers)
+	var tanks = Global.TANK_ROLE_KEYS.duplicate()
+	var healers = Global.HEALER_ROLE_KEYS.duplicate()
+	var dps = Global.DPS_ROLE_KEYS.duplicate()
+	tanks.shuffle()
+	healers.shuffle()
+	dps.shuffle()
+	
+	# If user is forcing tethers, swap player to tether index.
+	if Global.p4_dd_force_tether:
+		var player_key: String = get_tree().get_first_node_in_group("player").get_role()
+		if Global.TANK_ROLE_KEYS.has(player_key) and tanks[0] != player_key:
+			tanks[1] = tanks[0]
+			tanks[0] = player_key
+		elif Global.HEALER_ROLE_KEYS.has(player_key) and healers[0] != player_key:
+			healers[1] = healers[0]
+			healers[0] = player_key
+		elif Global.DPS_ROLE_KEYS.has(player_key) and (dps[0] != player_key and dps[1] != player_key):
+			var player_index = dps.find(player_key)
+			var swap_index = randi_range(0, 1)
+			dps[player_index] = dps[swap_index]
+			dps[swap_index] = player_key
+	
+	# Build shuffled tether link list (0 linked to 1 and 3, etc.)
+	tether_links.append(tanks[0])
+	tether_links.append(dps[0])
+	tether_links.append(dps[1])
+	tether_links.shuffle()
+	# Add healer at index 0 (Healer always NW anchor)
+	tether_links.push_front(healers[0])
+
+	# Handle tether swap to make bowtie shape
+	# Use lineup to determine which dps is South/North
+	var lineup
+	if strat == Strat.KOR:
+		lineup = KOR_SN_PRIO
+	else:
+		assert(false, "Invalid Strat selection in KOR party setup.")
+	
+	var south_dps
+	var north_dps
+	if lineup.find(dps[0]) < lineup.find(dps[1]):
+		south_dps = dps[0]
+		north_dps = dps[1]
+	else:
+		north_dps = dps[0]
+		south_dps = dps[1]
+	# Default bowtie shape (no swaps needed)
+	var bowtie_tethers := [healers[0], north_dps, south_dps, tanks[0]]  # [nw, ne, se, sw]
+	# Get the pair of keys linked to the healer
+	var linked_to_nw := [tether_links[1], tether_links[3]]
+	# If box shape, swap dps
+	if linked_to_nw.has(tanks[0]) and linked_to_nw.has(north_dps):
+		bowtie_tethers[1] = south_dps # ne
+		bowtie_tethers[2] = north_dps # se
+	# If hourglass shape, swap tank with west dps
+	elif linked_to_nw.has(north_dps) and linked_to_nw.has(south_dps):
+		bowtie_tethers[1] = tanks[0] # ne
+		bowtie_tethers[3] = north_dps # sw
+	
+	# Handle water debuffs and potential swap
+	var non_tethers := [healers[1], dps[3], dps[2], tanks[1]]  # [nw, ne, se, sw]
+	# Store pre-swap positions, to be used for bot movement.
+	var pre_water_swap_non_tethers = non_tethers.duplicate()
+	# Pick Waters, swap non-tethers if they are on same N/S side.
+	var tether_water = bowtie_tethers.pick_random()
+	var non_tether_water = non_tethers.pick_random()
+	var west_swapped := false
+	var east_swapped := false
+	# Check if both waters are North
+	if (tether_water == bowtie_tethers[0] or tether_water == bowtie_tethers[1]) and\
+		(non_tether_water == non_tethers[0] or non_tether_water == non_tethers[1]):
+		# 0 swaps with 3, 1 swaps with 2
+		if non_tether_water == non_tethers[0]:
+			var temp = non_tethers[0]
+			non_tethers[0] = non_tethers[3]
+			non_tethers[3] = temp
+			west_swapped = true
+		elif non_tether_water == non_tethers[1]:
+			var temp = non_tethers[1]
+			non_tethers[1] = non_tethers[2]
+			non_tethers[2] = temp
+			east_swapped = true
+	# Check if both waters are South
+	elif (tether_water == bowtie_tethers[2] or tether_water == bowtie_tethers[3]) and\
+		(non_tether_water == non_tethers[2] or non_tether_water == non_tethers[3]):
+		# 0 swaps with 3, 1 swaps with 2
+		if non_tether_water == non_tethers[3]:
+			var temp = non_tethers[0]
+			non_tethers[0] = non_tethers[3]
+			non_tethers[3] = temp
+			west_swapped = true
+		elif non_tether_water == non_tethers[2]:
+			var temp = non_tethers[1]
+			non_tethers[1] = non_tethers[2]
+			non_tethers[2] = temp
+			east_swapped = true
+	assert(!(west_swapped and east_swapped), "Error in E/W swap logic.")
+	# Build party_dd Dictionary
+	party_dd = {
+		"nw_tether": bowtie_tethers[0], "ne_tether": bowtie_tethers[1],
+		"se_tether": bowtie_tethers[2], "sw_tether": bowtie_tethers[3],
+		"nw_bait": non_tethers[0], "ne_bait": non_tethers[1],
+		"se_bait": non_tethers[2], "sw_bait": non_tethers[3]
+		}
+	# Build pre-swap Dictionary (for positioning before waters swap)
+	pre_swap_party_dd = party_dd.duplicate()
+	pre_swap_party_dd["nw_bait"] = pre_water_swap_non_tethers[0]
+	pre_swap_party_dd["ne_bait"] = pre_water_swap_non_tethers[1]
+	pre_swap_party_dd["se_bait"] = pre_water_swap_non_tethers[2]
+	pre_swap_party_dd["sw_bait"] = pre_water_swap_non_tethers[3]
+	water_keys = [tether_water, non_tether_water]
+	# Build Spirit Spread Dictionary (need to distinguish Supp from DPS for spread positions).
+	spirit_spread_dd = {
+		"nw_tether": party_dd["nw_tether"], "ne_tether": party_dd["ne_tether"],
+		"se_tether": party_dd["se_tether"], "sw_tether": party_dd["sw_tether"],
+		"w_sup": party_dd["nw_bait"], "w_dps": party_dd["sw_bait"],
+		"e_sup": party_dd["ne_bait"], "e_dps": party_dd["se_bait"]
+	}
+	if west_swapped:
+		spirit_spread_dd["w_sup"] = party_dd["sw_bait"]
+		spirit_spread_dd["w_dps"] = party_dd["nw_bait"]
+	elif east_swapped:
+		spirit_spread_dd["e_sup"] = party_dd["se_bait"]
+		spirit_spread_dd["e_dps"] = party_dd["ne_bait"]
+
 
 # Returns the PlayableCharacter for the assigned key.
 func get_char(dd_key) -> PlayableCharacter:

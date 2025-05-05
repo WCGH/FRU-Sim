@@ -104,6 +104,11 @@ const POST_AA_PARTY_MANA := {
 	"t1": MID, "t2": MID + RS1, "h1": MID + RS2, "h2": MID + RS3,
 	"m1": MID - RS1, "m2": MID - RS2, "r1": MID - RS3, "r2": MID
 	}
+# KOR
+const POST_AA_PARTY_KOR := {
+	"t1": MID, "t2": MID + RS1, "h1": MID + RS2, "h2": MID + RS3,
+	"m1": MID - RS1, "m2": MID - RS2, "r1": MID - RS3, "r2": MID
+	}
 
 # Move to LR pre-pos, NA
 const LR_PARTY_NA := {
@@ -132,6 +137,12 @@ const LR_PARTY_MANA := {
 	"h1": LR_EW * NW + S_OFFSET, "h2": LR_NS * NW + S_OFFSET,
 	"m1": LR_EW * SW + S_OFFSET, "m2": LR_NS * SW + S_OFFSET,
 	"r1": LR_NS * SE + S_OFFSET, "r2": LR_EW * SE + S_OFFSET
+	}
+const LR_PARTY_KOR := {
+	"t1": LR_JP * NW + (S_OFFSET * 3), "t2": LR_JP * NW + (S_OFFSET * 2),
+	"h1": LR_JP * NW + S_OFFSET, "h2": LR_JP * NW,
+	"m1": LR_JP * NE + (S_OFFSET * 3), "m2": LR_JP * NE + (S_OFFSET * 2),
+	"r1": LR_JP * NE + S_OFFSET, "r2": LR_JP * NE
 	}
 
 # Bowtie positions
