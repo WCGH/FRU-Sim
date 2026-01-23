@@ -7,8 +7,8 @@ extends CheckButton
 
 
 func _ready() -> void:
-	button_pressed = SavedVariables.save_data["settings"]["p4_ct_aero_plant"]
+	button_pressed = Global.p4_dd_force_tether
 
 
 func _on_pressed() -> void:
-	GameEvents.emit_variable_saved("settings", "p4_ct_aero_plant", button_pressed)
+	Global.p4_dd_force_tether = button_pressed

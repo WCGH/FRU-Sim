@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://chasoddjwqblg"]
+[gd_scene load_steps=10 format=3 uid="uid://chasoddjwqblg"]
 
 [ext_resource type="Script" path="res://scenes/ui/cast_bars/cast_bar.gd" id="1_nkki0"]
 [ext_resource type="FontFile" uid="uid://dflgosesmjvf" path="res://assets/common/fonts/MYRIADPRO-BOLD.OTF" id="1_uiasi"]
+[ext_resource type="FontFile" uid="uid://46wxmrxlq74f" path="res://assets/common/fonts/eurostarregularextended.ttf" id="3_gv24i"]
 
 [sub_resource type="Theme" id="Theme_vadjc"]
 default_font = ExtResource("1_uiasi")
@@ -22,29 +23,36 @@ border_color = Color(0.968627, 0.6, 0, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eit2t"]
 bg_color = Color(1, 1, 1, 1)
 
-[node name="CastBar" type="CanvasLayer" groups=["cast_bar"]]
-script = ExtResource("1_nkki0")
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3n2w0"]
+bg_color = Color(0.267, 0.267, 0.267, 0.741)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.780392, 0.501961, 0.360784, 1)
 
-[node name="Timer" type="Timer" parent="."]
-one_shot = true
+[sub_resource type="LabelSettings" id="LabelSettings_gth00"]
+font = ExtResource("3_gv24i")
+font_size = 15
+outline_size = 3
+outline_color = Color(0.780392, 0.501961, 0.360784, 1)
+
+[node name="CastBar" type="CanvasLayer" groups=["cast_bar"]]
+visible = false
+script = ExtResource("1_nkki0")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchors_preset = -1
-anchor_left = 0.095
-anchor_top = 0.711
-anchor_right = 0.095
-anchor_bottom = 0.711
-offset_left = 47.705
-offset_top = -29.92
-offset_right = 298.705
-offset_bottom = 0.0799866
+anchor_left = 0.226
+anchor_top = 0.654
+anchor_right = 0.226
+anchor_bottom = 0.654
+offset_left = 0.64801
+offset_top = -0.791992
+offset_right = 220.648
+offset_bottom = 29.208
 grow_vertical = 2
 size_flags_vertical = 8
-mouse_filter = 2
-theme_override_constants/margin_left = 21
-theme_override_constants/margin_top = 0
-theme_override_constants/margin_right = 0
-theme_override_constants/margin_bottom = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
@@ -53,7 +61,6 @@ size_flags_vertical = 4
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme = SubResource("Theme_vadjc")
-text = "Test cast"
 label_settings = SubResource("LabelSettings_lc2st")
 horizontal_alignment = 2
 
@@ -68,4 +75,25 @@ max_value = 1.0
 value = 0.5
 show_percentage = false
 
+[node name="MoveUIBG" type="Panel" parent="MarginContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_3n2w0")
+
+[node name="Label" type="Label" parent="MarginContainer/MoveUIBG"]
+layout_mode = 0
+offset_left = 49.0
+offset_right = 176.0
+offset_bottom = 25.0
+text = "Cast Bar"
+label_settings = SubResource("LabelSettings_gth00")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="gui_input" from="MarginContainer" to="." method="_on_margin_container_gui_input"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

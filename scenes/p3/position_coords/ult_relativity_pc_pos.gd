@@ -85,6 +85,7 @@ const E_BAIT_2 := E * (MID_DISTANCE / 2.0)
 static var fire_1_dps_ice := {
 	"f1_dps_sw": SW_OUT, "f1_dps_se": SE_OUT, "f1_sup": N_OUT,
 	"f2_dps": E_IN, "f2_sup": W_IN,
+	"f2_dps_g9": W_IN, "f2_sup_g9": E_IN,
 	"f3_sup_nw": NW_IN, "f3_sup_ne": NE_IN,"f3_dps": S_IN
 }
 
@@ -92,6 +93,7 @@ static var fire_1_dps_ice := {
 static var fire_1_sup_ice := {
 	"f1_dps_sw": SW_OUT, "f1_dps_se": SE_OUT, "f1_sup": N_MID,
 	"f2_dps": E_IN, "f2_sup": W_IN,
+	"f2_dps_g9": W_IN, "f2_sup_g9": E_IN,
 	"f3_sup_nw": NW_IN, "f3_sup_ne": NE_IN,"f3_dps": S_IN
 }
 
@@ -99,6 +101,7 @@ static var fire_1_sup_ice := {
 static var bait_rewind_1_cw := {
 	"f1_dps_sw": SW_MID, "f1_dps_se": SE_MID, "f1_sup": N_MID,
 	"f2_dps": E_IN, "f2_sup": W_MID,
+	"f2_dps_g9": W_IN, "f2_sup_g9": E_MID,
 	"f3_sup_nw": NW_CW, "f3_sup_ne": NE_CW,"f3_dps": S_CW
 }
 
@@ -106,6 +109,7 @@ static var bait_rewind_1_cw := {
 static var bait_rewind_1_ccw := {
 	"f1_dps_sw": SW_MID, "f1_dps_se": SE_MID, "f1_sup": N_MID,
 	"f2_dps": E_IN, "f2_sup": W_MID,
+	"f2_dps_g9": W_IN, "f2_sup_g9": E_MID,
 	"f3_sup_nw": NW_CCW, "f3_sup_ne": NE_CCW,"f3_dps": S_CCW
 }
 
@@ -113,6 +117,7 @@ static var bait_rewind_1_ccw := {
 static var fire_2_inter := {
 	"f1_dps_sw": SW_IN, "f1_dps_se": SE_IN, "f1_sup": N_IN,
 	"f2_dps": E_MID, "f2_sup": W_MID,
+	"f2_dps_g9": W_MID, "f2_sup_g9": E_MID,
 	"f3_sup_nw": NW_IN, "f3_sup_ne": NE_IN,"f3_dps": S_IN
 }
 
@@ -120,6 +125,7 @@ static var fire_2_inter := {
 static var fire_2 := {
 	"f1_dps_sw": SW_IN, "f1_dps_se": SE_IN, "f1_sup": N_IN,
 	"f2_dps": E_OUT, "f2_sup": W_OUT,
+	"f2_dps_g9": W_OUT, "f2_sup_g9": E_OUT,
 	"f3_sup_nw": NW_IN, "f3_sup_ne": NE_IN,"f3_dps": S_IN
 }
 
@@ -127,6 +133,7 @@ static var fire_2 := {
 static var bait_rewind_2_cw := {
 	"f1_dps_sw": SW_CW, "f1_dps_se": SE_CW, "f1_sup": N_CW,
 	"f2_dps": E_BAIT_2, "f2_sup": W_BAIT_2,
+	"f2_dps_g9": W_BAIT_2, "f2_sup_g9": E_BAIT_2,
 	"f3_sup_nw": NW_IN, "f3_sup_ne": NE_IN,"f3_dps": S_IN
 }
 
@@ -134,6 +141,7 @@ static var bait_rewind_2_cw := {
 static var bait_rewind_2_ccw := {
 	"f1_dps_sw": SW_CCW, "f1_dps_se": SE_CCW, "f1_sup": N_CCW,
 	"f2_dps": E_BAIT_2, "f2_sup": W_BAIT_2,
+	"f2_dps_g9": W_BAIT_2, "f2_sup_g9": E_BAIT_2,
 	"f3_sup_nw": NW_IN, "f3_sup_ne": NE_IN,"f3_dps": S_IN
 }
 
@@ -141,6 +149,7 @@ static var bait_rewind_2_ccw := {
 static var fire_3 := {
 	"f1_dps_sw": SW_IN, "f1_dps_se": SE_IN, "f1_sup": N_IN,
 	"f2_dps": E_IN, "f2_sup": W_IN,
+	"f2_dps_g9": W_IN, "f2_sup_g9": E_IN,
 	"f3_sup_nw": NW_OUT, "f3_sup_ne": NE_OUT,"f3_dps": S_OUT
 }
 
@@ -148,6 +157,7 @@ static var fire_3 := {
 static var bait_rewind_3_cw := {
 	"f1_dps_sw": SW_IN, "f1_dps_se": SE_IN, "f1_sup": N_IN,
 	"f2_dps": E_CW, "f2_sup": W_CW,
+	"f2_dps_g9": W_CW, "f2_sup_g9": E_CW,
 	"f3_sup_nw": NW_IN, "f3_sup_ne": NE_IN,"f3_dps": S_IN
 }
 
@@ -155,6 +165,7 @@ static var bait_rewind_3_cw := {
 static var bait_rewind_3_ccw := {
 	"f1_dps_sw": SW_IN, "f1_dps_se": SE_IN, "f1_sup": N_IN,
 	"f2_dps": E_CCW, "f2_sup": W_CCW,
+	"f2_dps_g9": W_CCW, "f2_sup_g9": E_CCW,
 	"f3_sup_nw": NW_IN, "f3_sup_ne": NE_IN,"f3_dps": S_IN
 }
 
@@ -162,18 +173,20 @@ static var bait_rewind_3_ccw := {
 static var pre_slide := {
 	"f1_dps_sw": SW_IN, "f1_dps_se": SE_IN, "f1_sup": N_IN,
 	"f2_dps": E_IN, "f2_sup": W_IN,
+	"f2_dps_g9": W_IN, "f2_sup_g9": E_IN,
 	"f3_sup_nw": NW_IN, "f3_sup_ne": NE_IN,"f3_dps": S_IN
 }
 
 static var look_direction := {
 	"f1_dps_sw": Vector2(-100, -100), "f1_dps_se": Vector2(-100, 100), "f1_sup": Vector2(100, 0),
 	"f2_dps": Vector2(0, 100), "f2_sup": Vector2(0, -100),
+	"f2_dps_g9": Vector2(0, -100), "f2_sup_g9": Vector2(0, 100),
 	"f3_sup_nw": Vector2(100, -100), "f3_sup_ne": Vector2(100,  100),"f3_dps": Vector2(-100, 0)
 }
-
 
 static var final_stack := {
 	"f1_dps_sw": SW, "f1_dps_se": SE, "f1_sup": NE,
 	"f2_dps": E, "f2_sup": W,
+	"f2_dps_g9": W, "f2_sup_g9": E,
 	"f3_sup_nw": NW, "f3_sup_ne": NE,"f3_dps": S
 }

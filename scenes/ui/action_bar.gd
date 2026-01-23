@@ -3,13 +3,14 @@
 # This file is released under "GNU General Public License 3.0".
 # Please see the LICENSE file that should have been included as part of this package.
 
-extends CanvasLayer
+extends MovableCanvasLayer
 
 @onready var sprint_action_button: ActionButton = $MarginContainer/ButtonsContainer/SprintActionButton
 @onready var arms_action_button: ActionButton = $MarginContainer/ButtonsContainer/ArmsActionButton
 @onready var dash_action_button: ActionButton = $MarginContainer/ButtonsContainer/DashActionButton
 @onready var parent_node: Sequence = $".."
 @onready var control_menu: CanvasLayer = %ControlMenu
+@onready var move_ui_bg: Panel = %MoveUIBG
 
 
 var player: Player
@@ -17,6 +18,9 @@ var keybinds: Dictionary
 
 
 func _ready() -> void:
+	section_key = "action_bar"
+	GameEvents.ui_ready.connect(on_ui_ready)
+	
 	GameEvents.party_ready.connect(on_party_ready)
 	sprint_action_button.action_pressed.connect(on_sprint_pressed)
 	arms_action_button.action_pressed.connect(on_arms_pressed)
@@ -26,8 +30,9 @@ func _ready() -> void:
 	update_keybinds()
 
 
+# Handles Action Bar and Reset keybinds.
 func _unhandled_input(event : InputEvent) -> void:
-	if control_menu.visible:
+	if control_menu.visible or Global.is_moving_ui:
 		return
 	if event is InputEventKey:
 		var keycode : int = event.get_keycode_with_modifiers()
@@ -85,3 +90,18 @@ func on_dash_pressed() -> void:
 	if !player:
 		return
 	player.dash()
+
+
+func _on_margin_container_gui_input(event: InputEvent) -> void:
+	if not Global.is_moving_ui:
+		return
+	if event is InputEventMouseButton:
+		on_container_mouse_button_event(event)
+
+
+func on_move_ui_on():
+	move_ui_bg.show()
+
+
+func on_move_ui_off():
+	move_ui_bg.hide()

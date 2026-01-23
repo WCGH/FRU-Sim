@@ -6,32 +6,32 @@
 extends HBoxContainer
 
 @onready var buttons_vbox: VBoxContainer = $".."
-@onready var lineup_menu: MarginContainer = %LineupMenuContainer
-
-var extra_node_count := 2  # Number of nodes in the container before the role nodes
+@onready var party_order_menu: PartyOrderMenu = %PartyOrderMarginContainer
 
 
 func _on_up_button_pressed() -> void:
-	var index := get_index() - extra_node_count
+	var index: int = get_index() - party_order_menu.HEADER_NODE_COUNT
 	if index == 0:
 		return
-	buttons_vbox.move_child(self, index + extra_node_count - 1)
-	lineup_menu.save_lineup()
+	buttons_vbox.move_child(self, index + party_order_menu.HEADER_NODE_COUNT - 1)
+	party_order_menu.save_lineup()
 	# Swap key in array with previous one
-	var temp : String = lineup_menu.lineup_keys[index - 1]
-	lineup_menu.lineup_keys[index - 1] = lineup_menu.lineup_keys[index]
-	lineup_menu.lineup_keys[index] = temp
-	lineup_menu.save_lineup()
+	var temp : String = party_order_menu.party_keys[index - 1]
+	party_order_menu.party_keys[index - 1] = party_order_menu.party_keys[index]
+	party_order_menu.party_keys[index] = temp
+	party_order_menu.order_containers()
+	party_order_menu.save_lineup()
 
 
 func _on_down_button_pressed() -> void:
-	var index := get_index() - 2
+	var index := get_index() - party_order_menu.HEADER_NODE_COUNT
 	if index == 7:
 		return
-	buttons_vbox.move_child(self, index + extra_node_count + 1)
-	lineup_menu.save_lineup()
+	buttons_vbox.move_child(self, index + party_order_menu.HEADER_NODE_COUNT + 1)
+	party_order_menu.save_lineup()
 	# Swap key in array with next one
-	var temp : String = lineup_menu.lineup_keys[index + 1]
-	lineup_menu.lineup_keys[index + 1] = lineup_menu.lineup_keys[index]
-	lineup_menu.lineup_keys[index] = temp
-	lineup_menu.save_lineup()
+	var temp : String = party_order_menu.party_keys[index + 1]
+	party_order_menu.party_keys[index + 1] = party_order_menu.party_keys[index]
+	party_order_menu.party_keys[index] = temp
+	party_order_menu.order_containers()
+	party_order_menu.save_lineup()

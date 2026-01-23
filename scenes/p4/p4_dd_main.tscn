@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=3 uid="uid://72xsy2riqeef"]
+[gd_scene load_steps=54 format=3 uid="uid://72xsy2riqeef"]
 
 [ext_resource type="Script" path="res://scenes/p4/p4_dd_main.gd" id="1_8ujqk"]
 [ext_resource type="PackedScene" uid="uid://b23aj0fsxbgap" path="res://scenes/menus/control_menu.tscn" id="2_nk68u"]
@@ -37,6 +37,7 @@
 [ext_resource type="Script" path="res://scenes/p4/strat_select_button_dd.gd" id="34_c6fxa"]
 [ext_resource type="PackedScene" uid="uid://cmakti71sjg46" path="res://scenes/ui/info_box.tscn" id="34_j1suw"]
 [ext_resource type="Script" path="res://scenes/p4/dd_select_button.gd" id="35_kkb1i"]
+[ext_resource type="PackedScene" uid="uid://c6lwk2vknoj7w" path="res://scenes/ui/move_ui_reset_button.tscn" id="38_v4obg"]
 
 [sub_resource type="Animation" id="Animation_6yukl"]
 resource_name = "darklit"
@@ -314,7 +315,6 @@ visible = false
 
 [node name="CastBar" parent="." instance=ExtResource("4_qcpxm")]
 unique_name_in_owner = true
-visible = false
 
 [node name="EnmityCastBar" parent="." instance=ExtResource("5_yy0vl")]
 unique_name_in_owner = true
@@ -679,6 +679,10 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
 theme_override_font_sizes/font_size = 21
 text = "WATCH BOSS HP"
+
+[node name="MoveUIResetButton" parent="Buttons" instance=ExtResource("38_v4obg")]
+unique_name_in_owner = true
+visible = false
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_onckn")

@@ -1,75 +1,70 @@
-[gd_scene load_steps=2 format=3 uid="uid://cmakti71sjg46"]
+[gd_scene load_steps=7 format=3 uid="uid://cmakti71sjg46"]
 
 [ext_resource type="Script" path="res://scenes/ui/info_box.gd" id="1_jdn8w"]
+[ext_resource type="FontFile" uid="uid://46wxmrxlq74f" path="res://assets/common/fonts/eurostarregularextended.ttf" id="2_hfmnb"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_o4brj"]
+font = ExtResource("2_hfmnb")
+font_size = 12
+
+[sub_resource type="LabelSettings" id="LabelSettings_wy18i"]
+font = ExtResource("2_hfmnb")
+font_size = 12
+
+[sub_resource type="LabelSettings" id="LabelSettings_7q6ll"]
+font = ExtResource("2_hfmnb")
+font_size = 12
+
+[sub_resource type="LabelSettings" id="LabelSettings_t0686"]
+font = ExtResource("2_hfmnb")
+font_size = 12
 
 [node name="InfoBox" type="CanvasLayer"]
 script = ExtResource("1_jdn8w")
 
-[node name="VersionLabel" type="Label" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -85.0
-offset_top = -58.0
-offset_right = -6.0
-offset_bottom = -33.0
+offset_left = -40.0
+offset_top = -40.0
 grow_horizontal = 0
 grow_vertical = 0
+
+[node name="VersionLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
 theme_override_font_sizes/font_size = 12
-text = "Beta v1.6.1
+text = "Beta v1.7.0
 "
+label_settings = SubResource("LabelSettings_o4brj")
 horizontal_alignment = 2
 
-[node name="ControlsLabel" type="Label" parent="."]
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -129.0
-offset_top = -39.0
-offset_right = -6.0
-offset_bottom = -2.0
-grow_horizontal = 0
-grow_vertical = 0
-theme_override_font_sizes/font_size = 12
-text = "'p': Pause
-'Esc': Control Options"
-horizontal_alignment = 2
-
-[node name="CoordsLabel" type="Label" parent="."]
+[node name="CoordsLabel" type="Label" parent="VBoxContainer"]
 unique_name_in_owner = true
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -108.0
-offset_top = -98.0
-offset_right = -6.0
-offset_bottom = -61.0
-grow_horizontal = 0
-grow_vertical = 0
+visible = false
+layout_mode = 2
 theme_override_font_sizes/font_size = 12
 text = "0.00, 0.00
 Angle: 180"
+label_settings = SubResource("LabelSettings_wy18i")
 horizontal_alignment = 2
 
-[node name="FPSLabel" type="Label" parent="."]
+[node name="FPSLabel" type="Label" parent="VBoxContainer"]
 unique_name_in_owner = true
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -85.0
-offset_top = -116.0
-offset_right = -6.0
-offset_bottom = -91.0
-grow_horizontal = 0
-grow_vertical = 0
+layout_mode = 2
 theme_override_font_sizes/font_size = 12
 text = "FPS: 165"
+label_settings = SubResource("LabelSettings_7q6ll")
+horizontal_alignment = 2
+
+[node name="ControlsLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "'p': Pause
+'Esc': Control Options
+'Alt+Drag': Move UI
+Alt+Scroll: Scale UI"
+label_settings = SubResource("LabelSettings_t0686")
 horizontal_alignment = 2

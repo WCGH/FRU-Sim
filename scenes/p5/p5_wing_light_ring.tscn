@@ -1,0 +1,53 @@
+[gd_scene load_steps=5 format=3 uid="uid://cjnys67q85v4v"]
+
+[sub_resource type="Shader" id="Shader_m1217"]
+code = "shader_type spatial;
+
+uniform vec4 color : source_color;
+uniform float intensity : hint_range(-5.0, 5.0);
+
+void fragment() {
+	float uv_y = min(max(UV.y * intensity, 0), 1);
+	ALBEDO = color.rgb;
+	ALPHA = uv_y;
+	EMISSION = color.rgb * uv_y * (intensity * 25.0);
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lhjwr"]
+render_priority = 0
+shader = SubResource("Shader_m1217")
+shader_parameter/color = Color(0.971887, 0.898191, 0.375062, 1)
+shader_parameter/intensity = 0.213
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_4y5dq"]
+lightmap_size_hint = Vector2i(117, 47)
+material = SubResource("ShaderMaterial_lhjwr")
+flip_faces = true
+top_radius = 3.25
+bottom_radius = 3.7
+height = 1.28
+cap_top = false
+cap_bottom = false
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ya8op"]
+lightmap_size_hint = Vector2i(117, 47)
+material = SubResource("ShaderMaterial_lhjwr")
+top_radius = 3.25
+bottom_radius = 3.7
+height = 1.28
+cap_top = false
+cap_bottom = false
+
+[node name="LightRing" type="Node3D"]
+visible = false
+
+[node name="InnerMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -5.96046e-08, -1, 0, 1, -5.96046e-08, 0, 0, -5.35339)
+mesh = SubResource("CylinderMesh_4y5dq")
+skeleton = NodePath("../..")
+
+[node name="OutterMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -5.96046e-08, -1, 0, 1, -5.96046e-08, 0, 0, -5.35339)
+mesh = SubResource("CylinderMesh_ya8op")
+skeleton = NodePath("../..")

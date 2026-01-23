@@ -1,8 +1,8 @@
 [gd_scene load_steps=2 format=3 uid="uid://dgw10dfk4o2d6"]
 
-[ext_resource type="Texture2D" uid="uid://mglratnfojp3" path="res://assets/png/job_icons/whm_icon.png" id="1_nkitj"]
+[ext_resource type="Texture2D" uid="uid://mglratnfojp3" path="res://assets/common/icons/job_icons/whm_icon.png" id="1_nkitj"]
 
-[node name="TextureRect" type="TextureRect"]
+[node name="WHMIcon" type="TextureRect"]
 custom_minimum_size = Vector2(21, 0)
 size_flags_vertical = 4
 texture = ExtResource("1_nkitj")

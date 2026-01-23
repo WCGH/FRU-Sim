@@ -1,0 +1,354 @@
+[gd_scene load_steps=7 format=3 uid="uid://b44dhl02dv6rg"]
+
+[ext_resource type="FontFile" uid="uid://dflgosesmjvf" path="res://assets/common/fonts/MYRIADPRO-BOLD.OTF" id="2_43jje"]
+[ext_resource type="FontFile" uid="uid://b87hanxewtnrb" path="res://assets/common/fonts/MYRIADPRO-BOLDCOND.OTF" id="3_174y3"]
+[ext_resource type="Script" path="res://scenes/menus/lineup_menu/lineup_role_container.gd" id="4_thqgq"]
+[ext_resource type="Texture2D" uid="uid://n8f2owyvj3cy" path="res://assets/common/icons/ui_icons/white_arrow.png" id="5_unc8j"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_vkj6m"]
+font = ExtResource("2_43jje")
+font_size = 37
+outline_size = 4
+outline_color = Color(1, 0.603922, 0.176471, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_8x8sj"]
+font = ExtResource("2_43jje")
+font_size = 25
+
+[node name="LineupMenuContainer" type="MarginContainer"]
+size_flags_horizontal = 0
+size_flags_vertical = 2
+theme_override_constants/margin_left = 115
+theme_override_constants/margin_top = 35
+theme_override_constants/margin_right = 115
+theme_override_constants/margin_bottom = 35
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 38
+
+[node name="LeftButtonsVBox" type="VBoxContainer" parent="MarginContainer"]
+custom_minimum_size = Vector2(500, 550)
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="HeaderLabel" type="Label" parent="MarginContainer/LeftButtonsVBox"]
+custom_minimum_size = Vector2(0, 44.61)
+layout_mode = 2
+text = "DotH Lineup (Left to Right)"
+label_settings = SubResource("LabelSettings_vkj6m")
+horizontal_alignment = 1
+
+[node name="DefaultButton" type="Button" parent="MarginContainer/LeftButtonsVBox"]
+custom_minimum_size = Vector2(125.22, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+focus_mode = 0
+theme_override_fonts/font = ExtResource("3_174y3")
+theme_override_font_sizes/font_size = 35
+text = "Default"
+
+[node name="T1Container" type="HBoxContainer" parent="MarginContainer/LeftButtonsVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 10
+script = ExtResource("4_thqgq")
+
+[node name="RoleLabel" type="Label" parent="MarginContainer/LeftButtonsVBox/T1Container"]
+custom_minimum_size = Vector2(125.345, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 1
+text = "Tank  1"
+label_settings = SubResource("LabelSettings_8x8sj")
+
+[node name="UpButton" type="TextureButton" parent="MarginContainer/LeftButtonsVBox/T1Container"]
+custom_minimum_size = Vector2(27, 14.8)
+layout_mode = 2
+size_flags_horizontal = 0
+focus_mode = 0
+texture_normal = ExtResource("5_unc8j")
+ignore_texture_size = true
+stretch_mode = 0
+flip_v = true
+
+[node name="DownButton" type="TextureButton" parent="MarginContainer/LeftButtonsVBox/T1Container"]
+custom_minimum_size = Vector2(27, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+focus_mode = 0
+texture_normal = ExtResource("5_unc8j")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="T2Container" type="HBoxContainer" parent="MarginContainer/LeftButtonsVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 10
+script = ExtResource("4_thqgq")
+
+[node name="RoleLabel" type="Label" parent="MarginContainer/LeftButtonsVBox/T2Container"]
+custom_minimum_size = Vector2(125.345, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 1
+text = "Tank  2"
+label_settings = SubResource("LabelSettings_8x8sj")
+
+[node name="UpButton" type="TextureButton" parent="MarginContainer/LeftButtonsVBox/T2Container"]
+custom_minimum_size = Vector2(27, 14.8)
+layout_mode = 2
+size_flags_horizontal = 0
+focus_mode = 0
+texture_normal = ExtResource("5_unc8j")
+ignore_texture_size = true
+stretch_mode = 0
+flip_v = true
+
+[node name="DownButton" type="TextureButton" parent="MarginContainer/LeftButtonsVBox/T2Container"]
+custom_minimum_size = Vector2(27, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+focus_mode = 0
+texture_normal = ExtResource("5_unc8j")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="H1Container" type="HBoxContainer" parent="MarginContainer/LeftButtonsVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 10
+script = ExtResource("4_thqgq")
+
+[node name="RoleLabel" type="Label" parent="MarginContainer/LeftButtonsVBox/H1Container"]
+custom_minimum_size = Vector2(125.345, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 1
+text = "Healer 1"
+label_settings = SubResource("LabelSettings_8x8sj")
+
+[node name="UpButton" type="TextureButton" parent="MarginContainer/LeftButtonsVBox/H1Container"]
+custom_minimum_size = Vector2(27, 14.8)
+layout_mode = 2
+size_flags_horizontal = 0
+focus_mode = 0
+texture_normal = ExtResource("5_unc8j")
+ignore_texture_size = true
+stretch_mode = 0
+flip_v = true
+
+[node name="DownButton" type="TextureButton" parent="MarginContainer/LeftButtonsVBox/H1Container"]
+custom_minimum_size = Vector2(27, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+focus_mode = 0
+texture_normal = ExtResource("5_unc8j")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="H2Container" type="HBoxContainer" parent="MarginContainer/LeftButtonsVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 10
+script = ExtResource("4_thqgq")
+
+[node name="RoleLabel" type="Label" parent="MarginContainer/LeftButtonsVBox/H2Container"]
+custom_minimum_size = Vector2(125.345, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 1
+text = "Healer 2"
+label_settings = SubResource("LabelSettings_8x8sj")
+
+[node name="UpButton" type="TextureButton" parent="MarginContainer/LeftButtonsVBox/H2Container"]
+custom_minimum_size = Vector2(27, 14.8)
+layout_mode = 2
+size_flags_horizontal = 0
+focus_mode = 0
+texture_normal = ExtResource("5_unc8j")
+ignore_texture_size = true
+stretch_mode = 0
+flip_v = true
+
+[node name="DownButton" type="TextureButton" parent="MarginContainer/LeftButtonsVBox/H2Container"]
+custom_minimum_size = Vector2(27, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+focus_mode = 0
+texture_normal = ExtResource("5_unc8j")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="M1Container" type="HBoxContainer" parent="MarginContainer/LeftButtonsVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 10
+script = ExtResource("4_thqgq")
+
+[node name="RoleLabel" type="Label" parent="MarginContainer/LeftButtonsVBox/M1Container"]
+custom_minimum_size = Vector2(125.345, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 1
+text = "Melee 1"
+label_settings = SubResource("LabelSettings_8x8sj")
+
+[node name="UpButton" type="TextureButton" parent="MarginContainer/LeftButtonsVBox/M1Container"]
+custom_minimum_size = Vector2(27, 14.8)
+layout_mode = 2
+size_flags_horizontal = 0
+focus_mode = 0
+texture_normal = ExtResource("5_unc8j")
+ignore_texture_size = true
+stretch_mode = 0
+flip_v = true
+
+[node name="DownButton" type="TextureButton" parent="MarginContainer/LeftButtonsVBox/M1Container"]
+custom_minimum_size = Vector2(27, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+focus_mode = 0
+texture_normal = ExtResource("5_unc8j")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="M2Container" type="HBoxContainer" parent="MarginContainer/LeftButtonsVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 10
+script = ExtResource("4_thqgq")
+
+[node name="RoleLabel" type="Label" parent="MarginContainer/LeftButtonsVBox/M2Container"]
+custom_minimum_size = Vector2(125.345, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 1
+text = "Melee 2"
+label_settings = SubResource("LabelSettings_8x8sj")
+
+[node name="UpButton" type="TextureButton" parent="MarginContainer/LeftButtonsVBox/M2Container"]
+custom_minimum_size = Vector2(27, 14.8)
+layout_mode = 2
+size_flags_horizontal = 0
+focus_mode = 0
+texture_normal = ExtResource("5_unc8j")
+ignore_texture_size = true
+stretch_mode = 0
+flip_v = true
+
+[node name="DownButton" type="TextureButton" parent="MarginContainer/LeftButtonsVBox/M2Container"]
+custom_minimum_size = Vector2(27, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+focus_mode = 0
+texture_normal = ExtResource("5_unc8j")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="R1Container" type="HBoxContainer" parent="MarginContainer/LeftButtonsVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 10
+script = ExtResource("4_thqgq")
+
+[node name="RoleLabel" type="Label" parent="MarginContainer/LeftButtonsVBox/R1Container"]
+custom_minimum_size = Vector2(125.345, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 1
+text = "Ranged 1"
+label_settings = SubResource("LabelSettings_8x8sj")
+
+[node name="UpButton" type="TextureButton" parent="MarginContainer/LeftButtonsVBox/R1Container"]
+custom_minimum_size = Vector2(27, 14.8)
+layout_mode = 2
+size_flags_horizontal = 0
+focus_mode = 0
+texture_normal = ExtResource("5_unc8j")
+ignore_texture_size = true
+stretch_mode = 0
+flip_v = true
+
+[node name="DownButton" type="TextureButton" parent="MarginContainer/LeftButtonsVBox/R1Container"]
+custom_minimum_size = Vector2(27, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+focus_mode = 0
+texture_normal = ExtResource("5_unc8j")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="R2Container" type="HBoxContainer" parent="MarginContainer/LeftButtonsVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 10
+script = ExtResource("4_thqgq")
+
+[node name="RoleLabel" type="Label" parent="MarginContainer/LeftButtonsVBox/R2Container"]
+custom_minimum_size = Vector2(125.345, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 1
+text = "Ranged 2"
+label_settings = SubResource("LabelSettings_8x8sj")
+
+[node name="UpButton" type="TextureButton" parent="MarginContainer/LeftButtonsVBox/R2Container"]
+custom_minimum_size = Vector2(27, 14.8)
+layout_mode = 2
+size_flags_horizontal = 0
+focus_mode = 0
+texture_normal = ExtResource("5_unc8j")
+ignore_texture_size = true
+stretch_mode = 0
+flip_v = true
+
+[node name="DownButton" type="TextureButton" parent="MarginContainer/LeftButtonsVBox/R2Container"]
+custom_minimum_size = Vector2(27, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+focus_mode = 0
+texture_normal = ExtResource("5_unc8j")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="BottomHBoxContainer" type="HBoxContainer" parent="MarginContainer/LeftButtonsVBox"]
+layout_mode = 2
+size_flags_vertical = 10
+theme_override_constants/separation = 60
+
+[node name="BackButton" type="Button" parent="MarginContainer/LeftButtonsVBox/BottomHBoxContainer"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+focus_mode = 0
+theme_override_fonts/font = ExtResource("3_174y3")
+theme_override_font_sizes/font_size = 42
+text = "Back"
+
+[connection signal="pressed" from="MarginContainer/LeftButtonsVBox/DefaultButton" to="." method="_on_default_button_pressed"]
+[connection signal="pressed" from="MarginContainer/LeftButtonsVBox/T1Container/UpButton" to="MarginContainer/LeftButtonsVBox/T1Container" method="_on_up_button_pressed"]
+[connection signal="pressed" from="MarginContainer/LeftButtonsVBox/T1Container/DownButton" to="MarginContainer/LeftButtonsVBox/T1Container" method="_on_down_button_pressed"]
+[connection signal="pressed" from="MarginContainer/LeftButtonsVBox/T2Container/UpButton" to="MarginContainer/LeftButtonsVBox/T2Container" method="_on_up_button_pressed"]
+[connection signal="pressed" from="MarginContainer/LeftButtonsVBox/T2Container/DownButton" to="MarginContainer/LeftButtonsVBox/T2Container" method="_on_down_button_pressed"]
+[connection signal="pressed" from="MarginContainer/LeftButtonsVBox/H1Container/UpButton" to="MarginContainer/LeftButtonsVBox/H1Container" method="_on_up_button_pressed"]
+[connection signal="pressed" from="MarginContainer/LeftButtonsVBox/H1Container/DownButton" to="MarginContainer/LeftButtonsVBox/H1Container" method="_on_down_button_pressed"]
+[connection signal="pressed" from="MarginContainer/LeftButtonsVBox/H2Container/UpButton" to="MarginContainer/LeftButtonsVBox/H2Container" method="_on_up_button_pressed"]
+[connection signal="pressed" from="MarginContainer/LeftButtonsVBox/H2Container/DownButton" to="MarginContainer/LeftButtonsVBox/H2Container" method="_on_down_button_pressed"]
+[connection signal="pressed" from="MarginContainer/LeftButtonsVBox/M1Container/UpButton" to="MarginContainer/LeftButtonsVBox/M1Container" method="_on_up_button_pressed"]
+[connection signal="pressed" from="MarginContainer/LeftButtonsVBox/M1Container/DownButton" to="MarginContainer/LeftButtonsVBox/M1Container" method="_on_down_button_pressed"]
+[connection signal="pressed" from="MarginContainer/LeftButtonsVBox/M2Container/UpButton" to="MarginContainer/LeftButtonsVBox/M2Container" method="_on_up_button_pressed"]
+[connection signal="pressed" from="MarginContainer/LeftButtonsVBox/M2Container/DownButton" to="MarginContainer/LeftButtonsVBox/M2Container" method="_on_down_button_pressed"]
+[connection signal="pressed" from="MarginContainer/LeftButtonsVBox/R1Container/UpButton" to="MarginContainer/LeftButtonsVBox/R1Container" method="_on_up_button_pressed"]
+[connection signal="pressed" from="MarginContainer/LeftButtonsVBox/R1Container/DownButton" to="MarginContainer/LeftButtonsVBox/R1Container" method="_on_down_button_pressed"]
+[connection signal="pressed" from="MarginContainer/LeftButtonsVBox/R2Container/UpButton" to="MarginContainer/LeftButtonsVBox/R2Container" method="_on_up_button_pressed"]
+[connection signal="pressed" from="MarginContainer/LeftButtonsVBox/R2Container/DownButton" to="MarginContainer/LeftButtonsVBox/R2Container" method="_on_down_button_pressed"]
+[connection signal="pressed" from="MarginContainer/LeftButtonsVBox/BottomHBoxContainer/BackButton" to="." method="_on_back_button_pressed"]

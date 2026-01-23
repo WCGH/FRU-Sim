@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://c6lwk2vknoj7w"]
+
+[ext_resource type="Script" path="res://scenes/ui/move_ui_reset_button.gd" id="1_lo5yd"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_64ril"]
+bg_color = Color(0.429044, 0.405372, 0.17215, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="Theme" id="Theme_ywrq0"]
+Button/styles/normal = SubResource("StyleBoxFlat_64ril")
+
+[node name="MoveUIResetButton" type="Button"]
+offset_left = 29.0
+offset_top = 75.0
+offset_right = 128.0
+offset_bottom = 113.0
+focus_mode = 0
+theme = SubResource("Theme_ywrq0")
+text = "Reset UI"
+script = ExtResource("1_lo5yd")
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
+[connection signal="pressed" from="." to="." method="_on_pressed"]

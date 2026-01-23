@@ -6,7 +6,7 @@
 extends Node
 
 enum {NONE, SHORT, MED, LONG}  # Water debuff durations.
-enum Strat {NAUR, LPDU, MUR}
+enum Strat {NAUR, LPDU, MUR, MANA}
 enum Spread {STATIC, PERMA}   # Freepoc, Permaswap
 
 const DARK_WATER_ICON = preload("res://scenes/ui/auras/debuff_icons/p3/dark_water_icon.tscn")
@@ -19,7 +19,7 @@ const WATER_LIFETIME := 0.4
 const WATER_COLOR := Color.DODGER_BLUE
 const ERUPTION_RADIUS := 15.0
 const ERUPTION_LIFETIME := 0.3
-const ERUPTION_COLOR := Color(0.545098, 0, 0, 0.2)
+const ERUPTION_COLOR := Color(0.545098, 0, 0, 0.5)
 const JUMP_BUFFER := 15.0
 const JUMP_DURATION := 0.5
 const JUMP_RADIUS := 16.0
@@ -34,6 +34,10 @@ const FLANK_STACK_DIST := 11.0
 # All rotations are clockwise.
 const CW_ROTATION_MAP := {0: -45, 45: 0, 90: -135, 135: -90}
 const CCW_ROTATION_MAP := {0: -135, 45: -90, 90: -45, 135: 0}
+# MANA rotations
+const MANA_CW_ROTATION_MAP := {0: -45, 45: 0, 90: -135, 135: -90}
+const MANA_CCW_ROTATION_MAP := {0: 45, 45: 90, 90: -45, 135: 0}
+const MANA_ROTATION_OFFSET = 22.5
 # Determines where T2 goes for bait (assuming no swap)
 const T2_ROTATION_CW := {0: -45, 45: 0, 90: -135, 135: -90}
 const T2_ROTATION_CCW := {0: -45, 45: 0, 90: 45, 135: 90}
@@ -131,8 +135,10 @@ func cast_refrain():
 ## 2.2
 # Move to inital role positions.
 func move_to_setup():
-	if strat == Strat.NAUR or strat == Strat.MUR:
+	if strat in [Strat.NAUR, Strat.MUR]:
 		move_party_sa_static(ApocPos.ROLE_SETUP_NA)
+	elif strat == Strat.MANA:
+		move_party_sa_static_rotated(ApocPos.ROLE_SETUP_EU, MANA_ROTATION_OFFSET)
 	else:
 		move_party_sa_static(ApocPos.ROLE_SETUP_EU)
 
@@ -187,8 +193,10 @@ func cast_apoc():
 ## 15.6
 # Make swaps if needed
 func move_to_swap_pos():
-	if strat == Strat.NAUR or strat == Strat.MUR:
+	if strat in [Strat.NAUR, Strat.MUR]:
 		move_party_sa(ApocPos.SWAP_SETUP_NA)
+	elif strat == Strat.MANA:
+		move_party_sa_rotated(ApocPos.SWAP_SETUP_EU, MANA_ROTATION_OFFSET)
 	else:
 		move_party_sa(ApocPos.SWAP_SETUP_EU)
 
@@ -211,8 +219,10 @@ func start_lock_cd(duration):
 ## 20.2
 # Move to stack pos
 func move_stack_1():
-	if strat == Strat.NAUR or strat == Strat.MUR:
+	if strat in [Strat.NAUR, Strat.MUR]:
 		move_party_sa(ApocPos.STACK_1_NA)
+	elif strat == Strat.MANA:
+		move_party_sa_rotated(ApocPos.STACK_1_EU, MANA_ROTATION_OFFSET)
 	else:
 		move_party_sa(ApocPos.STACK_1_EU)
 
@@ -245,8 +255,10 @@ func water_hit(duration: int):
 ## 23.8
 # Return to spread pos.
 func move_to_spread_pos():
-	if strat == Strat.NAUR  or strat == Strat.MUR:
+	if strat in [Strat.NAUR, Strat.MUR]:
 		move_party_sa(ApocPos.SPREAD_NA)
+	elif strat == Strat.MANA:
+		move_party_sa_rotated(ApocPos.SPREAD_EU, MANA_ROTATION_OFFSET)
 	else:
 		move_party_sa(ApocPos.SPREAD_EU)
 
@@ -275,16 +287,28 @@ func pre_move_swaps():
 ## 28.0
 # Move to Apoc Spread pos (move bots as late as possible).
 func move_apoc_spread():
-	if cw_light:
+	# This works fine for all strats, I'm just being overly cautious.
+	if strat == Strat.MANA:
+		var check_cw = "CW" if cw_light else "CCW"
+		var check_map = "MANA_%s_ROTATION_MAP" if strat == Strat.MANA else "%s_ROTATION_MAP"
+		var ROTATION_MAP = get(check_map % check_cw)
+		var APOC_SPREAD = ApocPos.APOC_SPREAD_CW if cw_light else ApocPos.APOC_SPREAD_CCW
 		if apoc_spread == Spread.STATIC:
-			move_party_sa_static_rotated(ApocPos.APOC_SPREAD_CW, CW_ROTATION_MAP[arena_rotation_deg])
+			move_party_sa_static_rotated(APOC_SPREAD, ROTATION_MAP[arena_rotation_deg])
 		else:
-			move_party_sa_rotated(ApocPos.APOC_SPREAD_CW, CW_ROTATION_MAP[arena_rotation_deg])
+			move_party_sa_rotated(APOC_SPREAD, ROTATION_MAP[arena_rotation_deg])
+	
 	else:
-		if apoc_spread == Spread.STATIC:
-			move_party_sa_static_rotated(ApocPos.APOC_SPREAD_CCW, CCW_ROTATION_MAP[arena_rotation_deg])
+		if cw_light:
+			if apoc_spread == Spread.STATIC:
+				move_party_sa_static_rotated(ApocPos.APOC_SPREAD_CW, CW_ROTATION_MAP[arena_rotation_deg])
+			else:
+				move_party_sa_rotated(ApocPos.APOC_SPREAD_CW, CW_ROTATION_MAP[arena_rotation_deg])
 		else:
-			move_party_sa_rotated(ApocPos.APOC_SPREAD_CCW, CCW_ROTATION_MAP[arena_rotation_deg])
+			if apoc_spread == Spread.STATIC:
+				move_party_sa_static_rotated(ApocPos.APOC_SPREAD_CCW, CCW_ROTATION_MAP[arena_rotation_deg])
+			else:
+				move_party_sa_rotated(ApocPos.APOC_SPREAD_CCW, CCW_ROTATION_MAP[arena_rotation_deg])
 
 
 ## 30.9
@@ -314,16 +338,27 @@ func eruption_hit():
 ## 36.2
 # Move to post eruption pos
 func move_post_erupt():
-	if cw_light:
+	if strat == Strat.MANA:
+		var check_cw = "CW" if cw_light else "CCW"
+		var check_map = "MANA_%s_ROTATION_MAP" if strat == Strat.MANA else "%s_ROTATION_MAP"
+		var ROTATION_MAP = get(check_map % check_cw)
+		var APOC_SPREAD = ApocPos.POST_ERUPTION
 		if apoc_spread == Spread.STATIC:
-			move_party_sa_static_rotated(ApocPos.POST_ERUPTION, CW_ROTATION_MAP[arena_rotation_deg])
+			move_party_sa_static_rotated(APOC_SPREAD, ROTATION_MAP[arena_rotation_deg])
 		else:
-			move_party_sa_rotated(ApocPos.POST_ERUPTION, CW_ROTATION_MAP[arena_rotation_deg])
+			move_party_sa_rotated(APOC_SPREAD, ROTATION_MAP[arena_rotation_deg])
+	
 	else:
-		if apoc_spread == Spread.STATIC:
-			move_party_sa_static_rotated(ApocPos.POST_ERUPTION, CCW_ROTATION_MAP[arena_rotation_deg])
+		if cw_light:
+			if apoc_spread == Spread.STATIC:
+				move_party_sa_static_rotated(ApocPos.POST_ERUPTION, CW_ROTATION_MAP[arena_rotation_deg])
+			else:
+				move_party_sa_rotated(ApocPos.POST_ERUPTION, CW_ROTATION_MAP[arena_rotation_deg])
 		else:
-			move_party_sa_rotated(ApocPos.POST_ERUPTION, CCW_ROTATION_MAP[arena_rotation_deg])
+			if apoc_spread == Spread.STATIC:
+				move_party_sa_static_rotated(ApocPos.POST_ERUPTION, CCW_ROTATION_MAP[arena_rotation_deg])
+			else:
+				move_party_sa_rotated(ApocPos.POST_ERUPTION, CCW_ROTATION_MAP[arena_rotation_deg])
 
 
 ## 37.0
@@ -495,7 +530,7 @@ func party_setup() -> void:
 	var dps_keys: Array # LP1 keys for MUR
 	#var sup_keys: Array # LP2 keys for MUR
 	# Handle strat specific variables.
-	if strat == Strat.NAUR or strat == Strat.LPDU:
+	if strat in [Strat.NAUR, Strat.LPDU, Strat.MANA]:
 		party_keys_sa = PARTY_SA_STATIC.duplicate()
 		dps_adjust_prio = DPS_ADJUST_PRIO_NA.duplicate()
 		sup_adjust_prio = SUP_ADJUST_PRIO_NA.duplicate()

@@ -6,7 +6,7 @@
 extends Node
 class_name GroundAoeController
 
-enum {CIRCLE, DONUT, LINE, TOWER, CONE, LR_TOWER}
+enum {CIRCLE, DONUT, LINE, TOWER, CONE, LR_TOWER, PR_TOWER, WIDE_CONE}
 
 const CIRCLE_Y := 0.11
 const CONE_Y := 0.11
@@ -20,9 +20,9 @@ const DONUT_Y := 0.11
 	"line": "res://scenes/common/ground_markers/line_aoe.tscn",
 	"tower": "res://scenes/common/ground_markers/tower_aoe.tscn",
 	"cone": "res://scenes/common/ground_markers/cone_aoe.tscn",
-	"twister": "",
-	"ascalon": "",
-	"lr_tower": "res://scenes/common/ground_markers/lr_tower_solo.tscn"
+	"lr_tower": "res://scenes/common/ground_markers/lr_tower_solo.tscn",
+	"pr_tower": "res://scenes/common/ground_markers/pr_tower.tscn",
+	"wide_cone": "res://scenes/common/ground_markers/wide_cone.tscn"
 }
 
 var circle_aoe_scene : PackedScene
@@ -32,7 +32,8 @@ var tower_aoe_scene : PackedScene
 var cone_aoe_scene : PackedScene
 var ascalon_cone_scene : PackedScene
 var lr_tower_scene : PackedScene
-#var twister_scene : PackedScene
+var pr_tower_scene : PackedScene
+var wide_cone_scene : PackedScene
 
 
 func preload_aoe(aoe_keys: Array) -> void:
@@ -135,6 +136,21 @@ func spawn_lr_tower(position: Vector2, lifetime: float) -> LRTower:
 	return new_tower
 
 
+# Returns a reference to tower to be called later for collision check
+func spawn_pr_tower(position: Vector2, lifetime: float) -> PRTower:
+	# Load resource
+	if !pr_tower_scene:
+		if ResourceLoader.load_threaded_get_status(res_path["pr_tower"]) == 0:
+			ResourceLoader.load_threaded_request(res_path["pr_tower"])
+		pr_tower_scene = ResourceLoader.load_threaded_get(res_path["pr_tower"])
+	# Spawn new tower
+	var new_tower: PRTower = pr_tower_scene.instantiate()
+	marker_layer.add_child(new_tower)
+	new_tower.set_parameters(Vector3(position.x, 0, position.y), lifetime)
+	new_tower.play_start_animation()
+	return new_tower
+
+
 # TODO: missing check at end
 func spawn_cone(position: Vector2, angle_deg: float, length: float,
 target: Vector2, lifetime: float, color: Color,
@@ -157,11 +173,28 @@ fail_conditions: Array = [], check_at_end : bool = false) -> ConeAoe:
 	return new_cone
 
 
+func spawn_wide_cone(position: Vector2, target: Vector2, lifetime: float, color: Color,
+	fail_conditions: Array = [], check_at_end : bool = false) -> WideConeAoe:
+	# Load resource
+	if !wide_cone_scene:
+		if ResourceLoader.load_threaded_get_status(res_path["wide_cone"]) == 0:
+			ResourceLoader.load_threaded_request(res_path["wide_cone"])
+		wide_cone_scene = ResourceLoader.load_threaded_get(res_path["wide_cone"])
+	var new_cone: WideConeAoe = wide_cone_scene.instantiate()
+	marker_layer.add_child(new_cone)
+	new_cone.set_parameters(Vector3(position.x, CONE_Y, position.y),
+		target, lifetime, color, fail_conditions)
+	new_cone.play_start_animation()
+	new_cone.await_collision()
+	if check_at_end:
+		new_cone.check_at_end()
+	else:
+		new_cone.await_collision()
+	return new_cone
 
 
 
-## Deprecated ##
-
+## Deprecated (Mostly DSR stuff) ##
 
 
 #func spawn_ascalon_cone(position: Vector2, target: Vector2, lifetime: float, 

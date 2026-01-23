@@ -9,7 +9,7 @@ class_name ApocLights
 
 const APOC_RADIUS := 21.8
 const APOC_LIFETIME := 0.3
-const APOC_COLOR := Color(1, 0.870588, 1, 0.2)
+const APOC_COLOR := Color(1, 0.870588, 1, 0.6)
 const APOC_SPELL_NAME := "Apocalypse"
 const ROTATION_TIME := 2.0   # Time it takes for light to travel 45 deg.
 const MAX_ROTATION_DEG := 225.0  # Angle travelled by Light 1

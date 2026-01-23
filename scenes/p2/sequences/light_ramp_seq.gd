@@ -23,7 +23,7 @@ const PUDDLE_COUNT := 6
 const PUDDLE_DROP_DELAY := 1.6
 const PUDDLE_DURATION := 10.0
 const PUDDLE_RADIUS := 14.5
-const PUDDLE_COLOR := Color(1, 1, 0, 0.125)
+const PUDDLE_COLOR := Color(1, 1, 0, 0.165)
 const PUDDLE_TARGET_FAIL_COUNT := 2
 
 const ORB_AOE_RADIUS := 10
@@ -45,7 +45,7 @@ const PAIRS_AOE_COLOR := Color.ALICE_BLUE
 const PROTEAN_ANGLE := 90
 const PROTEAN_LENGTH := 150
 const PROTEAN_LIFETIME := 0.3
-const PROTEAN_COLOR := Color(0.8, 0.647059, 0, 0.06)
+const PROTEAN_COLOR := Color(0.8, 0.647059, 0, 0.12)
 
 @onready var light_ramp_anim: AnimationPlayer = %LightRampAnim
 @onready var cast_bar: CastBar = %CastBar

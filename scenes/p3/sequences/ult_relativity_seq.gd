@@ -21,7 +21,7 @@ const REWIND_MARKER = preload("res://scenes/p3/arena/rewind_marker.tscn")
 
 const FIRE_RADIUS := 23.0
 const FIRE_LIFETIME := 0.3
-const FIRE_COLOR := Color(1, 0.270588, 0, 0.3)
+const FIRE_COLOR := Color(1, 0.270588, 0, 0.35)
 const UD_RADIUS := 9.0
 const UD_LIFETIME := 0.3
 const UD_COLOR := Color.REBECCA_PURPLE
@@ -34,7 +34,7 @@ const WATER_LIFETIME := 0.3
 const WATER_COLOR := Color.DODGER_BLUE
 const ERUPTION_RADIUS := 15.0
 const ERUPTION_LIFETIME := 0.3
-const ERUPTION_COLOR := Color(0.545098, 0, 0, 0.2)
+const ERUPTION_COLOR := Color(0.545098, 0, 0, 0.5)
 const SHELL_RADIUS := 9.0
 const SHELL_LIFETIME := 0.3
 const SHELL_COLOR := Color.NAVY_BLUE
@@ -101,14 +101,15 @@ var active_hg_keys: Array
 var rewind_positions: Dictionary
 var rewind_ground_markers: Array
 var valid_targets: Array
+var selected_strat: int
 
 
 func start_sequence(new_party: Dictionary) -> void:
 	assert(new_party != null, "Error. Where the party at?")
 	ground_aoe_controller.preload_aoe(["line", "circle", "donut"])
 	lockon_controller.pre_load([12])
-	on_toggle_bots_visible()
 	instantiate_party(new_party)
+	on_toggle_bots_visible()
 	hide_bots_button.toggle_bots_visible.connect(on_toggle_bots_visible)
 	ult_relativity_anim.play("ult_relativity")
 
@@ -143,6 +144,13 @@ func assign_debuffs() -> void:
 	# Unholy Darkness
 	for i: int in ud_keys.size():
 		get_ur_player(ud_keys[i]).add_debuff(UNHOLY_DARKNESS_ICON, (i * 10 + 11))
+	
+	# If GREY strat, swap med fire dps and supp.
+	#if selected_strat == Strat.GREY:
+		#var tmp = party_keys_ur["f2_sup"]
+		#party_keys_ur["f2_sup"] = party_keys_ur["f2_dps"]
+		#party_keys_ur["f2_dps"] = tmp
+	
 	spawn_hourglasses()
 
 
@@ -363,7 +371,17 @@ func move_third_bait() -> void:
 	for key in active_hg_keys:
 		if hourglass_rotations[key] == 1:
 			var pc: PlayableCharacter = get_ur_player(hourglass_soakers[key])
-			pc.move_to(UltRelativityPcPos.bait_rewind_3_ccw[hourglass_soakers[key]]\
+			var pos_key = hourglass_soakers[key]
+			# Need to swap E/W soaker keys if Grey-9
+			if selected_strat == Strat.GREY and pos_key in ["f2_dps", "f2_sup"]:
+				if pos_key == "f2_dps":
+					pc = get_ur_player("f2_sup")
+					pos_key = "f2_sup_g9"
+				elif pos_key == "f2_sup":
+					pc = get_ur_player("f2_dps")
+					pos_key = "f2_dps_g9"
+			
+			pc.move_to(UltRelativityPcPos.bait_rewind_3_ccw[pos_key]\
 				.rotated(deg_to_rad(arena_rotation_deg)))
 
 
@@ -381,7 +399,10 @@ func move_final() -> void:
 # Look at "out" positions.
 func look_out() -> void:
 	for key in party_keys_ur:
-		get_ur_player(key).look_at_direction(v3(UltRelativityPcPos.look_direction[key].rotated(deg_to_rad(arena_rotation_deg))))
+		var pos_key = String(key)
+		if selected_strat == Strat.GREY and pos_key in ["f2_dps", "f2_sup"]:
+			pos_key = str(pos_key + "_g9")
+		get_ur_player(key).look_at_direction(v3(UltRelativityPcPos.look_direction[pos_key].rotated(deg_to_rad(arena_rotation_deg))))
 
 
 ## 51.9
@@ -499,7 +520,7 @@ func party_setup() -> void:
 	var dps_prio: Array
 	var sup_prio: Array
 	
-	var selected_strat = SavedVariables.save_data["settings"]["p3_ur_strat"]
+	selected_strat = SavedVariables.save_data["settings"]["p3_ur_strat"]
 	if selected_strat == Strat.NA:
 		dps_prio = na_dps_prio.duplicate()
 		sup_prio = na_sup_prio.duplicate()
@@ -557,12 +578,6 @@ func party_setup() -> void:
 	party_keys_ur["f2_sup"] = shuffle_list[1]
 	party_keys_ur["f3_sup_nw"] = shuffle_list[2]
 	party_keys_ur["f3_sup_ne"] = shuffle_list[3]
-	
-	# If Grey-9 strat, we need to swap E/W 20s fires.
-	if selected_strat == Strat.GREY:
-		var tmp = party_keys_ur["f2_sup"]
-		party_keys_ur["f2_sup"] = party_keys_ur["f2_dps"]
-		party_keys_ur["f2_dps"] = tmp
 
 
 # Returns the PlayableCharacter for the assigned key.
@@ -572,7 +587,7 @@ func get_ur_player(ur_key) -> PlayableCharacter:
 
 # Moves given party of CharacterBodies to given positions, make sure keys match.
 func move_party(party_dict: Dictionary, pos: Dictionary) -> void:
-	for key: String in pos:
+	for key: String in party_dict:
 		var pc: PlayableCharacter = party_dict[key]
 		if pc.is_player() and !Global.spectate_mode:
 			continue
@@ -581,11 +596,14 @@ func move_party(party_dict: Dictionary, pos: Dictionary) -> void:
 
 # Moves UR Party to gives pos dictionary (must match UR keys). Also rotates positions by arena_rotation_deg.
 func move_party_ur_rotated(pos: Dictionary) -> void:
-	for key: String in pos:
+	for key: String in party_keys_ur:
+		var pos_key = String(key)
+		if selected_strat == Strat.GREY and key in ["f2_dps", "f2_sup"]:
+			pos_key = str(pos_key + "_g9")
 		var pc: PlayableCharacter = get_ur_player(key)
 		if pc.is_player() and !Global.spectate_mode:
 			continue
-		pc.move_to(pos[key].rotated(deg_to_rad(arena_rotation_deg)))
+		pc.move_to(pos[pos_key].rotated(deg_to_rad(arena_rotation_deg)))
 
 
 func on_toggle_bots_visible() -> void:

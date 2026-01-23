@@ -1,0 +1,193 @@
+[gd_scene load_steps=10 format=3 uid="uid://b2w6j0ped8mgg"]
+
+[ext_resource type="Script" path="res://scenes/ui/party_list/member_container.gd" id="1_evm72"]
+[ext_resource type="PackedScene" uid="uid://dgw10dfk4o2d6" path="res://scenes/ui/party_list/role_icons/whm_icon.tscn" id="2_11vgd"]
+[ext_resource type="Texture2D" uid="uid://daghgymd8abek" path="res://assets/common/icons/ui_icons/1_icon.png" id="3_lh3dg"]
+[ext_resource type="FontFile" uid="uid://46wxmrxlq74f" path="res://assets/common/fonts/eurostarregularextended.ttf" id="4_eovx6"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_5lojc"]
+font = ExtResource("4_eovx6")
+font_size = 18
+outline_size = 2
+outline_color = Color(0.252825, 0.503394, 0.934092, 1)
+shadow_color = Color(0, 0, 0, 0.535)
+
+[sub_resource type="LabelSettings" id="LabelSettings_7u378"]
+font = ExtResource("4_eovx6")
+font_size = 20
+outline_size = 1
+outline_color = Color(0.164706, 0.396078, 1, 1)
+shadow_color = Color(0, 0, 0, 0.416)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fiyvu"]
+bg_color = Color(0.0117647, 0.141176, 0.286275, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.403922, 0.752941, 0.933333, 1)
+border_blend = true
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+expand_margin_left = 1.0
+expand_margin_top = 1.0
+expand_margin_right = 1.0
+expand_margin_bottom = 1.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vit53"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+
+[sub_resource type="LabelSettings" id="LabelSettings_60331"]
+font = ExtResource("4_eovx6")
+outline_size = 2
+outline_color = Color(0.25098, 0.501961, 0.933333, 1)
+shadow_color = Color(0, 0, 0, 0.259)
+
+[node name="MemberContainer" type="HBoxContainer"]
+custom_minimum_size = Vector2(0, 34)
+offset_right = 96.0
+offset_bottom = 28.0
+theme_override_constants/separation = 5
+script = ExtResource("1_evm72")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="RoleIcon" type="CenterContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="RoleIconTexture" parent="HBoxContainer/RoleIcon" instance=ExtResource("2_11vgd")]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="InfoLabels" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 12)
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="IndexIconTexture" type="TextureRect" parent="HBoxContainer/VBoxContainer/InfoLabels"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+size_flags_vertical = 8
+texture = ExtResource("3_lh3dg")
+expand_mode = 5
+stretch_mode = 5
+
+[node name="LevelLabelScale" type="Control" parent="HBoxContainer/VBoxContainer/InfoLabels"]
+custom_minimum_size = Vector2(38.365, 0)
+layout_mode = 2
+
+[node name="LevelLabel" type="Label" parent="HBoxContainer/VBoxContainer/InfoLabels/LevelLabelScale"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -9.73
+offset_right = 71.0
+offset_bottom = 13.27
+grow_vertical = 0
+scale = Vector2(0.45, 0.45)
+size_flags_vertical = 8
+text = "Lv100"
+label_settings = SubResource("LabelSettings_5lojc")
+vertical_alignment = 2
+
+[node name="RoleLabelScale" type="Control" parent="HBoxContainer/VBoxContainer/InfoLabels"]
+layout_mode = 2
+
+[node name="RoleLabel" type="Label" parent="HBoxContainer/VBoxContainer/InfoLabels/RoleLabelScale"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -15.0
+offset_right = 116.0
+offset_bottom = 10.0
+grow_vertical = 0
+scale = Vector2(0.645, 0.645)
+size_flags_horizontal = 3
+text = "Ranged 1"
+label_settings = SubResource("LabelSettings_7u378")
+vertical_alignment = 2
+
+[node name="ResourceBars" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 10
+theme_override_constants/separation = 12
+
+[node name="HealthBar" type="ProgressBar" parent="HBoxContainer/VBoxContainer/ResourceBars"]
+custom_minimum_size = Vector2(75, 4.5)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_eovx6")
+theme_override_styles/background = SubResource("StyleBoxFlat_fiyvu")
+theme_override_styles/fill = SubResource("StyleBoxFlat_vit53")
+step = 1.0
+value = 100.0
+show_percentage = false
+
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer/ResourceBars/HealthBar"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -84.0
+offset_top = -4.5
+offset_right = 1.0
+offset_bottom = 18.5
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(0.54, 0.54)
+pivot_offset = Vector2(81.905, 4.09)
+text = "150000"
+label_settings = SubResource("LabelSettings_60331")
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="ManaBar" type="ProgressBar" parent="HBoxContainer/VBoxContainer/ResourceBars"]
+custom_minimum_size = Vector2(75, 4.5)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_eovx6")
+theme_override_styles/background = SubResource("StyleBoxFlat_fiyvu")
+theme_override_styles/fill = SubResource("StyleBoxFlat_vit53")
+step = 1.0
+value = 100.0
+show_percentage = false
+
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer/ResourceBars/ManaBar"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -84.0
+offset_top = -4.5
+offset_right = 1.0
+offset_bottom = 18.5
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(0.54, 0.54)
+pivot_offset = Vector2(81.905, 4.09)
+text = "100
+"
+label_settings = SubResource("LabelSettings_60331")
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="AuraContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = -4

@@ -5,7 +5,7 @@
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mlejq"]
 resource_name = "bg_ex3_01_nvt_n4_goe_n4gw_material_n4gw_a3_flo00a.tex"
-cull_mode = 2
+specular_mode = 1
 albedo_texture = ExtResource("1_052bm")
 emission = Color(0.154155, 0.130497, 0.129734, 1)
 normal_scale = 0.0

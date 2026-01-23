@@ -29,6 +29,7 @@ var player_role_key : String
 var selected_role_index := 4
 var selected_sequence_index := 0
 var spectate_mode := false
+var is_moving_ui := false
 
 # P2 Light Rampant
 var p2_force_puddles := false
@@ -49,6 +50,10 @@ var p4_dd_force_spirit := false
 var p4_ct_selected_debuff := 0  # [random, red/aero, red/ice, blue/eruption, blue/ice, blue,unholy, blue/water]
 var p4_ct_force_spirit := false
 var p4_ct_hide_bots := false
+
+# P5 Pandora
+var p5_selected_seq := 0 # [Fulgent Blade, Paradise Regained, Polarizing Strikes]
+var p5_ew_hide_bots := false
 
 # Waymarks
 var waymarks := {

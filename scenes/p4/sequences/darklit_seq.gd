@@ -28,7 +28,7 @@ const CHAINS_LOCKED_DURATION := 14
 const PROTEAN_ANGLE := 90
 const PROTEAN_LENGTH := 150
 const PROTEAN_LIFETIME := 0.5
-const PROTEAN_COLOR := Color(0.8, 0.647059, 0, 0.06)
+const PROTEAN_COLOR := Color(0.8, 0.647059, 0, 0.6)
 # Spirit Taker Jump
 const JUMP_BUFFER := 15.0
 const JUMP_DURATION := 0.5

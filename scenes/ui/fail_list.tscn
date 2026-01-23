@@ -1,20 +1,39 @@
-[gd_scene load_steps=3 format=3 uid="uid://cidk1e7u3l0ya"]
+[gd_scene load_steps=6 format=3 uid="uid://cidk1e7u3l0ya"]
 
 [ext_resource type="Script" path="res://scenes/ui/fail_list.gd" id="1_2wya2"]
 [ext_resource type="PackedScene" uid="uid://c3pv5d4jy0ae1" path="res://scenes/ui/fail_label.tscn" id="2_mll7f"]
+[ext_resource type="FontFile" uid="uid://46wxmrxlq74f" path="res://assets/common/fonts/eurostarregularextended.ttf" id="3_fw0mu"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4akwt"]
+bg_color = Color(0.267, 0.267, 0.267, 0.741)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.780392, 0.501961, 0.360784, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_h8iti"]
+font = ExtResource("3_fw0mu")
+font_size = 15
+outline_size = 3
+outline_color = Color(0.780392, 0.501961, 0.360784, 1)
 
 [node name="FailList" type="CanvasLayer" groups=["fail_list"]]
 script = ExtResource("1_2wya2")
 label_scene = ExtResource("2_mll7f")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
-offset_left = 12.0
-offset_top = 238.0
-offset_right = 12.0
-offset_bottom = 238.0
+anchors_preset = -1
+anchor_left = 0.028
+anchor_top = 0.201
+anchor_right = 0.028
+anchor_bottom = 0.201
+offset_left = -0.256001
+offset_top = -0.248001
+offset_right = -0.256001
+offset_bottom = -0.248001
 size_flags_horizontal = 3
 size_flags_vertical = 0
-mouse_filter = 2
 
 [node name="ColorRect" type="ColorRect" parent="MarginContainer"]
 layout_mode = 2
@@ -23,3 +42,30 @@ color = Color(0, 0, 0, 0.184314)
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
+
+[node name="MoveUIBG" type="Panel" parent="MarginContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_4akwt")
+
+[node name="Label" type="Label" parent="MarginContainer/MoveUIBG"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -63.5
+offset_top = -12.5
+offset_right = 63.5
+offset_bottom = 12.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Fail List"
+label_settings = SubResource("LabelSettings_h8iti")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="gui_input" from="MarginContainer" to="." method="_on_margin_container_gui_input"]

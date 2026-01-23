@@ -36,7 +36,7 @@ const UD_LIFETIME := 0.3
 const UD_COLOR := Color.REBECCA_PURPLE
 const HG_RADIUS := 28.93
 const HG_TELE_LIFETIME := 1.3
-const HG_TELE_COLOR := Color(0.768, 0.579, 0.165, 0.206)
+const HG_TELE_COLOR := Color(0.768, 0.579, 0.165, 0.4)
 const HG_HIT_LIFETIME := 0.2 
 const HG_HIT_COLOR := Color(0.522, 0.217, 0.627, 0.297)
 const ICE_RADIUS_INNER := 7.0
@@ -48,10 +48,10 @@ const WATER_LIFETIME := 0.3
 const WATER_COLOR := Color(0.376, 0.667, 0.918, 0.86)
 const ERUPTION_RADIUS := 15.0
 const ERUPTION_LIFETIME := 0.3
-const ERUPTION_COLOR := Color(0.545098, 0, 0, 0.2)
+const ERUPTION_COLOR := Color(0.545098, 0, 0, 0.3)
 const DRAGON_RADIUS := 27.2
 const DRAGON_LIFETIME := 0.3
-const DRAGON_COLOR := Color(0.886, 0.871, 0.287, 0.102)
+const DRAGON_COLOR := Color(0.886, 0.871, 0.287, 0.5)
 const WINGS_KNOCKBACK_TIME := 1.0
 const WINGS_KNOCKBACK_DISTANCE := 47.0
 const JUMP_DURATION := 0.5
@@ -157,9 +157,9 @@ func start_sequence(new_party: Dictionary) -> void:
 		strat = Strat.NA
 	# Apply user settings
 	aero_plant = SavedVariables.save_data["settings"]["p4_ct_aero_plant"]
-	on_toggle_bots_visible()
 	
 	instantiate_party(new_party)
+	on_toggle_bots_visible()
 	# Connect signals
 	dragon_e.collided_with_body.connect(on_dragon_collision)
 	dragon_w.collided_with_body.connect(on_dragon_collision)
@@ -897,7 +897,7 @@ func move_party_ct_and_soak(pos: Dictionary) -> void:
 			if puddles_positions.has(pos[key]):
 				pc.move_to(puddles_positions[pos[key]])
 			else:
-				push_warning("Looking for %s puddle, but cannot be found." % pos[key])
+				push_warning("Cannot find %s puddle to soak." % pos[key])
 		else:
 			pc.move_to(pos[key])
 

@@ -1,67 +1,1348 @@
-[gd_scene load_steps=13 format=3 uid="uid://02ckwb1trdp4"]
+[gd_scene load_steps=23 format=3 uid="uid://02ckwb1trdp4"]
 
 [ext_resource type="Script" path="res://scenes/ui/party_list/party_list.gd" id="1_nit7q"]
-[ext_resource type="PackedScene" uid="uid://b2w6j0ped8mgg" path="res://scenes/ui/auras/aura_container.tscn" id="2_cyddy"]
-[ext_resource type="PackedScene" uid="uid://cu7ghooei6mv5" path="res://scenes/ui/auras/debuff_icons/debuff.tscn" id="3_nu3yn"]
-[ext_resource type="PackedScene" uid="uid://cjrevlnk3yyii" path="res://scenes/ui/party_list/role_icons/pld_icon.tscn" id="4_imcih"]
-[ext_resource type="PackedScene" uid="uid://iclajebtw0yr" path="res://scenes/ui/party_list/role_icons/war_icon.tscn" id="5_w0fyr"]
 [ext_resource type="PackedScene" uid="uid://dgw10dfk4o2d6" path="res://scenes/ui/party_list/role_icons/whm_icon.tscn" id="6_ipj6x"]
-[ext_resource type="PackedScene" uid="uid://bhn6uhqwng4wn" path="res://scenes/ui/party_list/role_icons/sch_icon.tscn" id="7_pq7x8"]
-[ext_resource type="PackedScene" uid="uid://dw31sd7clm71x" path="res://scenes/ui/party_list/role_icons/rpr_icon.tscn" id="8_efgat"]
-[ext_resource type="PackedScene" uid="uid://bupwk74kk36gt" path="res://scenes/ui/party_list/role_icons/sam_icon.tscn" id="9_728ig"]
-[ext_resource type="PackedScene" uid="uid://b3umk4oihslqw" path="res://scenes/ui/party_list/role_icons/dnc_icon.tscn" id="10_06nwm"]
-[ext_resource type="PackedScene" uid="uid://bo67lk3uwl485" path="res://scenes/ui/party_list/role_icons/smn_icon.tscn" id="11_6j0nu"]
+[ext_resource type="FontFile" uid="uid://46wxmrxlq74f" path="res://assets/common/fonts/eurostarregularextended.ttf" id="12_g1bna"]
+[ext_resource type="Script" path="res://scenes/ui/party_list/member_container.gd" id="13_xtixg"]
+[ext_resource type="Texture2D" uid="uid://daghgymd8abek" path="res://assets/common/icons/ui_icons/1_icon.png" id="14_2f2wp"]
+[ext_resource type="Texture2D" uid="uid://d08jlse22swvx" path="res://assets/common/icons/job_icons/pld_icon.png" id="14_6musf"]
+[ext_resource type="Texture2D" uid="uid://r3tm7ser2hi6" path="res://assets/common/icons/job_icons/war_icon.png" id="16_hxi8r"]
+[ext_resource type="Texture2D" uid="uid://ci4i6c0pbxw5b" path="res://assets/common/icons/job_icons/sch_icon.png" id="17_xwuni"]
+[ext_resource type="Texture2D" uid="uid://pdr8y0w61wj1" path="res://assets/common/icons/job_icons/sam_icon.png" id="18_lcryu"]
+[ext_resource type="Texture2D" uid="uid://bpba6igwi63m7" path="res://assets/common/icons/job_icons/rpr_icon.png" id="19_e6lyf"]
+[ext_resource type="Texture2D" uid="uid://gqnorx77js0w" path="res://assets/common/icons/job_icons/dnc_icon.png" id="20_yqk1g"]
+[ext_resource type="Texture2D" uid="uid://cisaxqu1b03sl" path="res://assets/common/icons/job_icons/smn_icon.png" id="21_a7vtm"]
+
+[sub_resource type="Gradient" id="Gradient_a8mjx"]
+offsets = PackedFloat32Array(0, 0.0672269, 0.802521, 1)
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 0.524, 0, 0, 0, 0.267471, 0, 0, 0, 0.005)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_swc73"]
+gradient = SubResource("Gradient_a8mjx")
+width = 202
 
 [sub_resource type="LabelSettings" id="LabelSettings_j1ng4"]
-font_size = 10
+font = ExtResource("12_g1bna")
+font_size = 11
+outline_size = 1
+outline_color = Color(1, 0.649632, 0.113842, 1)
+shadow_size = 3
+shadow_color = Color(0, 0, 0, 0.254)
+
+[sub_resource type="LabelSettings" id="LabelSettings_5lojc"]
+font = ExtResource("12_g1bna")
+font_size = 18
 outline_size = 2
-outline_color = Color(1, 0.65098, 0, 1)
+outline_color = Color(0.252825, 0.503394, 0.934092, 1)
+shadow_color = Color(0, 0, 0, 0.535)
+
+[sub_resource type="LabelSettings" id="LabelSettings_7u378"]
+font = ExtResource("12_g1bna")
+font_size = 20
+outline_size = 1
+outline_color = Color(0.164706, 0.396078, 1, 1)
+shadow_color = Color(0, 0, 0, 0.416)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fiyvu"]
+bg_color = Color(0.0117647, 0.141176, 0.286275, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.403922, 0.752941, 0.933333, 1)
+border_blend = true
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+expand_margin_left = 1.0
+expand_margin_top = 1.0
+expand_margin_right = 1.0
+expand_margin_bottom = 1.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vit53"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+
+[sub_resource type="LabelSettings" id="LabelSettings_60331"]
+font = ExtResource("12_g1bna")
+outline_size = 2
+outline_color = Color(0.25098, 0.501961, 0.933333, 1)
+shadow_color = Color(0, 0, 0, 0.259)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5kfop"]
+bg_color = Color(0.267, 0.267, 0.267, 0.741)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.780392, 0.501961, 0.360784, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_wswh0"]
+font = ExtResource("12_g1bna")
+font_size = 15
+outline_size = 3
+outline_color = Color(0.780392, 0.501961, 0.360784, 1)
 
 [node name="PartyList" type="CanvasLayer" groups=["party_list"]]
 script = ExtResource("1_nit7q")
-aura_container_scene = ExtResource("2_cyddy")
-debuff_scene = ExtResource("3_nu3yn")
-role_icons = {
-"h1": ExtResource("6_ipj6x"),
-"h2": ExtResource("7_pq7x8"),
-"m1": ExtResource("9_728ig"),
-"m2": ExtResource("8_efgat"),
-"r1": ExtResource("10_06nwm"),
-"r2": ExtResource("11_6j0nu"),
-"t1": ExtResource("4_imcih"),
-"t2": ExtResource("5_w0fyr")
-}
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 348.595
-offset_top = -184.095
-offset_right = 486.595
-offset_bottom = 117.905
-grow_horizontal = 2
+anchors_preset = -1
+anchor_left = 0.706
+anchor_top = 0.279
+anchor_right = 0.706
+anchor_bottom = 0.279
+offset_right = 203.0
+offset_bottom = 330.0
+grow_horizontal = 0
 grow_vertical = 2
-scale = Vector2(1.34, 1.34)
-mouse_filter = 2
+pivot_offset = Vector2(101.25, 165.045)
 
-[node name="Label" type="Label" parent="MarginContainer"]
+[node name="TextureRect" type="TextureRect" parent="MarginContainer"]
+custom_minimum_size = Vector2(202.5, 330.09)
+layout_mode = 2
+texture = SubResource("GradientTexture1D_swc73")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/TextureRect"]
+layout_mode = 2
+offset_left = 5.0
+offset_right = 201.0
+offset_bottom = 329.0
+theme_override_constants/separation = -8
+
+[node name="Label" type="Label" parent="MarginContainer/TextureRect/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 2
 text = "FULL PARTY"
 label_settings = SubResource("LabelSettings_j1ng4")
 
-[node name="ColorRect" type="ColorRect" parent="MarginContainer"]
-layout_mode = 2
-color = Color(0, 0, 0, 0.092)
-
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="MemberVBoxContainer" type="VBoxContainer" parent="MarginContainer/TextureRect/VBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(110, 280)
 layout_mode = 2
-size_flags_horizontal = 4
+size_flags_horizontal = 0
 size_flags_vertical = 4
-theme_override_constants/separation = 1
+theme_override_constants/separation = -3
 alignment = 1
+
+[node name="T1MemberContainer" type="HBoxContainer" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 43)
+layout_mode = 2
+theme_override_constants/separation = 5
+script = ExtResource("13_xtixg")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/T1MemberContainer"]
+layout_mode = 2
+
+[node name="RoleIcon" type="CenterContainer" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/T1MemberContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="RoleIconTexture" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/T1MemberContainer/HBoxContainer/RoleIcon" instance=ExtResource("6_ipj6x")]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+texture = ExtResource("14_6musf")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/T1MemberContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="InfoLabels" type="HBoxContainer" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/T1MemberContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 12)
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="IndexIconTexture" type="TextureRect" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/T1MemberContainer/HBoxContainer/VBoxContainer/InfoLabels"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+size_flags_vertical = 8
+texture = ExtResource("14_2f2wp")
+expand_mode = 5
+stretch_mode = 5
+
+[node name="LevelLabelScale" type="Control" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/T1MemberContainer/HBoxContainer/VBoxContainer/InfoLabels"]
+custom_minimum_size = Vector2(38.365, 0)
+layout_mode = 2
+mouse_filter = 1
+
+[node name="LevelLabel" type="Label" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/T1MemberContainer/HBoxContainer/VBoxContainer/InfoLabels/LevelLabelScale"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -9.73
+offset_right = 71.0
+offset_bottom = 13.27
+grow_vertical = 0
+scale = Vector2(0.45, 0.45)
+size_flags_vertical = 8
+text = "Lv100"
+label_settings = SubResource("LabelSettings_5lojc")
+vertical_alignment = 2
+
+[node name="RoleLabelScale" type="Control" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/T1MemberContainer/HBoxContainer/VBoxContainer/InfoLabels"]
+layout_mode = 2
+mouse_filter = 1
+
+[node name="RoleLabel" type="Label" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/T1MemberContainer/HBoxContainer/VBoxContainer/InfoLabels/RoleLabelScale"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -15.0
+offset_right = 116.0
+offset_bottom = 10.0
+grow_vertical = 0
+scale = Vector2(0.645, 0.645)
+size_flags_horizontal = 3
+text = "Tank 1"
+label_settings = SubResource("LabelSettings_7u378")
+vertical_alignment = 2
+
+[node name="ResourceBars" type="HBoxContainer" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/T1MemberContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 10
+theme_override_constants/separation = 12
+
+[node name="HealthBar" type="ProgressBar" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/T1MemberContainer/HBoxContainer/VBoxContainer/ResourceBars"]
+custom_minimum_size = Vector2(75, 4.5)
+layout_mode = 2
+mouse_filter = 1
+theme_override_fonts/font = ExtResource("12_g1bna")
+theme_override_styles/background = SubResource("StyleBoxFlat_fiyvu")
+theme_override_styles/fill = SubResource("StyleBoxFlat_vit53")
+step = 1.0
+value = 100.0
+show_percentage = false
+
+[node name="Label" type="Label" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/T1MemberContainer/HBoxContainer/VBoxContainer/ResourceBars/HealthBar"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -84.0
+offset_top = -4.5
+offset_right = 1.0
+offset_bottom = 18.5
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(0.54, 0.54)
+pivot_offset = Vector2(81.905, 4.09)
+text = "200000"
+label_settings = SubResource("LabelSettings_60331")
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="ManaBar" type="ProgressBar" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/T1MemberContainer/HBoxContainer/VBoxContainer/ResourceBars"]
+custom_minimum_size = Vector2(75, 4.5)
+layout_mode = 2
+mouse_filter = 1
+theme_override_fonts/font = ExtResource("12_g1bna")
+theme_override_styles/background = SubResource("StyleBoxFlat_fiyvu")
+theme_override_styles/fill = SubResource("StyleBoxFlat_vit53")
+step = 1.0
+value = 100.0
+show_percentage = false
+
+[node name="Label" type="Label" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/T1MemberContainer/HBoxContainer/VBoxContainer/ResourceBars/ManaBar"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -84.0
+offset_top = -4.5
+offset_right = 1.0
+offset_bottom = 18.5
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(0.54, 0.54)
+pivot_offset = Vector2(81.905, 4.09)
+text = "100
+"
+label_settings = SubResource("LabelSettings_60331")
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="AuraContainer" type="HBoxContainer" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/T1MemberContainer"]
+layout_mode = 2
+theme_override_constants/separation = -4
+
+[node name="T2MemberContainer" type="HBoxContainer" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 43)
+layout_mode = 2
+theme_override_constants/separation = 5
+script = ExtResource("13_xtixg")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/T2MemberContainer"]
+layout_mode = 2
+
+[node name="RoleIcon" type="CenterContainer" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/T2MemberContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="RoleIconTexture" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/T2MemberContainer/HBoxContainer/RoleIcon" instance=ExtResource("6_ipj6x")]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+texture = ExtResource("16_hxi8r")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/T2MemberContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="InfoLabels" type="HBoxContainer" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/T2MemberContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 12)
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="IndexIconTexture" type="TextureRect" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/T2MemberContainer/HBoxContainer/VBoxContainer/InfoLabels"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+size_flags_vertical = 8
+texture = ExtResource("14_2f2wp")
+expand_mode = 5
+stretch_mode = 5
+
+[node name="LevelLabelScale" type="Control" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/T2MemberContainer/HBoxContainer/VBoxContainer/InfoLabels"]
+custom_minimum_size = Vector2(38.365, 0)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="LevelLabel" type="Label" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/T2MemberContainer/HBoxContainer/VBoxContainer/InfoLabels/LevelLabelScale"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -9.73
+offset_right = 71.0
+offset_bottom = 13.27
+grow_vertical = 0
+scale = Vector2(0.45, 0.45)
+size_flags_vertical = 8
+text = "Lv100"
+label_settings = SubResource("LabelSettings_5lojc")
+vertical_alignment = 2
+
+[node name="RoleLabelScale" type="Control" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/T2MemberContainer/HBoxContainer/VBoxContainer/InfoLabels"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="RoleLabel" type="Label" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/T2MemberContainer/HBoxContainer/VBoxContainer/InfoLabels/RoleLabelScale"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -15.0
+offset_right = 116.0
+offset_bottom = 10.0
+grow_vertical = 0
+scale = Vector2(0.645, 0.645)
+size_flags_horizontal = 3
+text = "Tank 2"
+label_settings = SubResource("LabelSettings_7u378")
+vertical_alignment = 2
+
+[node name="ResourceBars" type="HBoxContainer" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/T2MemberContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 10
+theme_override_constants/separation = 12
+
+[node name="HealthBar" type="ProgressBar" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/T2MemberContainer/HBoxContainer/VBoxContainer/ResourceBars"]
+custom_minimum_size = Vector2(75, 4.5)
+layout_mode = 2
+mouse_filter = 1
+theme_override_fonts/font = ExtResource("12_g1bna")
+theme_override_styles/background = SubResource("StyleBoxFlat_fiyvu")
+theme_override_styles/fill = SubResource("StyleBoxFlat_vit53")
+step = 1.0
+value = 100.0
+show_percentage = false
+
+[node name="Label" type="Label" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/T2MemberContainer/HBoxContainer/VBoxContainer/ResourceBars/HealthBar"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -84.0
+offset_top = -4.5
+offset_right = 1.0
+offset_bottom = 18.5
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(0.54, 0.54)
+pivot_offset = Vector2(81.905, 4.09)
+text = "200000"
+label_settings = SubResource("LabelSettings_60331")
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="ManaBar" type="ProgressBar" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/T2MemberContainer/HBoxContainer/VBoxContainer/ResourceBars"]
+custom_minimum_size = Vector2(75, 4.5)
+layout_mode = 2
+mouse_filter = 1
+theme_override_fonts/font = ExtResource("12_g1bna")
+theme_override_styles/background = SubResource("StyleBoxFlat_fiyvu")
+theme_override_styles/fill = SubResource("StyleBoxFlat_vit53")
+step = 1.0
+value = 100.0
+show_percentage = false
+
+[node name="Label" type="Label" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/T2MemberContainer/HBoxContainer/VBoxContainer/ResourceBars/ManaBar"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -84.0
+offset_top = -4.5
+offset_right = 1.0
+offset_bottom = 18.5
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(0.54, 0.54)
+pivot_offset = Vector2(81.905, 4.09)
+text = "100
+"
+label_settings = SubResource("LabelSettings_60331")
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="AuraContainer" type="HBoxContainer" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/T2MemberContainer"]
+layout_mode = 2
+theme_override_constants/separation = -4
+
+[node name="H1MemberContainer" type="HBoxContainer" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 43)
+layout_mode = 2
+theme_override_constants/separation = 5
+script = ExtResource("13_xtixg")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/H1MemberContainer"]
+layout_mode = 2
+
+[node name="RoleIcon" type="CenterContainer" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/H1MemberContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="RoleIconTexture" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/H1MemberContainer/HBoxContainer/RoleIcon" instance=ExtResource("6_ipj6x")]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/H1MemberContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="InfoLabels" type="HBoxContainer" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/H1MemberContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 12)
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="IndexIconTexture" type="TextureRect" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/H1MemberContainer/HBoxContainer/VBoxContainer/InfoLabels"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+size_flags_vertical = 8
+texture = ExtResource("14_2f2wp")
+expand_mode = 5
+stretch_mode = 5
+
+[node name="LevelLabelScale" type="Control" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/H1MemberContainer/HBoxContainer/VBoxContainer/InfoLabels"]
+custom_minimum_size = Vector2(38.365, 0)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="LevelLabel" type="Label" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/H1MemberContainer/HBoxContainer/VBoxContainer/InfoLabels/LevelLabelScale"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -9.73
+offset_right = 71.0
+offset_bottom = 13.27
+grow_vertical = 0
+scale = Vector2(0.45, 0.45)
+size_flags_vertical = 8
+text = "Lv100"
+label_settings = SubResource("LabelSettings_5lojc")
+vertical_alignment = 2
+
+[node name="RoleLabelScale" type="Control" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/H1MemberContainer/HBoxContainer/VBoxContainer/InfoLabels"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="RoleLabel" type="Label" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/H1MemberContainer/HBoxContainer/VBoxContainer/InfoLabels/RoleLabelScale"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -15.0
+offset_right = 116.0
+offset_bottom = 10.0
+grow_vertical = 0
+scale = Vector2(0.645, 0.645)
+size_flags_horizontal = 3
+text = "Healer 1"
+label_settings = SubResource("LabelSettings_7u378")
+vertical_alignment = 2
+
+[node name="ResourceBars" type="HBoxContainer" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/H1MemberContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 10
+theme_override_constants/separation = 12
+
+[node name="HealthBar" type="ProgressBar" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/H1MemberContainer/HBoxContainer/VBoxContainer/ResourceBars"]
+custom_minimum_size = Vector2(75, 4.5)
+layout_mode = 2
+mouse_filter = 1
+theme_override_fonts/font = ExtResource("12_g1bna")
+theme_override_styles/background = SubResource("StyleBoxFlat_fiyvu")
+theme_override_styles/fill = SubResource("StyleBoxFlat_vit53")
+step = 1.0
+value = 100.0
+show_percentage = false
+
+[node name="Label" type="Label" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/H1MemberContainer/HBoxContainer/VBoxContainer/ResourceBars/HealthBar"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -84.0
+offset_top = -4.5
+offset_right = 1.0
+offset_bottom = 18.5
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(0.54, 0.54)
+pivot_offset = Vector2(81.905, 4.09)
+text = "140000"
+label_settings = SubResource("LabelSettings_60331")
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="ManaBar" type="ProgressBar" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/H1MemberContainer/HBoxContainer/VBoxContainer/ResourceBars"]
+custom_minimum_size = Vector2(75, 4.5)
+layout_mode = 2
+mouse_filter = 1
+theme_override_fonts/font = ExtResource("12_g1bna")
+theme_override_styles/background = SubResource("StyleBoxFlat_fiyvu")
+theme_override_styles/fill = SubResource("StyleBoxFlat_vit53")
+step = 1.0
+value = 100.0
+show_percentage = false
+
+[node name="Label" type="Label" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/H1MemberContainer/HBoxContainer/VBoxContainer/ResourceBars/ManaBar"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -84.0
+offset_top = -4.5
+offset_right = 1.0
+offset_bottom = 18.5
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(0.54, 0.54)
+pivot_offset = Vector2(81.905, 4.09)
+text = "100
+"
+label_settings = SubResource("LabelSettings_60331")
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="AuraContainer" type="HBoxContainer" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/H1MemberContainer"]
+layout_mode = 2
+theme_override_constants/separation = -4
+
+[node name="H2MemberContainer" type="HBoxContainer" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 43)
+layout_mode = 2
+theme_override_constants/separation = 5
+script = ExtResource("13_xtixg")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/H2MemberContainer"]
+layout_mode = 2
+
+[node name="RoleIcon" type="CenterContainer" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/H2MemberContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="RoleIconTexture" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/H2MemberContainer/HBoxContainer/RoleIcon" instance=ExtResource("6_ipj6x")]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+texture = ExtResource("17_xwuni")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/H2MemberContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="InfoLabels" type="HBoxContainer" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/H2MemberContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 12)
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="IndexIconTexture" type="TextureRect" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/H2MemberContainer/HBoxContainer/VBoxContainer/InfoLabels"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+size_flags_vertical = 8
+texture = ExtResource("14_2f2wp")
+expand_mode = 5
+stretch_mode = 5
+
+[node name="LevelLabelScale" type="Control" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/H2MemberContainer/HBoxContainer/VBoxContainer/InfoLabels"]
+custom_minimum_size = Vector2(38.365, 0)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="LevelLabel" type="Label" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/H2MemberContainer/HBoxContainer/VBoxContainer/InfoLabels/LevelLabelScale"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -9.73
+offset_right = 71.0
+offset_bottom = 13.27
+grow_vertical = 0
+scale = Vector2(0.45, 0.45)
+size_flags_vertical = 8
+text = "Lv100"
+label_settings = SubResource("LabelSettings_5lojc")
+vertical_alignment = 2
+
+[node name="RoleLabelScale" type="Control" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/H2MemberContainer/HBoxContainer/VBoxContainer/InfoLabels"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="RoleLabel" type="Label" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/H2MemberContainer/HBoxContainer/VBoxContainer/InfoLabels/RoleLabelScale"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -15.0
+offset_right = 116.0
+offset_bottom = 10.0
+grow_vertical = 0
+scale = Vector2(0.645, 0.645)
+size_flags_horizontal = 3
+text = "Healer 2"
+label_settings = SubResource("LabelSettings_7u378")
+vertical_alignment = 2
+
+[node name="ResourceBars" type="HBoxContainer" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/H2MemberContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 10
+theme_override_constants/separation = 12
+
+[node name="HealthBar" type="ProgressBar" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/H2MemberContainer/HBoxContainer/VBoxContainer/ResourceBars"]
+custom_minimum_size = Vector2(75, 4.5)
+layout_mode = 2
+mouse_filter = 1
+theme_override_fonts/font = ExtResource("12_g1bna")
+theme_override_styles/background = SubResource("StyleBoxFlat_fiyvu")
+theme_override_styles/fill = SubResource("StyleBoxFlat_vit53")
+step = 1.0
+value = 100.0
+show_percentage = false
+
+[node name="Label" type="Label" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/H2MemberContainer/HBoxContainer/VBoxContainer/ResourceBars/HealthBar"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -84.0
+offset_top = -4.5
+offset_right = 1.0
+offset_bottom = 18.5
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(0.54, 0.54)
+pivot_offset = Vector2(81.905, 4.09)
+text = "140000"
+label_settings = SubResource("LabelSettings_60331")
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="ManaBar" type="ProgressBar" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/H2MemberContainer/HBoxContainer/VBoxContainer/ResourceBars"]
+custom_minimum_size = Vector2(75, 4.5)
+layout_mode = 2
+mouse_filter = 1
+theme_override_fonts/font = ExtResource("12_g1bna")
+theme_override_styles/background = SubResource("StyleBoxFlat_fiyvu")
+theme_override_styles/fill = SubResource("StyleBoxFlat_vit53")
+step = 1.0
+value = 100.0
+show_percentage = false
+
+[node name="Label" type="Label" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/H2MemberContainer/HBoxContainer/VBoxContainer/ResourceBars/ManaBar"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -84.0
+offset_top = -4.5
+offset_right = 1.0
+offset_bottom = 18.5
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(0.54, 0.54)
+pivot_offset = Vector2(81.905, 4.09)
+text = "100
+"
+label_settings = SubResource("LabelSettings_60331")
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="AuraContainer" type="HBoxContainer" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/H2MemberContainer"]
+layout_mode = 2
+theme_override_constants/separation = -4
+
+[node name="M1MemberContainer" type="HBoxContainer" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 43)
+layout_mode = 2
+theme_override_constants/separation = 5
+script = ExtResource("13_xtixg")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/M1MemberContainer"]
+layout_mode = 2
+
+[node name="RoleIcon" type="CenterContainer" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/M1MemberContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="RoleIconTexture" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/M1MemberContainer/HBoxContainer/RoleIcon" instance=ExtResource("6_ipj6x")]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+texture = ExtResource("18_lcryu")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/M1MemberContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="InfoLabels" type="HBoxContainer" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/M1MemberContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 12)
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="IndexIconTexture" type="TextureRect" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/M1MemberContainer/HBoxContainer/VBoxContainer/InfoLabels"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+size_flags_vertical = 8
+texture = ExtResource("14_2f2wp")
+expand_mode = 5
+stretch_mode = 5
+
+[node name="LevelLabelScale" type="Control" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/M1MemberContainer/HBoxContainer/VBoxContainer/InfoLabels"]
+custom_minimum_size = Vector2(38.365, 0)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="LevelLabel" type="Label" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/M1MemberContainer/HBoxContainer/VBoxContainer/InfoLabels/LevelLabelScale"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -9.73
+offset_right = 71.0
+offset_bottom = 13.27
+grow_vertical = 0
+scale = Vector2(0.45, 0.45)
+size_flags_vertical = 8
+text = "Lv100"
+label_settings = SubResource("LabelSettings_5lojc")
+vertical_alignment = 2
+
+[node name="RoleLabelScale" type="Control" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/M1MemberContainer/HBoxContainer/VBoxContainer/InfoLabels"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="RoleLabel" type="Label" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/M1MemberContainer/HBoxContainer/VBoxContainer/InfoLabels/RoleLabelScale"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -15.0
+offset_right = 116.0
+offset_bottom = 10.0
+grow_vertical = 0
+scale = Vector2(0.645, 0.645)
+size_flags_horizontal = 3
+text = "Melee 1"
+label_settings = SubResource("LabelSettings_7u378")
+vertical_alignment = 2
+
+[node name="ResourceBars" type="HBoxContainer" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/M1MemberContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 10
+theme_override_constants/separation = 12
+
+[node name="HealthBar" type="ProgressBar" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/M1MemberContainer/HBoxContainer/VBoxContainer/ResourceBars"]
+custom_minimum_size = Vector2(75, 4.5)
+layout_mode = 2
+mouse_filter = 1
+theme_override_fonts/font = ExtResource("12_g1bna")
+theme_override_styles/background = SubResource("StyleBoxFlat_fiyvu")
+theme_override_styles/fill = SubResource("StyleBoxFlat_vit53")
+step = 1.0
+value = 100.0
+show_percentage = false
+
+[node name="Label" type="Label" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/M1MemberContainer/HBoxContainer/VBoxContainer/ResourceBars/HealthBar"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -84.0
+offset_top = -4.5
+offset_right = 1.0
+offset_bottom = 18.5
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(0.54, 0.54)
+pivot_offset = Vector2(81.905, 4.09)
+text = "150000"
+label_settings = SubResource("LabelSettings_60331")
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="ManaBar" type="ProgressBar" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/M1MemberContainer/HBoxContainer/VBoxContainer/ResourceBars"]
+custom_minimum_size = Vector2(75, 4.5)
+layout_mode = 2
+mouse_filter = 1
+theme_override_fonts/font = ExtResource("12_g1bna")
+theme_override_styles/background = SubResource("StyleBoxFlat_fiyvu")
+theme_override_styles/fill = SubResource("StyleBoxFlat_vit53")
+step = 1.0
+value = 100.0
+show_percentage = false
+
+[node name="Label" type="Label" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/M1MemberContainer/HBoxContainer/VBoxContainer/ResourceBars/ManaBar"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -84.0
+offset_top = -4.5
+offset_right = 1.0
+offset_bottom = 18.5
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(0.54, 0.54)
+pivot_offset = Vector2(81.905, 4.09)
+text = "100
+"
+label_settings = SubResource("LabelSettings_60331")
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="AuraContainer" type="HBoxContainer" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/M1MemberContainer"]
+layout_mode = 2
+theme_override_constants/separation = -4
+
+[node name="M2MemberContainer" type="HBoxContainer" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 43)
+layout_mode = 2
+theme_override_constants/separation = 5
+script = ExtResource("13_xtixg")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/M2MemberContainer"]
+layout_mode = 2
+
+[node name="RoleIcon" type="CenterContainer" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/M2MemberContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="RoleIconTexture" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/M2MemberContainer/HBoxContainer/RoleIcon" instance=ExtResource("6_ipj6x")]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+texture = ExtResource("19_e6lyf")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/M2MemberContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="InfoLabels" type="HBoxContainer" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/M2MemberContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 12)
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="IndexIconTexture" type="TextureRect" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/M2MemberContainer/HBoxContainer/VBoxContainer/InfoLabels"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+size_flags_vertical = 8
+texture = ExtResource("14_2f2wp")
+expand_mode = 5
+stretch_mode = 5
+
+[node name="LevelLabelScale" type="Control" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/M2MemberContainer/HBoxContainer/VBoxContainer/InfoLabels"]
+custom_minimum_size = Vector2(38.365, 0)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="LevelLabel" type="Label" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/M2MemberContainer/HBoxContainer/VBoxContainer/InfoLabels/LevelLabelScale"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -9.73
+offset_right = 71.0
+offset_bottom = 13.27
+grow_vertical = 0
+scale = Vector2(0.45, 0.45)
+size_flags_vertical = 8
+text = "Lv100"
+label_settings = SubResource("LabelSettings_5lojc")
+vertical_alignment = 2
+
+[node name="RoleLabelScale" type="Control" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/M2MemberContainer/HBoxContainer/VBoxContainer/InfoLabels"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="RoleLabel" type="Label" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/M2MemberContainer/HBoxContainer/VBoxContainer/InfoLabels/RoleLabelScale"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -15.0
+offset_right = 116.0
+offset_bottom = 10.0
+grow_vertical = 0
+scale = Vector2(0.645, 0.645)
+size_flags_horizontal = 3
+text = "Melee 2"
+label_settings = SubResource("LabelSettings_7u378")
+vertical_alignment = 2
+
+[node name="ResourceBars" type="HBoxContainer" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/M2MemberContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 10
+theme_override_constants/separation = 12
+
+[node name="HealthBar" type="ProgressBar" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/M2MemberContainer/HBoxContainer/VBoxContainer/ResourceBars"]
+custom_minimum_size = Vector2(75, 4.5)
+layout_mode = 2
+mouse_filter = 1
+theme_override_fonts/font = ExtResource("12_g1bna")
+theme_override_styles/background = SubResource("StyleBoxFlat_fiyvu")
+theme_override_styles/fill = SubResource("StyleBoxFlat_vit53")
+step = 1.0
+value = 100.0
+show_percentage = false
+
+[node name="Label" type="Label" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/M2MemberContainer/HBoxContainer/VBoxContainer/ResourceBars/HealthBar"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -84.0
+offset_top = -4.5
+offset_right = 1.0
+offset_bottom = 18.5
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(0.54, 0.54)
+pivot_offset = Vector2(81.905, 4.09)
+text = "150000"
+label_settings = SubResource("LabelSettings_60331")
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="ManaBar" type="ProgressBar" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/M2MemberContainer/HBoxContainer/VBoxContainer/ResourceBars"]
+custom_minimum_size = Vector2(75, 4.5)
+layout_mode = 2
+mouse_filter = 1
+theme_override_fonts/font = ExtResource("12_g1bna")
+theme_override_styles/background = SubResource("StyleBoxFlat_fiyvu")
+theme_override_styles/fill = SubResource("StyleBoxFlat_vit53")
+step = 1.0
+value = 100.0
+show_percentage = false
+
+[node name="Label" type="Label" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/M2MemberContainer/HBoxContainer/VBoxContainer/ResourceBars/ManaBar"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -84.0
+offset_top = -4.5
+offset_right = 1.0
+offset_bottom = 18.5
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(0.54, 0.54)
+pivot_offset = Vector2(81.905, 4.09)
+text = "100
+"
+label_settings = SubResource("LabelSettings_60331")
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="AuraContainer" type="HBoxContainer" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/M2MemberContainer"]
+layout_mode = 2
+theme_override_constants/separation = -4
+
+[node name="R1MemberContainer" type="HBoxContainer" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 43)
+layout_mode = 2
+theme_override_constants/separation = 5
+script = ExtResource("13_xtixg")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/R1MemberContainer"]
+layout_mode = 2
+
+[node name="RoleIcon" type="CenterContainer" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/R1MemberContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="RoleIconTexture" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/R1MemberContainer/HBoxContainer/RoleIcon" instance=ExtResource("6_ipj6x")]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+texture = ExtResource("20_yqk1g")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/R1MemberContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="InfoLabels" type="HBoxContainer" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/R1MemberContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 12)
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="IndexIconTexture" type="TextureRect" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/R1MemberContainer/HBoxContainer/VBoxContainer/InfoLabels"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+size_flags_vertical = 8
+texture = ExtResource("14_2f2wp")
+expand_mode = 5
+stretch_mode = 5
+
+[node name="LevelLabelScale" type="Control" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/R1MemberContainer/HBoxContainer/VBoxContainer/InfoLabels"]
+custom_minimum_size = Vector2(38.365, 0)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="LevelLabel" type="Label" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/R1MemberContainer/HBoxContainer/VBoxContainer/InfoLabels/LevelLabelScale"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -9.73
+offset_right = 71.0
+offset_bottom = 13.27
+grow_vertical = 0
+scale = Vector2(0.45, 0.45)
+size_flags_vertical = 8
+text = "Lv100"
+label_settings = SubResource("LabelSettings_5lojc")
+vertical_alignment = 2
+
+[node name="RoleLabelScale" type="Control" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/R1MemberContainer/HBoxContainer/VBoxContainer/InfoLabels"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="RoleLabel" type="Label" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/R1MemberContainer/HBoxContainer/VBoxContainer/InfoLabels/RoleLabelScale"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -15.0
+offset_right = 116.0
+offset_bottom = 10.0
+grow_vertical = 0
+scale = Vector2(0.645, 0.645)
+size_flags_horizontal = 3
+text = "Ranged 1"
+label_settings = SubResource("LabelSettings_7u378")
+vertical_alignment = 2
+
+[node name="ResourceBars" type="HBoxContainer" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/R1MemberContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 10
+theme_override_constants/separation = 12
+
+[node name="HealthBar" type="ProgressBar" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/R1MemberContainer/HBoxContainer/VBoxContainer/ResourceBars"]
+custom_minimum_size = Vector2(75, 4.5)
+layout_mode = 2
+mouse_filter = 1
+theme_override_fonts/font = ExtResource("12_g1bna")
+theme_override_styles/background = SubResource("StyleBoxFlat_fiyvu")
+theme_override_styles/fill = SubResource("StyleBoxFlat_vit53")
+step = 1.0
+value = 100.0
+show_percentage = false
+
+[node name="Label" type="Label" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/R1MemberContainer/HBoxContainer/VBoxContainer/ResourceBars/HealthBar"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -84.0
+offset_top = -4.5
+offset_right = 1.0
+offset_bottom = 18.5
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(0.54, 0.54)
+pivot_offset = Vector2(81.905, 4.09)
+text = "150000"
+label_settings = SubResource("LabelSettings_60331")
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="ManaBar" type="ProgressBar" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/R1MemberContainer/HBoxContainer/VBoxContainer/ResourceBars"]
+custom_minimum_size = Vector2(75, 4.5)
+layout_mode = 2
+mouse_filter = 1
+theme_override_fonts/font = ExtResource("12_g1bna")
+theme_override_styles/background = SubResource("StyleBoxFlat_fiyvu")
+theme_override_styles/fill = SubResource("StyleBoxFlat_vit53")
+step = 1.0
+value = 100.0
+show_percentage = false
+
+[node name="Label" type="Label" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/R1MemberContainer/HBoxContainer/VBoxContainer/ResourceBars/ManaBar"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -84.0
+offset_top = -4.5
+offset_right = 1.0
+offset_bottom = 18.5
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(0.54, 0.54)
+pivot_offset = Vector2(81.905, 4.09)
+text = "100
+"
+label_settings = SubResource("LabelSettings_60331")
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="AuraContainer" type="HBoxContainer" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/R1MemberContainer"]
+layout_mode = 2
+theme_override_constants/separation = -4
+
+[node name="R2MemberContainer" type="HBoxContainer" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 43)
+layout_mode = 2
+theme_override_constants/separation = 5
+script = ExtResource("13_xtixg")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/R2MemberContainer"]
+layout_mode = 2
+
+[node name="RoleIcon" type="CenterContainer" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/R2MemberContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="RoleIconTexture" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/R2MemberContainer/HBoxContainer/RoleIcon" instance=ExtResource("6_ipj6x")]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+texture = ExtResource("21_a7vtm")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/R2MemberContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="InfoLabels" type="HBoxContainer" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/R2MemberContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 12)
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="IndexIconTexture" type="TextureRect" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/R2MemberContainer/HBoxContainer/VBoxContainer/InfoLabels"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+size_flags_vertical = 8
+texture = ExtResource("14_2f2wp")
+expand_mode = 5
+stretch_mode = 5
+
+[node name="LevelLabelScale" type="Control" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/R2MemberContainer/HBoxContainer/VBoxContainer/InfoLabels"]
+custom_minimum_size = Vector2(38.365, 0)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="LevelLabel" type="Label" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/R2MemberContainer/HBoxContainer/VBoxContainer/InfoLabels/LevelLabelScale"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -9.73
+offset_right = 71.0
+offset_bottom = 13.27
+grow_vertical = 0
+scale = Vector2(0.45, 0.45)
+size_flags_vertical = 8
+text = "Lv100"
+label_settings = SubResource("LabelSettings_5lojc")
+vertical_alignment = 2
+
+[node name="RoleLabelScale" type="Control" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/R2MemberContainer/HBoxContainer/VBoxContainer/InfoLabels"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="RoleLabel" type="Label" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/R2MemberContainer/HBoxContainer/VBoxContainer/InfoLabels/RoleLabelScale"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -15.0
+offset_right = 116.0
+offset_bottom = 10.0
+grow_vertical = 0
+scale = Vector2(0.645, 0.645)
+size_flags_horizontal = 3
+text = "Ranged 2"
+label_settings = SubResource("LabelSettings_7u378")
+vertical_alignment = 2
+
+[node name="ResourceBars" type="HBoxContainer" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/R2MemberContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 10
+theme_override_constants/separation = 12
+
+[node name="HealthBar" type="ProgressBar" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/R2MemberContainer/HBoxContainer/VBoxContainer/ResourceBars"]
+custom_minimum_size = Vector2(75, 4.5)
+layout_mode = 2
+mouse_filter = 1
+theme_override_fonts/font = ExtResource("12_g1bna")
+theme_override_styles/background = SubResource("StyleBoxFlat_fiyvu")
+theme_override_styles/fill = SubResource("StyleBoxFlat_vit53")
+step = 1.0
+value = 100.0
+show_percentage = false
+
+[node name="Label" type="Label" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/R2MemberContainer/HBoxContainer/VBoxContainer/ResourceBars/HealthBar"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -84.0
+offset_top = -4.5
+offset_right = 1.0
+offset_bottom = 18.5
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(0.54, 0.54)
+pivot_offset = Vector2(81.905, 4.09)
+text = "150000"
+label_settings = SubResource("LabelSettings_60331")
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="ManaBar" type="ProgressBar" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/R2MemberContainer/HBoxContainer/VBoxContainer/ResourceBars"]
+custom_minimum_size = Vector2(75, 4.5)
+layout_mode = 2
+mouse_filter = 1
+theme_override_fonts/font = ExtResource("12_g1bna")
+theme_override_styles/background = SubResource("StyleBoxFlat_fiyvu")
+theme_override_styles/fill = SubResource("StyleBoxFlat_vit53")
+step = 1.0
+value = 100.0
+show_percentage = false
+
+[node name="Label" type="Label" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/R2MemberContainer/HBoxContainer/VBoxContainer/ResourceBars/ManaBar"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -84.0
+offset_top = -4.5
+offset_right = 1.0
+offset_bottom = 18.5
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(0.54, 0.54)
+pivot_offset = Vector2(81.905, 4.09)
+text = "100
+"
+label_settings = SubResource("LabelSettings_60331")
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="AuraContainer" type="HBoxContainer" parent="MarginContainer/TextureRect/VBoxContainer/MemberVBoxContainer/R2MemberContainer"]
+layout_mode = 2
+theme_override_constants/separation = -4
+
+[node name="ColorRect" type="ColorRect" parent="MarginContainer"]
+visible = false
+custom_minimum_size = Vector2(202.5, 330.09)
+layout_mode = 2
+mouse_filter = 1
+color = Color(0, 0, 0, 0.13)
+
+[node name="MoveUIBG" type="Panel" parent="MarginContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_5kfop")
+
+[node name="Label" type="Label" parent="MarginContainer/MoveUIBG"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -63.5
+offset_top = -12.5
+offset_right = 63.5
+offset_bottom = 12.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Party List"
+label_settings = SubResource("LabelSettings_wswh0")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="gui_input" from="MarginContainer" to="." method="_on_margin_container_gui_input"]

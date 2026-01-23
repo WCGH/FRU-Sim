@@ -4,23 +4,25 @@
 # Please see the LICENSE file that should have been included as part of this package.
 
 extends Node
-class_name EncounterController
 
-#@export var chain_sequences := false
+class_name EncounterController
 
 @onready var sequences := get_children()
 
-var am_index := 0
+var _party
 
 func start_encounter(party: Dictionary) -> void:
-	#var selected_sequence := Global.selected_sequence_index
 	var selected_sequence := 0
 	print("Starting sequence: ", sequences[selected_sequence])
-	#if chain_sequences:
-		#sequences[selected_sequence].start_sequence(party).connect(play_next_sequence)
 	sequences[selected_sequence].start_sequence(party)
 
 
-#func play_next_sequence(party: Dictionary, seq_index: int) -> void:
-	#if seq_index != -1:
-		#sequences[seq_index].start_sequence(party).connect(play_next_sequence)
+func start_p5_encounter(party: Dictionary) -> void:
+	_party = party
+	var selected_sequence = Global.p5_selected_seq
+	print("Starting sequence: ", sequences[selected_sequence])
+	sequences[selected_sequence].start_sequence(party)
+
+
+func play_sequence_by_index(seq_index: int) -> void:
+	sequences[seq_index].start_sequence(_party)

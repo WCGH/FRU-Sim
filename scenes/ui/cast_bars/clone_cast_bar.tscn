@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://d0c27klcaisbj"]
+[gd_scene load_steps=10 format=3 uid="uid://d0c27klcaisbj"]
 
 [ext_resource type="Script" path="res://scenes/ui/cast_bars/clone_cast_bar.gd" id="1_1snv3"]
 [ext_resource type="FontFile" uid="uid://dflgosesmjvf" path="res://assets/common/fonts/MYRIADPRO-BOLD.OTF" id="2_ujq8d"]
+[ext_resource type="FontFile" uid="uid://46wxmrxlq74f" path="res://assets/common/fonts/eurostarregularextended.ttf" id="3_t6wnq"]
 
 [sub_resource type="Theme" id="Theme_vadjc"]
 default_font = ExtResource("2_ujq8d")
@@ -22,6 +23,20 @@ border_color = Color(0.968627, 0.6, 0, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eit2t"]
 bg_color = Color(1, 1, 1, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6disy"]
+bg_color = Color(0.267, 0.267, 0.267, 0.741)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.780392, 0.501961, 0.360784, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_dw8ij"]
+font = ExtResource("3_t6wnq")
+font_size = 15
+outline_size = 3
+outline_color = Color(0.780392, 0.501961, 0.360784, 1)
+
 [node name="CloneCastBar" type="CanvasLayer" groups=["clone_cast_bar"]]
 visible = false
 script = ExtResource("1_1snv3")
@@ -31,22 +46,17 @@ one_shot = true
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchors_preset = -1
-anchor_left = 0.095
+anchor_left = 0.174
 anchor_top = 0.711
-anchor_right = 0.095
+anchor_right = 0.174
 anchor_bottom = 0.711
-offset_left = 85.4
-offset_top = 22.0799
-offset_right = 336.4
-offset_bottom = 120.08
+offset_left = -0.447998
+offset_top = 0.271973
+offset_right = 250.552
+offset_bottom = 98.272
 grow_vertical = 2
 scale = Vector2(0.85, 0.85)
 size_flags_vertical = 8
-mouse_filter = 2
-theme_override_constants/margin_left = 21
-theme_override_constants/margin_top = 0
-theme_override_constants/margin_right = 0
-theme_override_constants/margin_bottom = 0
 
 [node name="CastBarContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
@@ -58,7 +68,7 @@ size_flags_vertical = 4
 [node name="Label" type="Label" parent="MarginContainer/CastBarContainer/CastBar1"]
 layout_mode = 2
 theme = SubResource("Theme_vadjc")
-text = "Test cast"
+text = "Cast 1"
 label_settings = SubResource("LabelSettings_lc2st")
 horizontal_alignment = 2
 
@@ -81,7 +91,7 @@ size_flags_vertical = 4
 [node name="Label" type="Label" parent="MarginContainer/CastBarContainer/CastBar2"]
 layout_mode = 2
 theme = SubResource("Theme_vadjc")
-text = "Test cast"
+text = "Cast 2"
 label_settings = SubResource("LabelSettings_lc2st")
 horizontal_alignment = 2
 
@@ -104,7 +114,7 @@ size_flags_vertical = 4
 [node name="Label" type="Label" parent="MarginContainer/CastBarContainer/CastBar3"]
 layout_mode = 2
 theme = SubResource("Theme_vadjc")
-text = "Test cast"
+text = "Cast 3"
 label_settings = SubResource("LabelSettings_lc2st")
 horizontal_alignment = 2
 
@@ -119,4 +129,23 @@ max_value = 1.0
 value = 0.5
 show_percentage = false
 
+[node name="MoveUIBG" type="Panel" parent="MarginContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_6disy")
+
+[node name="Label" type="Label" parent="MarginContainer/MoveUIBG"]
+layout_mode = 0
+offset_left = 46.2471
+offset_top = 1.40244
+offset_right = 192.247
+offset_bottom = 26.4024
+text = "Enmity Cast Bar"
+label_settings = SubResource("LabelSettings_dw8ij")
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="gui_input" from="MarginContainer" to="." method="_on_margin_container_gui_input"]

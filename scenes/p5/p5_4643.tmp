@@ -1,0 +1,1462 @@
+[gd_scene load_steps=72 format=3 uid="uid://dn43lysx7adqc"]
+
+[ext_resource type="Script" path="res://scenes/p5/p5_main.gd" id="1_cu2pk"]
+[ext_resource type="PackedScene" uid="uid://b23aj0fsxbgap" path="res://scenes/menus/control_menu.tscn" id="2_10nki"]
+[ext_resource type="PackedScene" uid="uid://vftsma2c80sa" path="res://scenes/menus/pause_menu.tscn" id="3_24g8a"]
+[ext_resource type="PackedScene" uid="uid://chasoddjwqblg" path="res://scenes/ui/cast_bars/cast_bar.tscn" id="4_ak1d3"]
+[ext_resource type="PackedScene" uid="uid://cjmyec6sin7kw" path="res://scenes/ui/cast_bars/enmity_cast_bar.tscn" id="5_ordt7"]
+[ext_resource type="PackedScene" uid="uid://cg0h4uysscvtc" path="res://scenes/ui/action_bar.tscn" id="6_51p1y"]
+[ext_resource type="PackedScene" uid="uid://cidk1e7u3l0ya" path="res://scenes/ui/fail_list.tscn" id="7_i2c35"]
+[ext_resource type="PackedScene" uid="uid://02ckwb1trdp4" path="res://scenes/ui/party_list/party_list.tscn" id="8_f58sv"]
+[ext_resource type="PackedScene" uid="uid://du2fr4o3nsww0" path="res://scenes/ui/auras/player_debuffs.tscn" id="9_pkjr8"]
+[ext_resource type="PackedScene" uid="uid://cbimodxf0fbhu" path="res://scenes/ui/waymark_menu.tscn" id="10_vbkrn"]
+[ext_resource type="PackedScene" uid="uid://bwd1v6kvgas8d" path="res://scenes/common/controllers/waymark_controller.tscn" id="12_lp1wq"]
+[ext_resource type="PackedScene" uid="uid://bayxk6ajn7khf" path="res://scenes/common/controllers/party_controller.tscn" id="13_ixaf3"]
+[ext_resource type="PackedScene" uid="uid://wdaa7tvsg1oy" path="res://scenes/common/controllers/lockon_controller.tscn" id="14_n5rek"]
+[ext_resource type="PackedScene" uid="uid://bauk161giibov" path="res://scenes/common/controllers/ground_aoe_controller.tscn" id="15_hkebs"]
+[ext_resource type="Script" path="res://scenes/p5/sequences/p5_fb_seq.gd" id="16_hgcho"]
+[ext_resource type="PackedScene" uid="uid://crewso7ys1t5t" path="res://scenes/common/controllers/encounter_controller.tscn" id="16_rsakf"]
+[ext_resource type="Script" path="res://scenes/p5/sequences/p5_pr_seq.gd" id="17_ganwv"]
+[ext_resource type="PackedScene" uid="uid://tpbo0f1m64tx" path="res://scenes/p5/arena/p5_arena.tscn" id="17_s7vjc"]
+[ext_resource type="Script" path="res://scenes/p5/sequences/p5_ps_seq.gd" id="18_eqrdc"]
+[ext_resource type="PackedScene" uid="uid://b5a8l81gltuhy" path="res://scenes/common/ground_markers/death_wall.tscn" id="19_5bphk"]
+[ext_resource type="PackedScene" uid="uid://cypkdpypuypj4" path="res://scenes/common/enemies/hitbox_ring.tscn" id="20_unrbk"]
+[ext_resource type="PackedScene" uid="uid://dodhm04hsn2ep" path="res://scenes/p3/enemies/oracle.tscn" id="21_nmrph"]
+[ext_resource type="PackedScene" uid="uid://cjnys67q85v4v" path="res://scenes/p5/p5_wing_light_ring.tscn" id="21_t77pd"]
+[ext_resource type="PackedScene" uid="uid://c3hxrvf0h86ye" path="res://scenes/p5/p5_wing_dark_ring.tscn" id="22_bsgus"]
+[ext_resource type="PackedScene" uid="uid://26kmxqrmgwq" path="res://scenes/p5/controllers/exawave_controller.tscn" id="22_c8582"]
+[ext_resource type="PackedScene" uid="uid://c6lwk2vknoj7w" path="res://scenes/ui/move_ui_reset_button.tscn" id="24_7t0oe"]
+[ext_resource type="Texture2D" uid="uid://bmcxcd6diyj1x" path="res://assets/common/world_markers/wm_ground_marker.png" id="24_jfovo"]
+[ext_resource type="PackedScene" uid="uid://bdnvuxjtbpidx" path="res://scenes/common/ground_markers/pr_tower.tscn" id="25_am1h7"]
+[ext_resource type="Script" path="res://scenes/p5/p5_sub_sequence_select_button.gd" id="27_4ii7p"]
+[ext_resource type="Script" path="res://scenes/common/ground_markers/pr_tower.gd" id="27_lemd5"]
+[ext_resource type="PackedScene" uid="uid://jcbpndkhehjl" path="res://scenes/ui/coords.tscn" id="28_aipha"]
+[ext_resource type="Script" path="res://scenes/p5/p5_hide_bots_check_button.gd" id="28_kaix3"]
+[ext_resource type="Script" path="res://scenes/ui/role_select_button.gd" id="29_gqa2w"]
+[ext_resource type="PackedScene" uid="uid://ce72svh5khi1u" path="res://scenes/ui/sequence_select_button.tscn" id="32_d6fpf"]
+[ext_resource type="Script" path="res://scenes/ui/spectate_button.gd" id="33_x6ks6"]
+[ext_resource type="PackedScene" uid="uid://cmakti71sjg46" path="res://scenes/ui/info_box.tscn" id="36_qcegl"]
+
+[sub_resource type="Animation" id="Animation_r07vk"]
+resource_name = "p5_fb_seq"
+length = 30.0
+step = 0.1
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(2.1, 4, 21, 28.5, 30),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"values": [{
+"args": [],
+"method": &"oracle_swing"
+}, {
+"args": [],
+"method": &"start_exalines"
+}, {
+"args": [],
+"method": &"cast_akh_morn"
+}, {
+"args": [],
+"method": &"akh_morn_hit"
+}, {
+"args": [],
+"method": &"play_pr_seq"
+}]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(8, 12, 16, 18, 20, 22, 24, 26),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"values": [{
+"args": [],
+"method": &"move_exa_pre"
+}, {
+"args": [0],
+"method": &"move_exa_dodge"
+}, {
+"args": [1],
+"method": &"move_exa_dodge"
+}, {
+"args": [2],
+"method": &"move_exa_dodge"
+}, {
+"args": [3],
+"method": &"move_exa_dodge"
+}, {
+"args": [4],
+"method": &"move_exa_dodge"
+}, {
+"args": [5],
+"method": &"move_exa_dodge"
+}, {
+"args": [],
+"method": &"move_am"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_sn5bc"]
+_data = {
+"p5_fb_seq": SubResource("Animation_r07vk")
+}
+
+[sub_resource type="Animation" id="Animation_elvuh"]
+resource_name = "p5_pr_seq"
+length = 24.7
+step = 0.1
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(1.3, 5, 6, 8.3, 9.5, 12.4, 13, 15, 15.7, 18.5, 19.2, 22.7, 24.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"values": [{
+"args": [],
+"method": &"cast_paradise"
+}, {
+"args": [],
+"method": &"finish_cast"
+}, {
+"args": [],
+"method": &"spawn_tower_1"
+}, {
+"args": [],
+"method": &"cast_wings"
+}, {
+"args": [],
+"method": &"spawn_tower_2"
+}, {
+"args": [],
+"method": &"play_wing_anim_2"
+}, {
+"args": [],
+"method": &"spawn_tower_3"
+}, {
+"args": [],
+"method": &"boss_face_t1"
+}, {
+"args": [],
+"method": &"tower_1_hit"
+}, {
+"args": [],
+"method": &"boss_face_t2"
+}, {
+"args": [],
+"method": &"tower_2_hit"
+}, {
+"args": [],
+"method": &"tower_3_hit"
+}, {
+"args": [],
+"method": &"play_ps_seq"
+}]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(2, 10, 16.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"values": [{
+"args": [],
+"method": &"move_pre_pos"
+}, {
+"args": [],
+"method": &"move_pos_1"
+}, {
+"args": [],
+"method": &"move_pos_2"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ydk0i"]
+_data = {
+"p5_pr_seq": SubResource("Animation_elvuh")
+}
+
+[sub_resource type="Animation" id="Animation_6imic"]
+resource_name = "p5_ps_seq"
+length = 27.0
+step = 0.1
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(3.5, 10, 10.3, 12.2, 12.4, 14.7, 15, 16.9, 17.1, 19.4, 19.7, 21.6, 21.8, 24.1, 24.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"values": [{
+"args": [],
+"method": &"cast_polarizing"
+}, {
+"args": [],
+"method": &"oracle_swing"
+}, {
+"args": [],
+"method": &"strike_hit"
+}, {
+"args": [],
+"method": &"cast_paths"
+}, {
+"args": [],
+"method": &"echo_hit"
+}, {
+"args": [],
+"method": &"oracle_swing"
+}, {
+"args": [],
+"method": &"strike_hit"
+}, {
+"args": [],
+"method": &"cast_polarizing"
+}, {
+"args": [],
+"method": &"echo_hit"
+}, {
+"args": [],
+"method": &"oracle_swing"
+}, {
+"args": [],
+"method": &"strike_hit"
+}, {
+"args": [],
+"method": &"cast_polarizing"
+}, {
+"args": [],
+"method": &"echo_hit"
+}, {
+"args": [],
+"method": &"oracle_swing"
+}, {
+"args": [],
+"method": &"strike_hit"
+}]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.5, 5, 11.3, 13.4, 16, 18.1, 20.7, 22.8, 25.4, 26.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"values": [{
+"args": [],
+"method": &"move_pre_pos"
+}, {
+"args": [],
+"method": &"move_hit_1_in"
+}, {
+"args": [],
+"method": &"move_hit_1_out"
+}, {
+"args": [],
+"method": &"move_hit_2_in"
+}, {
+"args": [],
+"method": &"move_hit_2_out"
+}, {
+"args": [],
+"method": &"move_hit_3_in"
+}, {
+"args": [],
+"method": &"move_hit_3_out"
+}, {
+"args": [],
+"method": &"move_hit_4_in"
+}, {
+"args": [],
+"method": &"move_hit_4_out"
+}, {
+"args": [],
+"method": &"echo_hit"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_13gh6"]
+_data = {
+"p5_ps_seq": SubResource("Animation_6imic")
+}
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_23fhv"]
+data = PackedVector3Array(150, 0, 150, -150, 0, 150, 150, 0, -150, -150, 0, 150, -150, 0, -150, 150, 0, -150)
+
+[sub_resource type="Animation" id="Animation_nu2tk"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LightRing1:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(3, 3, 3)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("LightRing1:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("LightRing2:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(3, 3, 3)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("LightRing2:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("LightRing3:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(3, 3, 3)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("LightRing3:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("LightRing4:scale")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(3, 3, 3)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("LightRing4:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("LightRing5:scale")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(3, 3, 3)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("LightRing5:visible")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_ppi8e"]
+resource_name = "light_wing_glow"
+length = 3.0
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LightRing1:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(3, 3, 3), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("LightRing1:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("LightRing2:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.55, 1.95),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(3, 3, 3), Vector3(0, 0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("LightRing2:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.55, 1.95),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("LightRing3:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(1.1, 2.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(3, 3, 3), Vector3(0, 0, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("LightRing3:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(1.1, 2.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("LightRing4:scale")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(1.65, 2.95),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(3, 3, 3), Vector3(0, 0, 0)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("LightRing4:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(1.65, 2.95),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("LightRing5:scale")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(2.3, 3),
+"transitions": PackedFloat32Array(1, 25.1067),
+"update": 0,
+"values": [Vector3(3, 3, 3), Vector3(0.5, 0.5, 0.5)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("LightRing5:visible")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(2.3, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4im58"]
+_data = {
+"RESET": SubResource("Animation_nu2tk"),
+"light_wing_glow": SubResource("Animation_ppi8e")
+}
+
+[sub_resource type="Animation" id="Animation_xno6j"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DarkRing1:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(3, 3, 3)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DarkRing1:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("DarkRing2:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(3, 3, 3)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("DarkRing2:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("DarkRing3:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(3, 3, 3)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("DarkRing3:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("DarkRing4:scale")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(3, 3, 3)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("DarkRing4:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("DarkRing5:scale")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(3, 3, 3)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("DarkRing5:visible")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_ltfv3"]
+resource_name = "dark_wing_glow"
+length = 3.0
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DarkRing1:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(3, 3, 3), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DarkRing1:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("DarkRing2:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.55, 1.95),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(3, 3, 3), Vector3(0, 0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("DarkRing2:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.55, 1.95),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("DarkRing3:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(1.1, 2.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(3, 3, 3), Vector3(0, 0, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("DarkRing3:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(1.1, 2.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("DarkRing4:scale")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(1.65, 2.95),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(3, 3, 3), Vector3(0, 0, 0)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("DarkRing4:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(1.65, 2.95),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("DarkRing5:scale")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(2.2, 3),
+"transitions": PackedFloat32Array(1, 7.99999),
+"update": 0,
+"values": [Vector3(3, 3, 3), Vector3(0.5, 0.5, 0.5)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("DarkRing5:visible")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(2.2, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7qnht"]
+_data = {
+"RESET": SubResource("Animation_xno6j"),
+"dark_wing_glow": SubResource("Animation_ltfv3")
+}
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s5pku"]
+transparency = 1
+albedo_texture = ExtResource("24_jfovo")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_5pk2k"]
+material = SubResource("StandardMaterial3D_s5pku")
+size = Vector2(8.795, 6.96)
+center_offset = Vector3(-0.115, 0, 0.022)
+
+[sub_resource type="Shader" id="Shader_wo7nj"]
+code = "shader_type spatial;
+render_mode unshaded;
+uniform float size: hint_range(0.0, 0.25);
+uniform float alpha: hint_range(0.0, 1.0);
+uniform vec3 color;
+
+void fragment() {
+	vec2 center = vec2(0.25, 0.75);
+	float df = distance(UV, center);
+	float circle = step(size, df);
+	ALBEDO = vec3(circle) * color;
+	ALPHA = alpha;
+}
+
+//void light() {
+	// Called for every pixel for every light affecting the CanvasItem.
+	// Uncomment to replace the default light processing function with this one.
+//}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rplae"]
+render_priority = 0
+shader = SubResource("Shader_wo7nj")
+shader_parameter/size = 0.21
+shader_parameter/alpha = 0.235
+shader_parameter/color = Vector3(0.081, 0.114, 2.064)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_wxxug"]
+material = SubResource("ShaderMaterial_rplae")
+top_radius = 8.657
+bottom_radius = 8.657
+height = 0.001
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hpvlw"]
+render_priority = 0
+shader = SubResource("Shader_wo7nj")
+shader_parameter/size = 0.224
+shader_parameter/alpha = 0.235
+shader_parameter/color = Vector3(1.892, 1.057, 0.188)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_n40hq"]
+material = SubResource("ShaderMaterial_hpvlw")
+top_radius = 8.395
+bottom_radius = 8.395
+height = 0.001
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hbiea"]
+render_priority = 0
+shader = SubResource("Shader_wo7nj")
+shader_parameter/size = 0.163
+shader_parameter/alpha = 0.236
+shader_parameter/color = Vector3(0.344, 0.451, 0.53)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_h1i47"]
+material = SubResource("ShaderMaterial_hbiea")
+top_radius = 4.414
+bottom_radius = 4.414
+height = 0.001
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6p0hk"]
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 6.93
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_phyvp"]
+transparency = 1
+albedo_color = Color(0.682353, 0.647059, 0.662745, 0.898039)
+emission_enabled = true
+emission = Color(0.682353, 0.647059, 0.662745, 1)
+emission_energy_multiplier = 0.17
+
+[sub_resource type="SphereMesh" id="SphereMesh_ks3nd"]
+material = SubResource("StandardMaterial3D_phyvp")
+radius = 2.0
+height = 4.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t1al5"]
+transparency = 1
+albedo_color = Color(0.804, 0.643, 1, 0.6)
+emission_enabled = true
+emission = Color(0.803922, 0.643137, 1, 1)
+emission_energy_multiplier = 1.65
+
+[sub_resource type="TorusMesh" id="TorusMesh_dlxfk"]
+material = SubResource("StandardMaterial3D_t1al5")
+inner_radius = 8.388
+outer_radius = 8.6
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_5rwqm"]
+height = 3.0
+radius = 8.7
+
+[sub_resource type="Animation" id="Animation_nux8y"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Orb:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 29.5833, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Orb:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Orb:mesh:material:albedo_color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.682353, 0.647059, 0.662745, 0.898039)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Ring:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 29.5833, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Ring:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Ring:mesh:material:albedo_color")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.804, 0.643, 1, 0.6)]
+}
+
+[sub_resource type="Animation" id="Animation_r6808"]
+resource_name = "orb_drop"
+length = 8.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Orb:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 29.5833, 0), Vector3(0, 1.5, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Orb:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 8.13333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Orb:mesh:material:albedo_color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(8, 8.13333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.682353, 0.647059, 0.662745, 0.898039), Color(0.682353, 0.647059, 0.662745, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_dtbow"]
+resource_name = "ring_drop"
+length = 9.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Ring:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 9.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 29.5833, 0), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Ring:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 9.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Ring:mesh:material:albedo_color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(9.23333, 9.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.804, 0.643, 1, 0.6), Color(0.804, 0.643, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_a00d4"]
+_data = {
+"RESET": SubResource("Animation_nux8y"),
+"orb_drop": SubResource("Animation_r6808"),
+"ring_drop": SubResource("Animation_dtbow")
+}
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_p3ej1"]
+
+[sub_resource type="Sky" id="Sky_3kvju"]
+sky_material = SubResource("ProceduralSkyMaterial_p3ej1")
+
+[sub_resource type="Environment" id="Environment_onckn"]
+background_mode = 2
+sky = SubResource("Sky_3kvju")
+tonemap_mode = 2
+glow_enabled = true
+volumetric_fog_density = 0.0
+
+[node name="P5Main" type="Node3D"]
+script = ExtResource("1_cu2pk")
+
+[node name="ControlMenu" parent="." instance=ExtResource("2_10nki")]
+unique_name_in_owner = true
+layer = 99
+visible = false
+
+[node name="PauseMenu" parent="." instance=ExtResource("3_24g8a")]
+
+[node name="CastBar" parent="." instance=ExtResource("4_ak1d3")]
+unique_name_in_owner = true
+
+[node name="EnmityCastBar" parent="." instance=ExtResource("5_ordt7")]
+unique_name_in_owner = true
+
+[node name="ActionBar" parent="." instance=ExtResource("6_51p1y")]
+
+[node name="FailList" parent="." instance=ExtResource("7_i2c35")]
+unique_name_in_owner = true
+
+[node name="PartyList" parent="." instance=ExtResource("8_f58sv")]
+unique_name_in_owner = true
+
+[node name="PlayerDebuffs" parent="." instance=ExtResource("9_pkjr8")]
+unique_name_in_owner = true
+
+[node name="WaymarkMenu" parent="." instance=ExtResource("10_vbkrn")]
+
+[node name="WaymarkController" parent="." node_paths=PackedStringArray("arena_waymark_node") groups=["waymark_controller"] instance=ExtResource("12_lp1wq")]
+unique_name_in_owner = true
+arena_waymark_node = NodePath("../Waymarks")
+
+[node name="PartyController" parent="." instance=ExtResource("13_ixaf3")]
+unique_name_in_owner = true
+
+[node name="LockonController" parent="." instance=ExtResource("14_n5rek")]
+unique_name_in_owner = true
+
+[node name="GroundAoEController" parent="." groups=["ground_aoe_controller"] instance=ExtResource("15_hkebs")]
+unique_name_in_owner = true
+
+[node name="EncounterController" parent="." instance=ExtResource("16_rsakf")]
+unique_name_in_owner = true
+
+[node name="P5FBSeq" type="Node" parent="EncounterController"]
+script = ExtResource("16_hgcho")
+
+[node name="P5FBAnim" type="AnimationPlayer" parent="EncounterController/P5FBSeq"]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_sn5bc")
+}
+
+[node name="P5PRSeq" type="Node" parent="EncounterController"]
+script = ExtResource("17_ganwv")
+
+[node name="P5PRAnim" type="AnimationPlayer" parent="EncounterController/P5PRSeq"]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_ydk0i")
+}
+
+[node name="P5PSSeq" type="Node" parent="EncounterController"]
+script = ExtResource("18_eqrdc")
+
+[node name="P5PSAnim" type="AnimationPlayer" parent="EncounterController/P5PSSeq"]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_13gh6")
+}
+
+[node name="Arena" type="Node3D" parent="."]
+
+[node name="Visual" type="Node3D" parent="Arena"]
+transform = Transform3D(2.358, 0, 0, 0, 2.358, 0, 0, 0, 2.358, 0, 0, 0)
+
+[node name="P6Arena" parent="Arena/Visual" instance=ExtResource("17_s7vjc")]
+
+[node name="FloorMesh" type="MeshInstance3D" parent="Arena"]
+skeleton = NodePath("")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Arena/FloorMesh"]
+collision_layer = 129
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Arena/FloorMesh/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_23fhv")
+
+[node name="DeathWall" parent="Arena" instance=ExtResource("19_5bphk")]
+transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 0, 0, 0)
+
+[node name="Waymarks" type="Node3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+
+[node name="Characters" type="Node3D" parent="." groups=["characters_layer"]]
+
+[node name="Enemies" type="Node3D" parent="." groups=["enemies_layer"]]
+
+[node name="OracleBoss" type="Node3D" parent="Enemies"]
+unique_name_in_owner = true
+
+[node name="OracleHitboxRing" parent="Enemies/OracleBoss" instance=ExtResource("20_unrbk")]
+unique_name_in_owner = true
+
+[node name="Oracle" parent="Enemies/OracleBoss" instance=ExtResource("21_nmrph")]
+unique_name_in_owner = true
+transform = Transform3D(-2.62268e-07, 0, 6, 0, 6, 0, -6, 0, -2.62268e-07, 0, 0, 0)
+
+[node name="LightWingEffect" type="Node3D" parent="Enemies/OracleBoss"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 0.966187, -0.257841, 0, 0.257841, 0.966187, 0, 11.414, 0)
+
+[node name="LightRing1" parent="Enemies/OracleBoss/LightWingEffect" instance=ExtResource("21_t77pd")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+
+[node name="LightRing2" parent="Enemies/OracleBoss/LightWingEffect" instance=ExtResource("21_t77pd")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+
+[node name="LightRing3" parent="Enemies/OracleBoss/LightWingEffect" instance=ExtResource("21_t77pd")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+
+[node name="LightRing4" parent="Enemies/OracleBoss/LightWingEffect" instance=ExtResource("21_t77pd")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+
+[node name="LightRing5" parent="Enemies/OracleBoss/LightWingEffect" instance=ExtResource("21_t77pd")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+
+[node name="LightWingAnim" type="AnimationPlayer" parent="Enemies/OracleBoss/LightWingEffect"]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_4im58")
+}
+
+[node name="DarkWingEffect" type="Node3D" parent="Enemies/OracleBoss"]
+unique_name_in_owner = true
+transform = Transform3D(-1, -2.24793e-08, -8.44833e-08, 0, 0.966376, -0.257133, 8.74228e-08, -0.257133, -0.966376, 0, 11.414, 0)
+
+[node name="DarkRing1" parent="Enemies/OracleBoss/DarkWingEffect" instance=ExtResource("22_bsgus")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+
+[node name="DarkRing2" parent="Enemies/OracleBoss/DarkWingEffect" instance=ExtResource("22_bsgus")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+
+[node name="DarkRing3" parent="Enemies/OracleBoss/DarkWingEffect" instance=ExtResource("22_bsgus")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+
+[node name="DarkRing4" parent="Enemies/OracleBoss/DarkWingEffect" instance=ExtResource("22_bsgus")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+
+[node name="DarkRing5" parent="Enemies/OracleBoss/DarkWingEffect" instance=ExtResource("22_bsgus")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+
+[node name="DarkWingAnim" type="AnimationPlayer" parent="Enemies/OracleBoss/DarkWingEffect"]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_7qnht")
+}
+
+[node name="GroundMarkers" type="Node3D" parent="." groups=["ground_marker_layer"]]
+unique_name_in_owner = true
+
+[node name="WMGroundMarker" type="MeshInstance3D" parent="GroundMarkers"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.60837, 0.14, 0.0603294)
+visible = false
+mesh = SubResource("PlaneMesh_5pk2k")
+
+[node name="SpecialMarkers" type="Node3D" parent="GroundMarkers"]
+unique_name_in_owner = true
+
+[node name="ExawaveController" parent="GroundMarkers/SpecialMarkers" instance=ExtResource("22_c8582")]
+unique_name_in_owner = true
+
+[node name="testtowers" type="Node3D" parent="GroundMarkers"]
+visible = false
+
+[node name="PRTower" type="Node3D" parent="GroundMarkers/testtowers"]
+transform = Transform3D(0.96, 0, 0, 0, 0.96, 0, 0, 0, 0.96, -16.6, 0, 0)
+script = ExtResource("27_lemd5")
+
+[node name="OutterMesh" type="MeshInstance3D" parent="GroundMarkers/testtowers/PRTower"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.112, 0)
+mesh = SubResource("CylinderMesh_wxxug")
+
+[node name="OutterMeshHighlight" type="MeshInstance3D" parent="GroundMarkers/testtowers/PRTower"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.119, 0)
+visible = false
+mesh = SubResource("CylinderMesh_n40hq")
+
+[node name="InnerMesh" type="MeshInstance3D" parent="GroundMarkers/testtowers/PRTower"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.144, 0)
+mesh = SubResource("CylinderMesh_h1i47")
+
+[node name="UpperGlowRing" type="CSGTorus3D" parent="GroundMarkers/testtowers/PRTower"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.445, 0)
+inner_radius = 8.64
+outer_radius = 8.709
+sides = 64
+ring_sides = 5
+material = SubResource("StandardMaterial3D_6p0hk")
+
+[node name="LowerGlowRing" type="CSGTorus3D" parent="GroundMarkers/testtowers/PRTower"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+inner_radius = 8.64
+outer_radius = 8.709
+sides = 64
+ring_sides = 5
+material = SubResource("StandardMaterial3D_6p0hk")
+
+[node name="InnerGlowRing" type="CSGTorus3D" parent="GroundMarkers/testtowers/PRTower"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+inner_radius = 7.202
+outer_radius = 7.267
+sides = 64
+ring_sides = 5
+material = SubResource("StandardMaterial3D_6p0hk")
+
+[node name="Orb" type="MeshInstance3D" parent="GroundMarkers/testtowers/PRTower"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 29.5833, 0)
+visible = false
+mesh = SubResource("SphereMesh_ks3nd")
+
+[node name="Ring" type="MeshInstance3D" parent="GroundMarkers/testtowers/PRTower"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 29.5833, 0)
+mesh = SubResource("TorusMesh_dlxfk")
+
+[node name="CollisionArea3D" type="Area3D" parent="GroundMarkers/testtowers/PRTower"]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GroundMarkers/testtowers/PRTower/CollisionArea3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+shape = SubResource("CylinderShape3D_5rwqm")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="GroundMarkers/testtowers/PRTower"]
+libraries = {
+"": SubResource("AnimationLibrary_a00d4")
+}
+
+[node name="PRTower2" parent="GroundMarkers/testtowers" instance=ExtResource("25_am1h7")]
+transform = Transform3D(0.96, 0, 0, 0, 0.96, 0, 0, 0, 0.96, 8.3, 0, -14.38)
+
+[node name="PRTower3" parent="GroundMarkers/testtowers" instance=ExtResource("25_am1h7")]
+transform = Transform3D(0.96, 0, 0, 0, 0.96, 0, 0, 0, 0.96, 8.3, 0, 14.38)
+
+[node name="Buttons" type="Node3D" parent="."]
+
+[node name="Coords" parent="Buttons" instance=ExtResource("28_aipha")]
+
+[node name="ResetButton" type="Button" parent="Buttons"]
+offset_left = 28.0
+offset_top = 18.0
+offset_right = 128.0
+offset_bottom = 58.0
+text = "Reset"
+
+[node name="MoveUIResetButton" parent="Buttons" instance=ExtResource("24_7t0oe")]
+unique_name_in_owner = true
+visible = false
+
+[node name="MainMenuButton" type="Button" parent="Buttons"]
+visible = false
+offset_left = 28.0
+offset_top = 73.0
+offset_right = 128.0
+offset_bottom = 113.0
+text = "Main Menu"
+
+[node name="RoleSelectButton" type="OptionButton" parent="Buttons"]
+offset_left = 150.0
+offset_top = 21.0
+offset_right = 327.0
+offset_bottom = 52.0
+focus_mode = 0
+action_mode = 1
+button_mask = 3
+selected = 6
+fit_to_longest_item = false
+item_count = 8
+popup/item_0/text = "Tank 1"
+popup/item_1/text = "Tank 2"
+popup/item_1/id = 1
+popup/item_2/text = "Healer 1"
+popup/item_2/id = 2
+popup/item_3/text = "Healer 2"
+popup/item_3/id = 3
+popup/item_4/text = "Melee 1"
+popup/item_4/id = 4
+popup/item_5/text = "Melee 2"
+popup/item_5/id = 5
+popup/item_6/text = "Ranged 1"
+popup/item_6/id = 6
+popup/item_7/text = "Ranged 2"
+popup/item_7/id = 7
+script = ExtResource("29_gqa2w")
+
+[node name="SequenceSelectButton" parent="Buttons" instance=ExtResource("32_d6fpf")]
+
+[node name="P5SubSequenceSelectButton" type="OptionButton" parent="Buttons"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -403.0
+offset_top = 21.0
+offset_right = -228.0
+offset_bottom = 52.0
+grow_horizontal = 0
+focus_mode = 0
+action_mode = 1
+button_mask = 3
+selected = 0
+fit_to_longest_item = false
+item_count = 3
+popup/item_0/text = "Fulgent Blade"
+popup/item_1/text = "Paradise Regained"
+popup/item_1/id = 1
+popup/item_2/text = "Polarizing Strikes"
+popup/item_2/id = 2
+script = ExtResource("27_4ii7p")
+
+[node name="Label" type="Label" parent="Buttons/P5SubSequenceSelectButton"]
+layout_mode = 0
+offset_left = 3.835
+offset_top = -19.0
+offset_right = 100.835
+offset_bottom = 4.0
+theme_override_font_sizes/font_size = 14
+text = "Starting Point
+"
+
+[node name="HideBotsCheckButton" type="CheckButton" parent="Buttons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(141, 0)
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -161.675
+offset_top = 60.0
+offset_right = -20.675
+offset_bottom = 91.0
+grow_horizontal = 0
+focus_mode = 0
+theme_override_constants/outline_size = 2
+button_mask = 3
+text = "Hide Bots during Exawaves"
+alignment = 2
+script = ExtResource("28_kaix3")
+
+[node name="SpectateButton" type="CheckButton" parent="Buttons"]
+offset_left = 149.0
+offset_top = 55.0
+offset_right = 315.0
+offset_bottom = 86.0
+focus_mode = 0
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 16
+text = "Spectate Mode"
+script = ExtResource("33_x6ks6")
+
+[node name="VersionLabel" parent="Buttons" instance=ExtResource("36_qcegl")]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_onckn")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+light_energy = 0.891
+
+[connection signal="body_entered" from="GroundMarkers/testtowers/PRTower/CollisionArea3D" to="GroundMarkers/testtowers/PRTower" method="_on_collision_area_3d_body_entered"]
+[connection signal="body_exited" from="GroundMarkers/testtowers/PRTower/CollisionArea3D" to="GroundMarkers/testtowers/PRTower" method="_on_collision_area_3d_body_exited"]
+[connection signal="pressed" from="Buttons/ResetButton" to="." method="_on_reset_button_pressed"]
+[connection signal="pressed" from="Buttons/MainMenuButton" to="." method="_on_main_menu_button_pressed"]
+[connection signal="item_selected" from="Buttons/RoleSelectButton" to="Buttons/RoleSelectButton" method="_on_item_selected"]
+[connection signal="item_selected" from="Buttons/P5SubSequenceSelectButton" to="Buttons/P5SubSequenceSelectButton" method="_on_item_selected"]
+[connection signal="pressed" from="Buttons/HideBotsCheckButton" to="Buttons/HideBotsCheckButton" method="_on_pressed"]
+[connection signal="pressed" from="Buttons/SpectateButton" to="Buttons/SpectateButton" method="_on_pressed"]

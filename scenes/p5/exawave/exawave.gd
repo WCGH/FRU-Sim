@@ -78,7 +78,7 @@ func box_highlight():
 	highlight_ab.play_fade_out()
 	highlight_cd.play_fade_out()
 
-## 6.8, 7.8, etc. (7 hits)
+## 6.8, 8.8, etc. (7 hits)
 # Hits 1 -7
 func wave_hit():
 	wave_dark_a.wave_hit()

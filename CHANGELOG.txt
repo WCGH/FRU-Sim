@@ -1,5 +1,4 @@
 # v1.5.4
-
 - DD: Added support for Mami (EU) and Vertical Spread (JP) strats. Needs testing.
 - DD: Bots will now always move towards mid while tank is baiting jump. Cleaned up tank movement.
 - P4: Increased size of Fragment of Fate hitbox. Need more research/vods showing the exact size of their hitbox.
@@ -10,7 +9,6 @@
 - Apoc: Increased Water AoE size.
 - UR: Added missing Return debuff, which should accurately count down until Rewind Stun is applied.
 - General: Fixed bug with players getting stuck after rewind or knockback.
-
 
 # v1.6.0
 - Added P5 Fulgent Blade mechanic. Rest of P5 to be added later.
@@ -32,3 +30,23 @@
 - CT: Fixed issue where M1 was baiting Spirit Jump too close to the Fragment.
 - General: Improved waymark visual (Credit to WorstAquaPlayer)
 - General: Fixed most debuff icon tooltips.
+
+
+## v1.7.0
+# New Additions (need testing):
+- Added Paradise Regained and Polarizing Strikes to Phase 5 (Pandora). You can select either of these or Fulgent Blade as a starting point, or practice all 3 in sequence. Currently this only supports the NAUR/LPDU/MUR strat (https://slides.com/ultiproject/frup5/scroll).
+- Added Mana DC strat support for Apoc. Credit to WaterBoiledPizza.
+
+# UI Changes:
+- Improved Party List visuals.
+- Party List can now be reordered, with the option to keep player at top of list.
+- Most UI Elements can now be moved (Alt+Click) and resized (Alt+ScrollWheel). This can be rebound in control settings. Credit to WorstAquaPlayer.
+- Window should now keep its position on reset, rather than resetting to center of screen.
+
+# Fixes:
+- UR: Fixed incorrect movements and debuffs for Med Fires on Grey-9 strat.
+- Darklit: Force Tether button should now work.
+
+# Known Issues:
+- Changing window size/resolution can sometimes push UI elements off the screen. If this happens, use the Reset UI button that appears at the top left while holding Alt.
+- The Pandora model is unavailable due to datamine protected. If that changes in 7.2, I'll update the P5 model.

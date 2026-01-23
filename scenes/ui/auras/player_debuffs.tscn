@@ -1,27 +1,40 @@
-[gd_scene format=3 uid="uid://du2fr4o3nsww0"]
+[gd_scene load_steps=5 format=3 uid="uid://du2fr4o3nsww0"]
+
+[ext_resource type="Script" path="res://scenes/ui/auras/player_debuffs.gd" id="1_qc6a1"]
+[ext_resource type="FontFile" uid="uid://46wxmrxlq74f" path="res://assets/common/fonts/eurostarregularextended.ttf" id="2_ij3b4"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ptb3q"]
+bg_color = Color(0.267, 0.267, 0.267, 0.741)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.780392, 0.501961, 0.360784, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_5ojtl"]
+font = ExtResource("2_ij3b4")
+font_size = 28
+outline_size = 3
+outline_color = Color(0.780392, 0.501961, 0.360784, 1)
 
 [node name="PlayerDebuffs" type="CanvasLayer"]
+script = ExtResource("1_qc6a1")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 61.0
-offset_top = 27.0
-offset_right = 188.0
-offset_bottom = 133.0
+anchors_preset = -1
+anchor_left = 0.576
+anchor_top = 0.667
+anchor_right = 0.576
+anchor_bottom = 0.667
+offset_left = -0.552002
+offset_top = -0.216003
+offset_right = 61.448
+offset_bottom = 15.784
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(2.07, 2.07)
+scale = Vector2(2, 2)
 size_flags_horizontal = 8
 size_flags_vertical = 8
-mouse_filter = 2
-theme_override_constants/margin_left = 21
-theme_override_constants/margin_top = 0
-theme_override_constants/margin_right = 0
-theme_override_constants/margin_bottom = 0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" groups=["debuff_container", "player_debuff_container"]]
 layout_mode = 2
@@ -29,3 +42,31 @@ size_flags_horizontal = 4
 size_flags_vertical = 8
 mouse_filter = 2
 theme_override_constants/separation = -5
+
+[node name="MoveUIBG" type="Panel" parent="MarginContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_ptb3q")
+
+[node name="Label" type="Label" parent="MarginContainer/MoveUIBG"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -15.0
+offset_top = -4.0
+offset_right = 120.0
+offset_bottom = 30.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.23, 0.23)
+text = "Debuffs"
+label_settings = SubResource("LabelSettings_5ojtl")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="gui_input" from="MarginContainer" to="." method="_on_margin_container_gui_input"]

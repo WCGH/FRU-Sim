@@ -27,7 +27,7 @@ popup/item_3/text = "Darklit Dragonsong"
 popup/item_3/id = 3
 popup/item_4/text = "Crystallize Time"
 popup/item_4/id = 4
-popup/item_5/text = "Fulgent Blade"
+popup/item_5/text = "Pandora"
 popup/item_5/id = 5
 script = ExtResource("1_hfr61")
 

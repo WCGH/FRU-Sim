@@ -1,4 +1,12 @@
 # TODO:
+	
+	v1.6.3
+	- Add Moveable UI elements.
+	- Update Party List visuals.
+	- Add nameplates.
+	- UR: Fix Grey-9 debuffs.
+	- Fix spectator disable in P5.
+	- 
 
 ### Critical:
 	- Fix character not triggering grounded when jumping.
@@ -9,11 +17,10 @@
 	- Add more movement abilities.
 
 ### UI:
-	- Add Moveable UI elements.
-	- Improve party frame UI.
 	- Fix select buttons capturing right clicks.
 	- Add standard/legacy control options.
 	- Add Nameplates.
+	- Make keybinds exclusive.
 
 ### Character Models:
 	- Fix sprint animation bug.
@@ -29,9 +36,6 @@
 ### P3 UR:
 	- Force free player after slide (player getting stuck).
 
-### P3 Apoc:
-
-### P4 CT:
 
 ### Non-critical:
 	- Scrolling damage text.

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cg0h4uysscvtc"]
+[gd_scene load_steps=10 format=3 uid="uid://cg0h4uysscvtc"]
 
 [ext_resource type="PackedScene" uid="uid://bw67wbi2y10qu" path="res://scenes/ui/action_button.tscn" id="1_oxg47"]
 [ext_resource type="Script" path="res://scenes/ui/action_bar.gd" id="1_pgg3b"]
@@ -6,20 +6,37 @@
 [ext_resource type="Texture2D" uid="uid://cxqgvoxf8p8nc" path="res://assets/common/icons/action_icons/arms_hl_icon.png" id="3_6ea2t"]
 [ext_resource type="Texture2D" uid="uid://5i4mreo11eq3" path="res://assets/common/icons/action_icons/avant_icon.png" id="4_ln20o"]
 [ext_resource type="Texture2D" uid="uid://7wp50uql53uc" path="res://assets/common/icons/action_icons/avant_hl_icon.png" id="5_vknay"]
+[ext_resource type="FontFile" uid="uid://46wxmrxlq74f" path="res://assets/common/fonts/eurostarregularextended.ttf" id="7_pjfqq"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2v8av"]
+bg_color = Color(0.267, 0.267, 0.267, 0.741)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.780392, 0.501961, 0.360784, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_q26as"]
+font = ExtResource("7_pjfqq")
+font_size = 20
+outline_size = 3
+outline_color = Color(0.780392, 0.501961, 0.360784, 1)
 
 [node name="ActionBar" type="CanvasLayer"]
 script = ExtResource("1_pgg3b")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchors_preset = -1
-anchor_left = 0.37
-anchor_top = 0.792
-anchor_right = 0.63
-anchor_bottom = 0.831
-offset_top = -4.79999
-offset_bottom = 0.100037
+anchor_left = 0.463
+anchor_top = 0.716
+anchor_right = 0.463
+anchor_bottom = 0.716
+offset_left = -0.375977
+offset_top = -0.968018
+offset_right = 134.624
+offset_bottom = 44.032
 grow_horizontal = 2
-grow_vertical = 0
+grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 8
 
@@ -32,6 +49,7 @@ custom_minimum_size = Vector2(45, 45)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
+mouse_filter = 1
 cooldown = 60.0
 
 [node name="ArmsActionButton" parent="MarginContainer/ButtonsContainer" instance=ExtResource("1_oxg47")]
@@ -39,6 +57,7 @@ custom_minimum_size = Vector2(45, 45)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
+mouse_filter = 1
 texture_normal = ExtResource("2_163b4")
 texture_hover = ExtResource("3_6ea2t")
 cooldown = 120.0
@@ -48,6 +67,27 @@ custom_minimum_size = Vector2(45, 45)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
+mouse_filter = 1
 texture_normal = ExtResource("4_ln20o")
 texture_hover = ExtResource("5_vknay")
 cooldown = 1.0
+
+[node name="MoveUIBG" type="Panel" parent="MarginContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_2v8av")
+
+[node name="Label" type="Label" parent="MarginContainer/MoveUIBG"]
+layout_mode = 0
+offset_left = 42.0
+offset_top = 10.0
+offset_right = 169.0
+offset_bottom = 35.0
+text = "Action Bar"
+label_settings = SubResource("LabelSettings_q26as")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="gui_input" from="MarginContainer" to="." method="_on_margin_container_gui_input"]

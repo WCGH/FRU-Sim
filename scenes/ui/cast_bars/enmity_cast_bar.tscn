@@ -1,29 +1,58 @@
-[gd_scene load_steps=2 format=3 uid="uid://cjmyec6sin7kw"]
+[gd_scene load_steps=5 format=3 uid="uid://cjmyec6sin7kw"]
 
 [ext_resource type="Script" path="res://scenes/ui/cast_bars/enmity_cast_bar.gd" id="1_iy7ye"]
+[ext_resource type="FontFile" uid="uid://46wxmrxlq74f" path="res://assets/common/fonts/eurostarregularextended.ttf" id="2_vs4ae"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nxgxx"]
+bg_color = Color(0.267, 0.267, 0.267, 0.741)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.780392, 0.501961, 0.360784, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_mop7f"]
+font = ExtResource("2_vs4ae")
+font_size = 15
+outline_size = 3
+outline_color = Color(0.780392, 0.501961, 0.360784, 1)
 
 [node name="EnmityCastBar" type="CanvasLayer" groups=["clone_cast_bar"]]
 script = ExtResource("1_iy7ye")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchors_preset = -1
-anchor_left = 0.095
+anchor_left = 0.174
 anchor_top = 0.711
-anchor_right = 0.095
+anchor_right = 0.174
 anchor_bottom = 0.711
-offset_left = 85.4
-offset_top = 22.0799
-offset_right = 336.4
-offset_bottom = 120.08
+offset_left = -0.447998
+offset_top = 0.271973
+offset_right = 250.552
+offset_bottom = 98.272
 grow_vertical = 2
 scale = Vector2(0.85, 0.85)
 size_flags_vertical = 8
-mouse_filter = 2
-theme_override_constants/margin_left = 21
-theme_override_constants/margin_top = 0
-theme_override_constants/margin_right = 0
-theme_override_constants/margin_bottom = 0
 
 [node name="CastBarContainer" type="VBoxContainer" parent="MarginContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+
+[node name="MoveUIBG" type="Panel" parent="MarginContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_nxgxx")
+
+[node name="Label" type="Label" parent="MarginContainer/MoveUIBG"]
+layout_mode = 0
+offset_left = 49.0
+offset_right = 176.0
+offset_bottom = 25.0
+text = "Enmity Cast Bar"
+label_settings = SubResource("LabelSettings_mop7f")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="gui_input" from="MarginContainer" to="." method="_on_margin_container_gui_input"]

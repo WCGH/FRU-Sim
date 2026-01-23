@@ -75,7 +75,7 @@ func set_center_position(new_position : Vector3) -> void:
 
 
 func set_color(color : Color) -> void:
-	if color != Color.TRANSPARENT:
+	if color != Color.TRANSPARENT and color.a > 0.99:
 		color.a = COLOR_ALPHA
 	mesh_instance_3d.mesh.material.albedo_color = color
 

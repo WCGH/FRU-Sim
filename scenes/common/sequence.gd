@@ -15,12 +15,17 @@ func _ready() -> void:
 	# Connect to window resize signal.
 	#get_tree().get_root().size_changed.connect(on_window_size_changed)
 	# Set screen size.
+	print(get_tree().get_root().initial_position)
 	var screen_res := SavedVariables.get_screen_res()  # If misbehaving, check on_ready order.
+	var screen_pos = SavedVariables.get_screen_pos()
+	if screen_pos != null:
+		get_tree().get_root().set_position(screen_pos)
 	get_tree().get_root().borderless = false
 	get_tree().get_root().set_size(screen_res)
-	get_tree().get_root().move_to_center()
 	if SavedVariables.save_data["settings"]["maximized"]:
 		get_tree().get_root().set_mode(Window.MODE_MAXIMIZED)
+	# Set UI
+	GameEvents.emit_ui_ready()
 	# Start sequence.
 	start_new_sequence()
 
@@ -42,6 +47,8 @@ func save_variables() -> void:
 func on_window_size_changed() -> void:
 	var maximized := get_tree().get_root().get_mode() == Window.MODE_MAXIMIZED
 	GameEvents.emit_variable_saved("settings", "maximized", maximized)
+	var screen_pos := get_tree().get_root().get_position()
+	GameEvents.emit_variable_saved("settings", "screen_pos", screen_pos)
 	# Keep old screen_res saved if maximized.
 	if maximized:
 		return

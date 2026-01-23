@@ -14,7 +14,7 @@ const STARTING_POS := Vector2(0, 47.48)
 const EXALINE_LENGTH := 23.74
 const EXALINE_WIDTH := 97.0
 const EXALINE_LIFETIME := 0.7
-const EXALINE_COLOR := Color(1, 0.647059, 0, 0.3)
+const EXALINE_COLOR := Color(1, 0.647059, 0, 0.5)
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var ground_aoe_controller: GroundAoeController = get_tree().get_first_node_in_group("ground_aoe_controller")
