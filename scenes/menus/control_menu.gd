@@ -21,6 +21,7 @@ const PRESS_KEY_TEXT = "Press Key"
 @onready var x_sens_h_slider: HSlider = %XSensHSlider
 @onready var y_sens_h_slider: HSlider = %YSensHSlider
 @onready var invert_y_check_button: CheckButton = %InvertYCheckButton
+@onready var invert_x_check_button: CheckButton = %InvertXCheckButton
 @onready var party_order_margin_container: PartyOrderMenu = %PartyOrderMarginContainer
 @onready var control_margin_container: MarginContainer = %ControlMarginContainer
 
@@ -42,6 +43,7 @@ func _ready() -> void:
 	x_sens_h_slider.set_value_no_signal(SavedVariables.save_data["settings"]["x_sens"])
 	y_sens_h_slider.set_value_no_signal(SavedVariables.save_data["settings"]["y_sens"])
 	invert_y_check_button.set_pressed_no_signal(SavedVariables.save_data["settings"]["invert_y"])
+	invert_x_check_button.set_pressed_no_signal(SavedVariables.save_data["settings"]["invert_x"])
 
 
 func _unhandled_input(event : InputEvent) -> void:
@@ -118,6 +120,10 @@ func _on_y_sens_h_slider_drag_ended(value_changed: bool) -> void:
 
 func _on_invert_y_check_button_toggled(toggled_on: bool) -> void:
 	GameEvents.emit_variable_saved("settings", "invert_y", toggled_on)
+	
+
+func _on_invert_x_check_button_toggled(toggled_on: bool) -> void:
+	GameEvents.emit_variable_saved("settings", "invert_x", toggled_on)
 
 
 func _on_back_button_pressed() -> void:

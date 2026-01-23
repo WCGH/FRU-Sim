@@ -721,6 +721,21 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 6
 
+[node name="InvertXContainer" type="HBoxContainer" parent="MenuContainer/MarginContainer/VBoxContainer/KeybindsMenuContainer/MarginContainer/LeftButtonsVBox"]
+layout_mode = 2
+theme_override_constants/separation = 57
+
+[node name="InvertXLabel" type="Label" parent="MenuContainer/MarginContainer/VBoxContainer/KeybindsMenuContainer/MarginContainer/LeftButtonsVBox/InvertXContainer"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+text = "Invert X"
+label_settings = SubResource("LabelSettings_8x8sj")
+
+[node name="InvertXCheckButton" type="CheckButton" parent="MenuContainer/MarginContainer/VBoxContainer/KeybindsMenuContainer/MarginContainer/LeftButtonsVBox/InvertXContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 6
+
 [node name="BottomHBoxContainer" type="HBoxContainer" parent="MenuContainer/MarginContainer/VBoxContainer/KeybindsMenuContainer/MarginContainer/LeftButtonsVBox"]
 layout_mode = 2
 size_flags_vertical = 10
@@ -1111,6 +1126,7 @@ libraries = {
 [connection signal="drag_ended" from="MenuContainer/MarginContainer/VBoxContainer/KeybindsMenuContainer/MarginContainer/LeftButtonsVBox/XSensContainer/XSensHSlider" to="MenuContainer/MarginContainer/VBoxContainer/KeybindsMenuContainer" method="_on_x_sens_h_slider_drag_ended"]
 [connection signal="drag_ended" from="MenuContainer/MarginContainer/VBoxContainer/KeybindsMenuContainer/MarginContainer/LeftButtonsVBox/YSensContainer2/YSensHSlider" to="MenuContainer/MarginContainer/VBoxContainer/KeybindsMenuContainer" method="_on_y_sens_h_slider_drag_ended"]
 [connection signal="toggled" from="MenuContainer/MarginContainer/VBoxContainer/KeybindsMenuContainer/MarginContainer/LeftButtonsVBox/InvertYContainer/InvertYCheckButton" to="MenuContainer/MarginContainer/VBoxContainer/KeybindsMenuContainer" method="_on_invert_y_check_button_toggled"]
+[connection signal="toggled" from="MenuContainer/MarginContainer/VBoxContainer/KeybindsMenuContainer/MarginContainer/LeftButtonsVBox/InvertXContainer/InvertXCheckButton" to="MenuContainer/MarginContainer/VBoxContainer/KeybindsMenuContainer" method="_on_invert_x_check_button_toggled"]
 [connection signal="pressed" from="MenuContainer/MarginContainer/VBoxContainer/KeybindsMenuContainer/MarginContainer/LeftButtonsVBox/BottomHBoxContainer/BackButton" to="MenuContainer/MarginContainer/VBoxContainer/KeybindsMenuContainer" method="_on_back_button_pressed"]
 [connection signal="pressed" from="MenuContainer/MarginContainer/VBoxContainer/LineupMenuContainer/MarginContainer/LeftButtonsVBox/DefaultButton" to="MenuContainer/MarginContainer/VBoxContainer/LineupMenuContainer" method="_on_default_button_pressed"]
 [connection signal="pressed" from="MenuContainer/MarginContainer/VBoxContainer/LineupMenuContainer/MarginContainer/LeftButtonsVBox/T1Container/UpButton" to="MenuContainer/MarginContainer/VBoxContainer/LineupMenuContainer/MarginContainer/LeftButtonsVBox/T1Container" method="_on_up_button_pressed"]
