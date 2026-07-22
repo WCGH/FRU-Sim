@@ -54,6 +54,9 @@ func _ready() -> void:
 	get_tree().get_root().set_size(Vector2(WINDOW_SIZE))
 	get_tree().get_root().move_to_center()
 
+	if OS.get_name() != "Windows":
+		buttons["launcher"].hide()
+
 
 func _process(_delta: float) -> void:
 	if load_screen_active:
@@ -153,6 +156,9 @@ func _on_p7_launch_button_pressed() -> void:
 
 
 func _on_update_launcher_button_pressed() -> void:
+	if OS.get_name() != "Windows":
+		return
+
 	if launch_status == DOWNLOAD:
 		pass
 	elif launch_status == UPDATE:
